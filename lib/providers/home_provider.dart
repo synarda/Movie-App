@@ -10,12 +10,6 @@ class HomeProvider with ChangeNotifier {
     fetchGenres();
   }
 
-  @override
-  void dispose() {
-    print("haha");
-    super.dispose();
-  }
-
   final Map<String, List<MoviesModel>> homeLists = {
     "popular": [],
     "upcoming": [],

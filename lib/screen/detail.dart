@@ -119,13 +119,17 @@ class DetailPage extends StatelessWidget {
                                               ),
                                               Align(
                                                 alignment: Alignment.bottomRight,
-                                                child: Padding(
-                                                  padding:
-                                                      const EdgeInsets.only(bottom: 66, right: 16),
-                                                  child: Text(
-                                                    movie.title,
-                                                    style:
-                                                        const TextStyle(color: Colorss.textColor),
+                                                child: SizedBox(
+                                                  width: 250,
+                                                  child: Padding(
+                                                    padding: const EdgeInsets.only(
+                                                        bottom: 66, right: 16),
+                                                    child: Text(
+                                                      textAlign: TextAlign.center,
+                                                      movie.title,
+                                                      style:
+                                                          const TextStyle(color: Colorss.textColor),
+                                                    ),
                                                   ),
                                                 ),
                                               ),
@@ -182,51 +186,99 @@ class DetailPage extends StatelessWidget {
                                     ),
                                   ],
                                 ),
-                                Container(
-                                  color: Colorss.background,
-                                  padding: const EdgeInsets.all(12),
-                                  width: double.infinity,
-                                  height: 150,
-                                  child: Text(
-                                    movie.description,
-                                    style: const TextStyle(color: Colorss.textColor, fontSize: 12),
+                                Padding(
+                                  padding: const EdgeInsets.all(20.0),
+                                  child: ListView(
+                                    shrinkWrap: true,
+                                    physics: const BouncingScrollPhysics(
+                                        parent: AlwaysScrollableScrollPhysics()),
+                                    children: [
+                                      Text(
+                                        movie.description,
+                                        style:
+                                            const TextStyle(color: Colorss.textColor, fontSize: 12),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(right: 8, left: 16, bottom: 64),
+                                  child: Align(
+                                    alignment: Alignment.centerLeft,
+                                    child: Container(
+                                      height: 28,
+                                      width: 100,
+                                      decoration: BoxDecoration(
+                                          boxShadow: [
+                                            BoxShadow(
+                                              color: Colorss.forebackground.withOpacity(0.5),
+                                              spreadRadius: 1,
+                                              blurRadius: 10,
+                                              offset: const Offset(0, 5),
+                                            ),
+                                          ],
+                                          borderRadius: BorderRadius.circular(20),
+                                          color: Colorss.themeFirst),
+                                      child: Row(
+                                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                        children: const [
+                                          Text(
+                                            "Add list",
+                                            style: TextStyle(color: Colorss.textColor, fontSize: 8),
+                                          ),
+                                          Icon(
+                                            Icons.star_border,
+                                            color: Colorss.textColor,
+                                            size: 15,
+                                          ),
+                                        ],
+                                      ),
+                                    ),
                                   ),
                                 ),
                                 Container(
                                   color: Colorss.background,
-                                  padding: const EdgeInsets.all(12),
+                                  padding: const EdgeInsets.only(
+                                      top: 8, right: 12, left: 12, bottom: 12),
                                   width: double.infinity,
                                   height: 150,
                                   child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                     children: [
-                                      Column(
-                                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                        children: [
-                                          CustomRow(
-                                              title: "Release date:  ", data: movie.releaseDate),
-                                          CustomRow(title: "Status:  ", data: movie.status),
-                                          CustomRow(
-                                              title: "Revenue:  ", data: movie.revenue.toString()),
-                                          CustomRow(
-                                              title: "Budget:  ", data: movie.budget.toString()),
-                                          CustomRow(
-                                              title: "Popularity:  ",
-                                              data: movie.popularity.toString()),
-                                        ],
-                                      ),
-                                      CircularPercentIndicator(
-                                        animationDuration: 1500,
-                                        radius: 30.0,
-                                        lineWidth: 5.0,
-                                        percent: movie.voteAverage / 10,
-                                        animation: true,
-                                        center: Text(
-                                          movie.voteAverage.toString().substring(0, 3),
-                                          style: const TextStyle(color: Colorss.textColor),
+                                      Padding(
+                                        padding: const EdgeInsets.only(left: 10, top: 16),
+                                        child: Column(
+                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          children: [
+                                            CustomRow(
+                                                title: "Release date:  ", data: movie.releaseDate),
+                                            CustomRow(title: "Status:  ", data: movie.status),
+                                            CustomRow(
+                                                title: "Revenue:  ",
+                                                data: movie.revenue.toString()),
+                                            CustomRow(
+                                                title: "Budget:  ", data: movie.budget.toString()),
+                                            CustomRow(
+                                                title: "Popularity:  ",
+                                                data: movie.popularity.toString()),
+                                          ],
                                         ),
-                                        progressColor: Colorss.themeFirst,
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.only(right: 64),
+                                        child: CircularPercentIndicator(
+                                          animationDuration: 1500,
+                                          radius: 30.0,
+                                          lineWidth: 5.0,
+                                          percent: movie.voteAverage / 10,
+                                          animation: true,
+                                          center: Text(
+                                            movie.voteAverage.toString().substring(0, 3),
+                                            style: const TextStyle(color: Colorss.textColor),
+                                          ),
+                                          progressColor: Colorss.themeFirst,
+                                        ),
                                       )
                                     ],
                                   ),
@@ -241,7 +293,7 @@ class DetailPage extends StatelessWidget {
                                 Container(
                                   padding: const EdgeInsets.all(16),
                                   width: double.infinity,
-                                  height: 280,
+                                  height: 220,
                                   child: Consumer<DetailProvider>(
                                     builder: (context, provider, child) {
                                       return GridView.builder(
@@ -350,161 +402,6 @@ class DetailPage extends StatelessWidget {
             ),
           ],
         ),
-        /*Expanded(
-            child: Container(
-          width: double.infinity,
-          color: Colorss.background,
-          child: Column(children: [
-            Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(20),
-                color: Colorss.forebackground.withOpacity(0.3),
-              ),
-              padding: const EdgeInsets.all(12),
-              margin: const EdgeInsets.all(8),
-              width: double.infinity,
-              height: 150,
-              child: Text(
-                description,
-                style: const TextStyle(color: Colorss.textColor, fontSize: 12),
-              ),
-            ),
-            Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(20),
-                color: Colorss.forebackground.withOpacity(0.3),
-              ),
-              padding: const EdgeInsets.all(12),
-              margin: const EdgeInsets.all(8),
-              width: double.infinity,
-              height: 150,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      Row(
-                        children: [
-                          const Text(
-                            "Release date:   ",
-                            style: TextStyle(color: Colorss.textColor, fontSize: 10),
-                          ),
-                          Text(
-                            releaseDate,
-                            style: const TextStyle(color: Colorss.themeFirst, fontSize: 12),
-                          ),
-                        ],
-                      ),
-                      Row(
-                        children: [
-                          const Text(
-                            "Popularity :   ",
-                            style: TextStyle(color: Colorss.textColor, fontSize: 10),
-                          ),
-                          Text(
-                            popularity.toString(),
-                            style: const TextStyle(color: Colorss.themeFirst, fontSize: 12),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-            SizedBox(
-              height: 150,
-              width: double.infinity,
-              child: Consumer<DetailProvider>(
-                builder: (context, provider, child) {
-                  return ListView(
-                    children: provider.movieList
-                        .map((e) => Container(
-                              child: Text(
-                                e.title,
-                                style: const TextStyle(color: Colorss.textColor),
-                              ),
-                            ))
-                        .toList(),
-                  );
-                },
-              ),
-            ),
-            Expanded(
-              child: Container(
-                padding: const EdgeInsets.all(16),
-                width: double.infinity,
-                child: Consumer<DetailProvider>(
-                  builder: (context, provider, child) {
-                    return GridView.builder(
-                      shrinkWrap: true,
-                      physics: const BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
-                      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 3,
-                      ),
-                      itemCount: provider.similarList.length,
-                      itemBuilder: (context, index) {
-                        final e = provider.similarList[index];
-                        return Container(
-                          decoration: BoxDecoration(borderRadius: BorderRadius.circular(20)),
-                          height: 150,
-                          width: MediaQuery.of(context).size.width / 3,
-                          child: Stack(
-                            children: [
-                              Container(
-                                margin: const EdgeInsets.all(16),
-                                height: 100,
-                                child: ClipRRect(
-                                  borderRadius: BorderRadius.circular(20),
-                                  child: CachedNetworkImage(
-                                    fit: BoxFit.cover,
-                                    imageUrl: "https://image.tmdb.org/t/p/original/${e.imgUrl}",
-                                    progressIndicatorBuilder: (context, url, downloadProgress) =>
-                                        //TODO: shimmer add
-                                        ShimmerWrapper(
-                                      active: true,
-                                      child: Container(),
-                                    ),
-                                    errorWidget: (context, url, error) => const Icon(Icons.error),
-                                  ),
-                                ),
-                              ),
-                              Align(
-                                alignment: Alignment.bottomCenter,
-                                child: Container(
-                                  decoration: BoxDecoration(
-                                      gradient: const LinearGradient(
-                                        begin: Alignment.bottomCenter,
-                                        end: Alignment.topCenter,
-                                        colors: [
-                                          Colorss.background,
-                                          Colors.transparent,
-                                        ],
-                                      ),
-                                      borderRadius: BorderRadius.circular(20)),
-                                  height: 100,
-                                  width: MediaQuery.of(context).size.width / 3,
-                                  child: Align(
-                                    alignment: Alignment.bottomCenter,
-                                    child: Text(
-                                      e.title,
-                                      style: const TextStyle(color: Colorss.textColor, fontSize: 8),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        );
-                      },
-                    );
-                  },
-                ),
-              ),
-            )
-          ]),
-        ))*/
       ]),
     );
   }

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
-import 'package:provider_api/providers/home_provider.dart';
 import 'package:provider_api/providers/login_provider.dart';
-import 'package:provider_api/screen/homepage.dart';
+import 'package:provider_api/providers/navigate_provider.dart';
+import 'package:provider_api/screen/route_page.dart';
 import 'package:provider_api/utils/const.dart';
 import 'package:provider_api/widgets/custom_textfield.dart';
 
@@ -52,8 +52,8 @@ class LoginPage extends StatelessWidget {
                               context,
                               MaterialPageRoute(
                                   builder: (context) => ChangeNotifierProvider(
-                                        create: (ctx) => HomeProvider(),
-                                        child: const HomePage(),
+                                        create: (ctx) => NavigateProvider(),
+                                        child: const RoutePage(),
                                       )));
                         }
                       });

@@ -38,7 +38,6 @@ class DetailProvider with ChangeNotifier {
 
     if (result != null) {
       movieList.add(result);
-      print(movieList);
     }
     notifyListeners();
   }

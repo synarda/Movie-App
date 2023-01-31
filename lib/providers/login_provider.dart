@@ -6,11 +6,13 @@ class LoginProvider with ChangeNotifier {
   final sessionBox = Hive.box("sessionBox");
 
   String token = "";
+  String accountId = "";
   TextEditingController userNameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   LoginProvider() {
     {
       getToken();
+      getAccount();
     }
   }
   @override
@@ -23,18 +25,21 @@ class LoginProvider with ChangeNotifier {
   Future<void> getToken() async {
     final result = await AuthService.getToken();
     token = result!;
-    print("tokeni aldım $token");
+
+    notifyListeners();
+  }
+
+  Future<void> getAccount() async {
+    final sessionBox = Hive.box("sessionBox");
+    final sessionId = sessionBox.get("sessionId");
+    final result = await AuthService.getAccount(sessionId);
+    accountId = result!;
 
     notifyListeners();
   }
 
   Future<void> postAuth(String token, String userName, String password) async {
     await AuthService.postAuth(token, userName, password).then((value) {
-      print("kayıt işlemini yaptım");
-      print(userName);
-      print(token);
-      print(password);
-
       if (value != null) {
         postSession(token);
       }
@@ -47,10 +52,8 @@ class LoginProvider with ChangeNotifier {
     final result = await AuthService.postSession(token);
     if (result != null) {
       sessionBox.put("sessionId", result);
-      print("kayıt ettim");
-      print(result);
     } else {
-      print("hata");
+      print("error");
     }
 
     notifyListeners();

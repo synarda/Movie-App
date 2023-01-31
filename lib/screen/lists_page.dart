@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:provider_api/providers/add_provider.dart';
 import 'package:provider_api/providers/navigate_provider.dart';
 import 'package:provider_api/screen/add_alert_page.dart';
+import 'package:provider_api/screen/delete_alert_page.dart';
 import 'package:provider_api/utils/const.dart';
 import 'package:provider_api/widgets/animated_listview.dart';
 
@@ -56,7 +57,7 @@ class ListsPage extends StatelessWidget {
                       .map((listItem) => Container(
                             key: ValueKey(listItem.id),
                             margin: const EdgeInsets.all(16),
-                            padding: const EdgeInsets.all(16),
+                            padding: const EdgeInsets.all(10),
                             decoration: BoxDecoration(boxShadow: [
                               BoxShadow(
                                 color: Colorss.themeFirst.withOpacity(0.1),
@@ -66,6 +67,19 @@ class ListsPage extends StatelessWidget {
                               ),
                             ], borderRadius: BorderRadius.circular(20), color: Colorss.background),
                             child: ListTile(
+                              leading: Container(
+                                  height: 60,
+                                  width: 60,
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(20),
+                                      color: Colorss.forebackground),
+                                  child: Center(
+                                    child: Text(
+                                      listItem.name.toString().trim().toUpperCase().substring(0, 1),
+                                      style: const TextStyle(
+                                          color: Colorss.textColor, fontWeight: FontWeight.bold),
+                                    ),
+                                  )),
                               title: Text(listItem.name,
                                   style: TextStyle(
                                       color: Colorss.textColor.withOpacity(0.8),
@@ -76,7 +90,13 @@ class ListsPage extends StatelessWidget {
                                     Icons.delete,
                                     color: Colorss.themeFirst,
                                   ),
-                                  onPressed: () => provider.deleteList(listItem.id)),
+                                  onPressed: () => showDialog(
+                                      context: context,
+                                      builder: (x) => ChangeNotifierProvider.value(
+                                          value: context.read<AddProvider>(),
+                                          child: DeleteAlertPage(
+                                            id: listItem.id,
+                                          )))),
                               subtitle: Text(
                                 listItem.description,
                                 style: TextStyle(

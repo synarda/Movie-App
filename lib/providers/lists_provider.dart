@@ -34,10 +34,8 @@ class AddProvider with ChangeNotifier {
     if (name.isEmpty && description.isEmpty) {
     } else {
       final result = await UserService.createList(name, description, sessionID);
-      print("ardaaaa$result");
       if (result != null) {
         lists.add(ListsModel(name: name, description: description, id: result, itemCount: 0));
-        print("l,stem$lists");
       }
     }
     notifyListeners();

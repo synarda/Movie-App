@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:provider_api/providers/detail_provider.dart';
 import 'package:provider_api/providers/home_provider.dart';
-import 'package:provider_api/screen/detail.dart';
+import 'package:provider_api/providers/login_provider.dart';
+import 'package:provider_api/screen/detail_page.dart';
 import 'package:provider_api/utils/const.dart';
 import 'package:provider_api/widgets/shimmer.dart';
 
@@ -34,6 +35,7 @@ class ListHome extends StatelessWidget {
                                   id: e.id,
                                   data: data,
                                   adult: e.adult,
+                                  accountId: Provider.of<LoginProvider>(context).accountId,
                                 ),
                               )));
                 },

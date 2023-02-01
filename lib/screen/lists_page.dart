@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:provider/provider.dart';
-import 'package:provider_api/providers/add_provider.dart';
-import 'package:provider_api/providers/navigate_provider.dart';
-import 'package:provider_api/screen/add_alert_page.dart';
-import 'package:provider_api/screen/delete_alert_page.dart';
+import 'package:provider_api/providers/list_detail_provider.dart';
+import 'package:provider_api/providers/lists_provider.dart';
+import 'package:provider_api/screen/alerts/addList_alert_page.dart';
+import 'package:provider_api/screen/alerts/delete_alert_page.dart';
+import 'package:provider_api/screen/list_detail_page.dart';
 import 'package:provider_api/utils/const.dart';
-import 'package:provider_api/widgets/animated_listview.dart';
 
 class ListsPage extends StatelessWidget {
   const ListsPage({super.key});
@@ -49,58 +50,79 @@ class ListsPage extends StatelessWidget {
           Consumer<AddProvider>(
             builder: (context, provider, child) {
               return Expanded(
-                child: AnimatedListView(
-                  key: ValueKey(context.read<NavigateProvider>().pageIdx),
+                child: ListView(
                   shrinkWrap: true,
                   physics: const BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
                   children: provider.lists
-                      .map((listItem) => Container(
-                            key: ValueKey(listItem.id),
-                            margin: const EdgeInsets.all(16),
-                            padding: const EdgeInsets.all(10),
-                            decoration: BoxDecoration(boxShadow: [
-                              BoxShadow(
-                                color: Colorss.themeFirst.withOpacity(0.1),
-                                spreadRadius: 1,
-                                blurRadius: 10,
-                                offset: const Offset(0, 5),
-                              ),
-                            ], borderRadius: BorderRadius.circular(20), color: Colorss.background),
-                            child: ListTile(
-                              leading: Container(
-                                  height: 60,
-                                  width: 60,
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(20),
-                                      color: Colorss.forebackground),
-                                  child: Center(
-                                    child: Text(
-                                      listItem.name.toString().trim().toUpperCase().substring(0, 1),
-                                      style: const TextStyle(
-                                          color: Colorss.textColor, fontWeight: FontWeight.bold),
+                      .map((listItem) => GestureDetector(
+                            onTap: () {
+                              final sessionBox = Hive.box("sessionBox");
+                              final sessionId = sessionBox.get("sessionId");
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          ChangeNotifierProvider<ListDetailProvider>(
+                                            create: (ctx) => ListDetailProvider(
+                                                listItem.id.toString(), sessionId),
+                                            child: const ListDetailPage(),
+                                          )));
+                            },
+                            child: Container(
+                              key: ValueKey(listItem.id),
+                              margin: const EdgeInsets.all(16),
+                              padding: const EdgeInsets.all(10),
+                              decoration: BoxDecoration(
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Colorss.themeFirst.withOpacity(0.1),
+                                      spreadRadius: 1,
+                                      blurRadius: 10,
+                                      offset: const Offset(0, 5),
                                     ),
-                                  )),
-                              title: Text(listItem.name,
+                                  ],
+                                  borderRadius: BorderRadius.circular(20),
+                                  color: Colorss.background),
+                              child: ListTile(
+                                leading: Container(
+                                    height: 60,
+                                    width: 60,
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(20),
+                                        color: Colorss.forebackground),
+                                    child: Center(
+                                      child: Text(
+                                        listItem.name
+                                            .toString()
+                                            .trim()
+                                            .toUpperCase()
+                                            .substring(0, 1),
+                                        style: const TextStyle(
+                                            color: Colorss.textColor, fontWeight: FontWeight.bold),
+                                      ),
+                                    )),
+                                title: Text(listItem.name,
+                                    style: TextStyle(
+                                        color: Colorss.textColor.withOpacity(0.8),
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.bold)),
+                                trailing: IconButton(
+                                    icon: const Icon(
+                                      Icons.delete,
+                                      color: Colorss.themeFirst,
+                                    ),
+                                    onPressed: () => showDialog(
+                                        context: context,
+                                        builder: (x) => ChangeNotifierProvider.value(
+                                            value: context.read<AddProvider>(),
+                                            child: DeleteAlertPage(
+                                              id: listItem.id,
+                                            )))),
+                                subtitle: Text(
+                                  listItem.description,
                                   style: TextStyle(
-                                      color: Colorss.textColor.withOpacity(0.8),
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.bold)),
-                              trailing: IconButton(
-                                  icon: const Icon(
-                                    Icons.delete,
-                                    color: Colorss.themeFirst,
-                                  ),
-                                  onPressed: () => showDialog(
-                                      context: context,
-                                      builder: (x) => ChangeNotifierProvider.value(
-                                          value: context.read<AddProvider>(),
-                                          child: DeleteAlertPage(
-                                            id: listItem.id,
-                                          )))),
-                              subtitle: Text(
-                                listItem.description,
-                                style: TextStyle(
-                                    color: Colorss.textColor.withOpacity(0.5), fontSize: 10),
+                                      color: Colorss.textColor.withOpacity(0.5), fontSize: 10),
+                                ),
                               ),
                             ),
                           ))

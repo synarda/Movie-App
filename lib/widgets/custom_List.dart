@@ -9,18 +9,19 @@ import 'package:provider_api/utils/const.dart';
 import 'package:provider_api/widgets/shimmer.dart';
 
 class ListHome extends StatelessWidget {
-  const ListHome({super.key, required this.data});
+  const ListHome({Key? key, required this.data}) : super(key: key);
 
   final String data;
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<HomeProvider>(builder: (context, provider, child) {
-      return SizedBox(
-        height: 225,
-        child: ListView(
+    return SizedBox(
+      height: 225,
+      child: Consumer<HomeProvider>(builder: (context, provider, child) {
+        return ListView(
+            key: PageStorageKey(data),
             scrollDirection: Axis.horizontal,
-            shrinkWrap: true,
+            shrinkWrap: false,
             physics: const BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
             children: provider.homeLists[data]!.map((e) {
               return GestureDetector(
@@ -43,7 +44,7 @@ class ListHome extends StatelessWidget {
                   Hero(
                     tag: e.id.toString() + data,
                     child: Container(
-                      margin: const EdgeInsets.all(16),
+                      margin: const EdgeInsets.only(top: 10, left: 16, right: 16, bottom: 5),
                       height: 300,
                       width: 250,
                       child: ClipRRect(
@@ -89,13 +90,12 @@ class ListHome extends StatelessWidget {
                                 style: const TextStyle(color: Colorss.textColor, fontSize: 12),
                               ),
                               const SizedBox(height: 4),
-                              SizedBox(
+                              /*SizedBox(
                                 width: 250,
                                 height: 35,
                                 child: ListView(
                                   shrinkWrap: true,
-                                  physics: const BouncingScrollPhysics(
-                                      parent: AlwaysScrollableScrollPhysics()),
+                                  physics: const NeverScrollableScrollPhysics(),
                                   scrollDirection: Axis.horizontal,
                                   children: e.genres
                                       .map((x) => Container(
@@ -113,7 +113,7 @@ class ListHome extends StatelessWidget {
                                           ))
                                       .toList(),
                                 ),
-                              ),
+                              ),*/
                             ]),
                       ),
                     ),
@@ -136,8 +136,8 @@ class ListHome extends StatelessWidget {
                       : Container(),
                 ]),
               );
-            }).toList()),
-      );
-    });
+            }).toList());
+      }),
+    );
   }
 }

@@ -1,4 +1,4 @@
-import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:provider_api/models/movie_model.dart';
 import 'package:provider_api/models/movies_model.dart';
 import 'package:provider_api/services/api_service.dart';
@@ -15,8 +15,9 @@ class DetailProvider with ChangeNotifier {
   }
   final List<MoviesModel> similarList = [];
   final List<MovieModel> movieList = [];
-
   late double opacity;
+
+  void blurAnimated() {}
 
   Future<void> fetchSimilar(int id) async {
     similarList.clear();

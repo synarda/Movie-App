@@ -3,7 +3,9 @@ import 'package:provider_api/utils/const.dart';
 import 'package:provider_api/widgets/custom_List.dart';
 
 class HomePage extends StatelessWidget {
-  const HomePage({super.key});
+  const HomePage({
+    Key? key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +20,7 @@ class HomePage extends StatelessWidget {
           indent: 16,
           thickness: 2,
         ),
-        const ListHome(data: "popular"),
+        const ListHome(data: "popular", key: PageStorageKey("popular")),
         dividerTitle("Upcoming"),
         const Divider(
           color: Colorss.background,
@@ -26,7 +28,7 @@ class HomePage extends StatelessWidget {
           indent: 16,
           thickness: 2,
         ),
-        const ListHome(data: "upcoming"),
+        const ListHome(data: "upcoming", key: PageStorageKey("upcoming")),
         dividerTitle("Top Rated"),
         const Divider(
           color: Colorss.background,
@@ -34,7 +36,7 @@ class HomePage extends StatelessWidget {
           indent: 16,
           thickness: 2,
         ),
-        const ListHome(data: "top_rated"),
+        const ListHome(data: "top_rated", key: PageStorageKey("top_rated")),
         const SizedBox(height: 54),
       ],
     );

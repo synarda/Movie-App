@@ -89,4 +89,18 @@ class UserService {
 
     return null;
   }
+
+  static Future deleteListInMovie(String listId, String sessionID, int mediaId) async {
+    await http.post(
+        Uri.http("api.themoviedb.org", "/3/list/$listId/remove_item",
+            {"api_key": "9c829acfb2666008b8b6304b45fc15a7", "session_id": sessionID}),
+        headers: {
+          'Accept': 'application/json',
+        },
+        body: {
+          "media_id": mediaId.toString(),
+        });
+
+    return null;
+  }
 }

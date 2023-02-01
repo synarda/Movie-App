@@ -29,7 +29,7 @@ class _AddMovieAlertPageState extends State<AddMovieAlertPage> {
           "Add Movie",
           style: TextStyle(color: Colorss.textColor),
         ),
-        backgroundColor: Colorss.background.withOpacity(0.7),
+        backgroundColor: Colorss.background,
         content: GestureDetector(
             onTap: FocusScope.of(context).unfocus,
             child: SizedBox(
@@ -43,8 +43,8 @@ class _AddMovieAlertPageState extends State<AddMovieAlertPage> {
                     children: provider.lists
                         .map((listItem) => Container(
                               key: ValueKey(listItem.id),
-                              margin: const EdgeInsets.all(16),
-                              padding: const EdgeInsets.all(10),
+                              margin: const EdgeInsets.only(top: 8, left: 16, right: 16),
+                              padding: const EdgeInsets.all(5),
                               decoration: BoxDecoration(
                                   boxShadow: [
                                     BoxShadow(
@@ -58,8 +58,8 @@ class _AddMovieAlertPageState extends State<AddMovieAlertPage> {
                                   color: Colorss.background),
                               child: ListTile(
                                 leading: Container(
-                                    height: 60,
-                                    width: 60,
+                                    height: 50,
+                                    width: 50,
                                     decoration: BoxDecoration(
                                         borderRadius: BorderRadius.circular(20),
                                         color: Colorss.forebackground),

@@ -38,14 +38,17 @@ class RoutePage extends StatelessWidget {
                 },
                 children: [
                   ChangeNotifierProvider(
+                    key: const PageStorageKey<String>("home"),
                     create: (_) => HomeProvider(),
                     child: const HomePage(),
                   ),
                   ChangeNotifierProvider(
+                    key: const PageStorageKey<String>("lists"),
                     create: (_) => AddProvider(loginProvider.accountId),
                     child: const ListsPage(),
                   ),
                   ChangeNotifierProvider(
+                    key: const PageStorageKey<String>("account"),
                     create: (_) => AccountProvider(),
                     child: const AccountPage(),
                   ),

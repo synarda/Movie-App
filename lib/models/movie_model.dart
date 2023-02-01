@@ -3,16 +3,17 @@ class MovieModel {
   final String title;
   final String backdropPath;
   final String posterPath;
-  final int budget;
+  final int? budget;
   final String description;
-  final String status;
-  final int runtime;
+  final String? status;
+  final int? runtime;
   final String releaseDate;
-  final int revenue;
-  final String tagLine;
+  final int? revenue;
+  final String? tagLine;
   final double popularity;
   final double voteAverage;
-  final List<dynamic> genres;
+  final List<dynamic>? genres;
+  final int id;
 
   const MovieModel({
     required this.title,
@@ -28,10 +29,12 @@ class MovieModel {
     required this.popularity,
     required this.voteAverage,
     required this.genres,
+    required this.id,
   });
   factory MovieModel.fromJson(Map<dynamic, dynamic> json) {
     return MovieModel(
       title: json["title"],
+      id: json["id"],
       backdropPath: json["backdrop_path"],
       posterPath: json["poster_path"],
       budget: json["budget"],

@@ -9,7 +9,9 @@ import 'package:provider_api/screen/list_detail_page.dart';
 import 'package:provider_api/utils/const.dart';
 
 class ListsPage extends StatelessWidget {
-  const ListsPage({super.key});
+  const ListsPage({
+    Key? key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -65,7 +67,11 @@ class ListsPage extends StatelessWidget {
                                           ChangeNotifierProvider<ListDetailProvider>(
                                             create: (ctx) => ListDetailProvider(
                                                 listItem.id.toString(), sessionId),
-                                            child: const ListDetailPage(),
+                                            child: ListDetailPage(
+                                              name: listItem.name,
+                                              description: listItem.description,
+                                              itemCount: listItem.itemCount,
+                                            ),
                                           )));
                             },
                             child: Container(
@@ -111,13 +117,14 @@ class ListsPage extends StatelessWidget {
                                       Icons.delete,
                                       color: Colorss.themeFirst,
                                     ),
-                                    onPressed: () => showDialog(
-                                        context: context,
-                                        builder: (x) => ChangeNotifierProvider.value(
-                                            value: context.read<AddProvider>(),
-                                            child: DeleteAlertPage(
-                                              id: listItem.id,
-                                            )))),
+                                    onPressed: () async {
+                                      final result = await showDialog(
+                                          context: context,
+                                          builder: (x) => const DeleteAlertPage());
+                                      if (result == true) {
+                                        provider.deleteList(listItem.id);
+                                      }
+                                    }),
                                 subtitle: Text(
                                   listItem.description,
                                   style: TextStyle(

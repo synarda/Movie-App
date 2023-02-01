@@ -1,20 +1,12 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:provider_api/providers/lists_provider.dart';
 import 'package:provider_api/utils/const.dart';
 
-class DeleteAlertPage extends StatefulWidget {
+class DeleteAlertPage extends StatelessWidget {
   const DeleteAlertPage({
     Key? key,
-    required this.id,
   }) : super(key: key);
-  final int id;
-  @override
-  State<DeleteAlertPage> createState() => _DeleteAlertPageState();
-}
 
-class _DeleteAlertPageState extends State<DeleteAlertPage> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
@@ -48,10 +40,7 @@ class _DeleteAlertPageState extends State<DeleteAlertPage> {
               height: 50,
               child: ElevatedButton(
                   onPressed: () {
-                    context
-                        .read<AddProvider>()
-                        .deleteList(widget.id)
-                        .then((value) => Navigator.pop(context));
+                    Navigator.pop(context, true);
                   },
                   style: ElevatedButton.styleFrom(
                       backgroundColor: Colorss.forebackground,

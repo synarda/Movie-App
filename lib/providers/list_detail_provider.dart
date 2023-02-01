@@ -7,12 +7,17 @@ class ListDetailProvider with ChangeNotifier {
     getListDetail(listId, sessionId);
   }
 
-  List<ListDetailModel?> listDetail = [];
+  ListDetailModel? listDetail;
   Future<void> getListDetail(String listId, String sessionId) async {
     final result = await UserService.getListDetail(listId, sessionId);
-
-    listDetail.add(result);
+    listDetail = result;
     notifyListeners();
-    print("bu çektiğim veri $listDetail");
+  }
+
+  Future<void> deleteListInMovie(String listId, String sessionId, int movieId) async {
+    listDetail!.items.removeWhere((element) => element.id == movieId);
+    await UserService.deleteListInMovie(listId, sessionId, movieId);
+
+    notifyListeners();
   }
 }

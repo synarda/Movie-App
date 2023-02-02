@@ -1,12 +1,12 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:provider/provider.dart';
 import 'package:provider_api/providers/detail_provider.dart';
 import 'package:provider_api/providers/home_provider.dart';
 import 'package:provider_api/providers/login_provider.dart';
 import 'package:provider_api/screen/detail_page.dart';
 import 'package:provider_api/utils/const.dart';
-import 'package:provider_api/widgets/shimmer.dart';
 
 class ListHome extends StatelessWidget {
   const ListHome({Key? key, required this.data}) : super(key: key);
@@ -52,11 +52,6 @@ class ListHome extends StatelessWidget {
                         child: CachedNetworkImage(
                           fit: BoxFit.cover,
                           imageUrl: "https://image.tmdb.org/t/p/original/${e.imgUrl}",
-                          progressIndicatorBuilder: (context, url, downloadProgress) =>
-                              ShimmerWrapper(
-                            active: true,
-                            child: Container(),
-                          ),
                           errorWidget: (context, url, error) => const Icon(Icons.error),
                         ),
                       ),
@@ -79,17 +74,37 @@ class ListHome extends StatelessWidget {
                       height: 200,
                       width: 250,
                       child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.start,
+                        padding: const EdgeInsets.only(bottom: 16, left: 8, right: 8),
+                        child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            crossAxisAlignment: CrossAxisAlignment.end,
                             children: [
-                              const SizedBox(height: 105),
-                              Text(
-                                e.title,
-                                style: const TextStyle(color: Colorss.textColor, fontSize: 12),
+                              SizedBox(
+                                width: 200,
+                                child: Text(
+                                  e.title,
+                                  style: const TextStyle(
+                                      color: Colorss.textColor,
+                                      fontSize: 12,
+                                      overflow: TextOverflow.ellipsis),
+                                ),
                               ),
-                              const SizedBox(height: 4),
+                              Padding(
+                                padding: const EdgeInsets.only(),
+                                child: CircularPercentIndicator(
+                                  animationDuration: 1500,
+                                  radius: 15.0,
+                                  lineWidth: 3.0,
+                                  percent: e.voteAverage / 10,
+                                  animation: false,
+                                  center: Text(
+                                    e.voteAverage.toString().substring(0, 3),
+                                    style: const TextStyle(color: Colorss.textColor, fontSize: 10),
+                                  ),
+                                  progressColor: Colorss.themeFirst,
+                                  backgroundColor: Colorss.textColor.withOpacity(0.5),
+                                ),
+                              )
                               /*SizedBox(
                                 width: 250,
                                 height: 35,

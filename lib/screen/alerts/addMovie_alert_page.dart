@@ -4,7 +4,7 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:provider_api/providers/add_movie_provider.dart';
 import 'package:provider_api/providers/lists_provider.dart';
-import 'package:provider_api/providers/navigate_provider.dart';
+import 'package:provider_api/providers/route_provider.dart';
 import 'package:provider_api/utils/const.dart';
 import 'package:provider_api/widgets/animated_listview.dart';
 
@@ -37,7 +37,7 @@ class _AddMovieAlertPageState extends State<AddMovieAlertPage> {
                 width: MediaQuery.of(context).size.width / 1.5,
                 child: Consumer<AddProvider>(builder: (context, provider, child) {
                   return AnimatedListView(
-                    key: ValueKey(context.read<NavigateProvider>().pageIdx),
+                    key: ValueKey(context.read<RoutePageProvider>().pageIdx),
                     shrinkWrap: true,
                     physics: const BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
                     children: provider.lists

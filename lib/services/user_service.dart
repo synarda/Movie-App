@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:provider_api/models/list_detail_model.dart';
 import 'package:provider_api/models/lists_model.dart';
+import 'package:provider_api/models/movies_model.dart';
 
 class UserService {
   static Future<int?> createList(String name, String description, String sessionID) async {
@@ -63,6 +64,19 @@ class UserService {
     return null;
   }
 
+  static Future<List<MoviesModel>?> getSearchResult(String sessionId, String query) async {
+    final response = await http.get(Uri.http("api.themoviedb.org", "/3/search/movie",
+        {"api_key": "9c829acfb2666008b8b6304b45fc15a7", "session_id": sessionId, "query": query}));
+    if (response.statusCode == 200) {
+      final result = jsonDecode(response.body);
+      List<dynamic> searchResultList = result["results"] as List<dynamic>;
+      return searchResultList.map((e) {
+        return MoviesModel.fromJson(e);
+      }).toList();
+    }
+    return null;
+  }
+
   static Future<ListDetailModel?> getListDetail(String listId, String sessionId) async {
     final response = await http.get(
         Uri.http("api.themoviedb.org", "/3/list/$listId",
@@ -100,7 +114,6 @@ class UserService {
         body: {
           "media_id": mediaId.toString(),
         });
-
     return null;
   }
 }

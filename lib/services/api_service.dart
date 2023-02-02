@@ -1,13 +1,14 @@
 import 'dart:convert';
 
-import 'package:http/http.dart' as http;
+import 'package:cancellation_token_http/http.dart' as http;
 import 'package:provider_api/models/movie_model.dart';
 import 'package:provider_api/models/movies_model.dart';
 
 class ApiService {
   static Future<List<MoviesModel>?> fetch(String filter) async {
     final response = await http.get(
-        Uri.http("api.themoviedb.org", "/3/movie/$filter", {"api_key": "9c829acfb2666008b8b6304b45fc15a7"}),
+        Uri.http("api.themoviedb.org", "/3/movie/$filter",
+            {"api_key": "9c829acfb2666008b8b6304b45fc15a7"}),
         headers: {
           'Accept': 'application/json',
         });
@@ -20,10 +21,12 @@ class ApiService {
   }
 
   static Future<MovieModel?> fetchMovie(int id) async {
-    final response = await http
-        .get(Uri.http("api.themoviedb.org", "/3/movie/$id", {"api_key": "9c829acfb2666008b8b6304b45fc15a7"}), headers: {
-      'Accept': 'application/json',
-    });
+    final response = await http.get(
+        Uri.http(
+            "api.themoviedb.org", "/3/movie/$id", {"api_key": "9c829acfb2666008b8b6304b45fc15a7"}),
+        headers: {
+          'Accept': 'application/json',
+        });
     if (response.statusCode == 200) {
       final result = jsonDecode(response.body);
       Map list = result as Map;
@@ -34,7 +37,8 @@ class ApiService {
 
   static Future<Map<int, String>?> fetchGenres() async {
     final response = await http.get(
-        Uri.http("api.themoviedb.org", "/3/genre/movie/list", {"api_key": "9c829acfb2666008b8b6304b45fc15a7"}),
+        Uri.http("api.themoviedb.org", "/3/genre/movie/list",
+            {"api_key": "9c829acfb2666008b8b6304b45fc15a7"}),
         headers: {
           'Accept': 'application/json',
         });
@@ -52,10 +56,12 @@ class ApiService {
 
   static Future<List<MoviesModel>?> fetchSimilar(int id) async {
     final response = await http.get(
-        Uri.http("api.themoviedb.org", "/3/movie/$id/similar", {"api_key": "9c829acfb2666008b8b6304b45fc15a7"}),
+        Uri.http("api.themoviedb.org", "/3/movie/$id/similar",
+            {"api_key": "9c829acfb2666008b8b6304b45fc15a7"}),
         headers: {
           'Accept': 'application/json',
         });
+
     if (response.statusCode == 200) {
       final result = jsonDecode(response.body);
       List<dynamic> list = result["results"] as List<dynamic>;

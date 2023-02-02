@@ -1,8 +1,8 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 class MovieModel {
   final String title;
-  final String backdropPath;
-  final String posterPath;
+  final String? backdropPath;
+  final String? posterPath;
   final int? budget;
   final String description;
   final String? status;
@@ -45,7 +45,8 @@ class MovieModel {
       revenue: json["revenue"],
       tagLine: json["tagline"],
       popularity: json["popularity"],
-      voteAverage: json["vote_average"],
+      voteAverage:
+          json["vote_average"] is int ? json["vote_average"].toDouble() : json["vote_average"],
       genres: json["genres"],
     );
   }

@@ -14,7 +14,6 @@ import 'package:provider_api/providers/login_provider.dart';
 import 'package:provider_api/screen/alerts/addMovie_alert_page.dart';
 import 'package:provider_api/utils/const.dart';
 import 'package:provider_api/widgets/custom_row.dart';
-import 'package:provider_api/widgets/shimmer.dart';
 
 class DetailPage extends StatefulWidget {
   const DetailPage({
@@ -67,29 +66,47 @@ class _DetailPageState extends State<DetailPage> {
       backgroundColor: Colorss.background,
       body: Stack(
         children: [
-          SizedBox(
-            height: 200,
-            width: MediaQuery.of(context).size.width,
-            child: ValueListenableBuilder(
-                valueListenable: blur,
-                child: Hero(
-                  tag: widget.id.toString() + widget.data.toString(),
-                  child: CachedNetworkImage(
-                    fit: BoxFit.cover,
-                    imageUrl: "https://image.tmdb.org/t/p/original/${widget.imgUrl}",
-                    progressIndicatorBuilder: (context, url, downloadProgress) => const Center(
-                      child: CupertinoActivityIndicator(),
+          ValueListenableBuilder(
+              valueListenable: blur,
+              child: Hero(
+                tag: widget.id.toString() + widget.data.toString(),
+                child: Stack(
+                  children: [
+                    SizedBox(
+                      height: 298,
+                      width: 497,
+                      child: CachedNetworkImage(
+                        fit: BoxFit.cover,
+                        imageUrl: "https://image.tmdb.org/t/p/original/${widget.imgUrl}",
+                        progressIndicatorBuilder: (context, url, downloadProgress) => const Center(
+                          child: CupertinoActivityIndicator(),
+                        ),
+                        errorWidget: (context, url, error) => const Icon(Icons.error),
+                      ),
                     ),
-                    errorWidget: (context, url, error) => const Icon(Icons.error),
-                  ),
+                    Container(
+                      height: 300,
+                      width: 500,
+                      decoration: const BoxDecoration(
+                        gradient: LinearGradient(
+                          begin: Alignment.bottomCenter,
+                          end: Alignment.topCenter,
+                          colors: [
+                            Colorss.background,
+                            Colors.transparent,
+                          ],
+                        ),
+                      ),
+                    )
+                  ],
                 ),
-                builder: (context, val, child) {
-                  return Blur(
-                    blur: val,
-                    child: child!,
-                  );
-                }),
-          ),
+              ),
+              builder: (context, val, child) {
+                return Blur(
+                  blur: val,
+                  child: child!,
+                );
+              }),
           Align(
             alignment: Alignment.bottomCenter,
             child: Consumer<DetailProvider>(builder: (context, provider, child) {
@@ -105,122 +122,115 @@ class _DetailPageState extends State<DetailPage> {
                               children: [
                                 ValueListenableBuilder(
                                     valueListenable: blurOpacity,
-                                    child: Container(
-                                      decoration: const BoxDecoration(
-                                        gradient: LinearGradient(
-                                          begin: Alignment.bottomCenter,
-                                          end: Alignment.topCenter,
-                                          colors: [
-                                            Colorss.background,
-                                            Colors.transparent,
-                                          ],
-                                        ),
-                                      ),
-                                      child: SizedBox(
-                                        height: 250,
-                                        width: double.infinity,
-                                        child: Stack(
-                                          children: [
-                                            Align(
-                                              alignment: Alignment.bottomLeft,
-                                              child: Container(
-                                                height: 160,
-                                                width: 100,
-                                                margin: const EdgeInsets.only(
-                                                  left: 32,
-                                                ),
-                                                decoration: BoxDecoration(
-                                                  borderRadius: BorderRadius.circular(10),
-                                                  boxShadow: [
-                                                    BoxShadow(
-                                                      color: Colorss.background.withOpacity(0.8),
-                                                      spreadRadius: 1,
-                                                      blurRadius: 10,
-                                                      offset: const Offset(0, 5),
-                                                    ),
-                                                  ],
-                                                ),
-                                                child: ClipRRect(
-                                                  borderRadius: BorderRadius.circular(20),
-                                                  child: CachedNetworkImage(
-                                                    fit: BoxFit.cover,
-                                                    imageUrl:
-                                                        "https://image.tmdb.org/t/p/original/${movie.posterPath}",
-                                                    progressIndicatorBuilder:
-                                                        (context, url, downloadProgress) =>
-                                                            ShimmerWrapper(
-                                                      active: true,
-                                                      child: Container(),
-                                                    ),
-                                                    errorWidget: (context, url, error) =>
-                                                        const Icon(Icons.error),
+                                    child: SizedBox(
+                                      height: 250,
+                                      width: double.infinity,
+                                      child: Stack(
+                                        children: [
+                                          Align(
+                                            alignment: Alignment.bottomLeft,
+                                            child: Container(
+                                              height: 160,
+                                              width: 100,
+                                              margin: const EdgeInsets.only(
+                                                left: 32,
+                                              ),
+                                              decoration: BoxDecoration(
+                                                borderRadius: BorderRadius.circular(10),
+                                                boxShadow: [
+                                                  BoxShadow(
+                                                    color: Colorss.background.withOpacity(0.8),
+                                                    spreadRadius: 1,
+                                                    blurRadius: 10,
+                                                    offset: const Offset(0, 5),
                                                   ),
+                                                ],
+                                              ),
+                                              child: ClipRRect(
+                                                borderRadius: BorderRadius.circular(20),
+                                                child: movie.posterPath == null
+                                                    ? Center(
+                                                        child: SizedBox(
+                                                            height: 35,
+                                                            width: 35,
+                                                            child:
+                                                                Image.asset("assets/noimage.png")),
+                                                      )
+                                                    : CachedNetworkImage(
+                                                        fit: BoxFit.cover,
+                                                        imageUrl:
+                                                            "https://image.tmdb.org/t/p/original/${movie.posterPath}",
+                                                        errorWidget: (context, url, error) =>
+                                                            const Icon(
+                                                          Icons.signal_cellular_nodata,
+                                                          color: Colorss.textColor,
+                                                          size: 25,
+                                                        ),
+                                                      ),
+                                              ),
+                                            ),
+                                          ),
+                                          Align(
+                                            alignment: Alignment.bottomRight,
+                                            child: SizedBox(
+                                              width: 250,
+                                              child: Padding(
+                                                padding:
+                                                    const EdgeInsets.only(bottom: 66, right: 16),
+                                                child: Text(
+                                                  textAlign: TextAlign.center,
+                                                  movie.title,
+                                                  style: const TextStyle(color: Colorss.textColor),
                                                 ),
                                               ),
                                             ),
-                                            Align(
-                                              alignment: Alignment.bottomRight,
+                                          ),
+                                          Align(
+                                            alignment: Alignment.bottomRight,
+                                            child: Padding(
+                                              padding: const EdgeInsets.only(left: 32),
                                               child: SizedBox(
                                                 width: 250,
-                                                child: Padding(
-                                                  padding:
-                                                      const EdgeInsets.only(bottom: 66, right: 16),
-                                                  child: Text(
-                                                    textAlign: TextAlign.center,
-                                                    movie.title,
-                                                    style:
-                                                        const TextStyle(color: Colorss.textColor),
-                                                  ),
+                                                height: 35,
+                                                child: ListView(
+                                                  shrinkWrap: true,
+                                                  physics: const BouncingScrollPhysics(
+                                                      parent: AlwaysScrollableScrollPhysics()),
+                                                  scrollDirection: Axis.horizontal,
+                                                  children: movie.genres!
+                                                      .map((x) => Container(
+                                                            decoration: BoxDecoration(
+                                                                boxShadow: [
+                                                                  BoxShadow(
+                                                                    color: Colorss.forebackground
+                                                                        .withOpacity(0.5),
+                                                                    spreadRadius: 1,
+                                                                    blurRadius: 10,
+                                                                    offset: const Offset(0, 5),
+                                                                  ),
+                                                                ],
+                                                                color: Colorss.background,
+                                                                borderRadius:
+                                                                    BorderRadius.circular(20)),
+                                                            margin: const EdgeInsets.only(
+                                                                left: 0,
+                                                                right: 8,
+                                                                top: 8,
+                                                                bottom: 8),
+                                                            padding: const EdgeInsets.all(5),
+                                                            child: Text(
+                                                              x["name"].toString(),
+                                                              style: const TextStyle(
+                                                                  color: Colorss.themeFirst,
+                                                                  fontSize: 8),
+                                                            ),
+                                                          ))
+                                                      .toList(),
                                                 ),
                                               ),
                                             ),
-                                            Align(
-                                              alignment: Alignment.bottomRight,
-                                              child: Padding(
-                                                padding: const EdgeInsets.only(left: 32),
-                                                child: SizedBox(
-                                                  width: 250,
-                                                  height: 35,
-                                                  child: ListView(
-                                                    shrinkWrap: true,
-                                                    physics: const BouncingScrollPhysics(
-                                                        parent: AlwaysScrollableScrollPhysics()),
-                                                    scrollDirection: Axis.horizontal,
-                                                    children: movie.genres!
-                                                        .map((x) => Container(
-                                                              decoration: BoxDecoration(
-                                                                  boxShadow: [
-                                                                    BoxShadow(
-                                                                      color: Colorss.forebackground
-                                                                          .withOpacity(0.5),
-                                                                      spreadRadius: 1,
-                                                                      blurRadius: 10,
-                                                                      offset: const Offset(0, 5),
-                                                                    ),
-                                                                  ],
-                                                                  color: Colorss.background,
-                                                                  borderRadius:
-                                                                      BorderRadius.circular(20)),
-                                                              margin: const EdgeInsets.only(
-                                                                  left: 0,
-                                                                  right: 8,
-                                                                  top: 8,
-                                                                  bottom: 8),
-                                                              padding: const EdgeInsets.all(5),
-                                                              child: Text(
-                                                                x["name"].toString(),
-                                                                style: const TextStyle(
-                                                                    color: Colorss.themeFirst,
-                                                                    fontSize: 8),
-                                                              ),
-                                                            ))
-                                                        .toList(),
-                                                  ),
-                                                ),
-                                              ),
-                                            ),
-                                          ],
-                                        ),
+                                          ),
+                                        ],
                                       ),
                                     ),
                                     builder: (context, val, child) {
@@ -233,16 +243,9 @@ class _DetailPageState extends State<DetailPage> {
                             ),
                             Padding(
                               padding: const EdgeInsets.all(20.0),
-                              child: ListView(
-                                shrinkWrap: true,
-                                physics: const BouncingScrollPhysics(
-                                    parent: AlwaysScrollableScrollPhysics()),
-                                children: [
-                                  Text(
-                                    movie.description,
-                                    style: const TextStyle(color: Colorss.textColor, fontSize: 12),
-                                  ),
-                                ],
+                              child: Text(
+                                movie.description,
+                                style: const TextStyle(color: Colorss.textColor, fontSize: 12),
                               ),
                             ),
                             Padding(
@@ -351,6 +354,7 @@ class _DetailPageState extends State<DetailPage> {
                               width: double.infinity,
                               child: Consumer<DetailProvider>(
                                 builder: (context, provider, child) {
+                                  print("girdi");
                                   return GridView.builder(
                                     shrinkWrap: true,
                                     physics: const NeverScrollableScrollPhysics(),
@@ -389,20 +393,21 @@ class _DetailPageState extends State<DetailPage> {
                                                 height: 100,
                                                 child: ClipRRect(
                                                   borderRadius: BorderRadius.circular(20),
-                                                  child: CachedNetworkImage(
-                                                    fit: BoxFit.cover,
-                                                    imageUrl:
-                                                        "https://image.tmdb.org/t/p/original/${e.imgUrl}",
-                                                    progressIndicatorBuilder:
-                                                        (context, url, downloadProgress) =>
-                                                            //TODO: shimmer add
-                                                            ShimmerWrapper(
-                                                      active: true,
-                                                      child: Container(),
-                                                    ),
-                                                    errorWidget: (context, url, error) =>
-                                                        const Icon(Icons.error),
-                                                  ),
+                                                  child: e.imgUrl.isEmpty
+                                                      ? Center(
+                                                          child: SizedBox(
+                                                              height: 30,
+                                                              width: 30,
+                                                              child: Image.asset(
+                                                                  "assets/noimage.png")),
+                                                        )
+                                                      : CachedNetworkImage(
+                                                          fit: BoxFit.cover,
+                                                          imageUrl:
+                                                              "https://image.tmdb.org/t/p/original/${e.imgUrl}",
+                                                          errorWidget: (context, url, error) =>
+                                                              const Icon(Icons.error),
+                                                        ),
                                                 ),
                                               ),
                                               Align(

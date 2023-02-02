@@ -1,3 +1,4 @@
+import 'package:cancellation_token/cancellation_token.dart';
 import 'package:flutter/material.dart';
 import 'package:provider_api/models/movie_model.dart';
 import 'package:provider_api/models/movies_model.dart';
@@ -5,23 +6,22 @@ import 'package:provider_api/services/api_service.dart';
 
 class DetailProvider with ChangeNotifier {
   DetailProvider(int id) {
-    fetchSimilar(id);
-    fetchMovie(id);
-    opacity = 0;
-    Future.delayed(const Duration(milliseconds: 1)).then((value) {
-      opacity = 1;
-      notifyListeners();
-    });
+    fetchMovie(id).then((value) => fetchSimilar(id));
   }
+
+  @override
+  void dispose() {
+    cancellationToken.cancel();
+    super.dispose();
+  }
+
   final List<MoviesModel> similarList = [];
   final List<MovieModel> movieList = [];
-  late double opacity;
-
+  CancellationToken cancellationToken = CancellationToken();
   void blurAnimated() {}
 
   Future<void> fetchSimilar(int id) async {
     similarList.clear();
-    notifyListeners();
 
     final result = await ApiService.fetchSimilar(id);
 
@@ -33,13 +33,11 @@ class DetailProvider with ChangeNotifier {
 
   Future<void> fetchMovie(int id) async {
     movieList.clear();
-    notifyListeners();
 
     final result = await ApiService.fetchMovie(id);
 
     if (result != null) {
       movieList.add(result);
     }
-    notifyListeners();
   }
 }

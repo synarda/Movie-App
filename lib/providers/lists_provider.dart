@@ -4,6 +4,8 @@ import 'package:provider_api/models/lists_model.dart';
 import 'package:provider_api/services/user_service.dart';
 
 class ListsProvider with ChangeNotifier {
+  bool isDisposed = false;
+
   ListsProvider(String id) {
     getLists(id);
   }
@@ -18,13 +20,13 @@ class ListsProvider with ChangeNotifier {
     } else {
       lists.clear();
     }
-    notifyListeners();
+    if (!isDisposed) notifyListeners();
   }
 
   Future<void> deleteList(int listId) async {
     await UserService.deleteList(listId, sessionId);
     lists.removeWhere((element) => element.id == listId);
-    notifyListeners();
+    if (!isDisposed) notifyListeners();
   }
 
   final sessionBox = Hive.box("sessionBox");
@@ -38,6 +40,12 @@ class ListsProvider with ChangeNotifier {
         lists.add(ListsModel(name: name, description: description, id: result, itemCount: 0));
       }
     }
-    notifyListeners();
+    if (!isDisposed) notifyListeners();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    isDisposed = true;
   }
 }

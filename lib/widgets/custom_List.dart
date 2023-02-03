@@ -46,7 +46,7 @@ class ListHome extends StatelessWidget {
                     child: Container(
                       margin: const EdgeInsets.only(top: 10, left: 16, right: 16, bottom: 5),
                       height: 300,
-                      width: 250,
+                      width: 300,
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(20),
                         child: CachedNetworkImage(
@@ -72,7 +72,7 @@ class ListHome extends StatelessWidget {
                           borderRadius: BorderRadius.circular(20)),
                       margin: const EdgeInsets.only(left: 16),
                       height: 200,
-                      width: 250,
+                      width: 300,
                       child: Padding(
                         padding: const EdgeInsets.only(bottom: 16, left: 8, right: 8),
                         child: Row(

@@ -70,9 +70,13 @@ class AccountPage extends StatelessWidget {
                   text: "Favorite"),
               GestureDetector(
                 onTap: () {
-                  Provider.of<AccountProvider>(context, listen: false).deleteSession().then(
-                      (value) => Navigator.pushReplacement(
-                          context, MaterialPageRoute(builder: (context) => const LoginPage())));
+                  Provider.of<AccountProvider>(context, listen: false)
+                      .deleteSession()
+                      .then((value) {
+                    Navigator.pushReplacement(
+                        context, MaterialPageRoute(builder: (context) => const LoginPage()));
+                    context.read<LoginProvider>().isLoading = true;
+                  });
                 },
                 child: CustomAccountListtile(
                     textColor: Colorss.themeFirst,

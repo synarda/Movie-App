@@ -71,7 +71,7 @@ class RoutePage extends StatelessWidget {
             body: Stack(
               children: [
                 PageView(
-                  physics: const BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
+                  physics: const NeverScrollableScrollPhysics(),
                   controller: provider.controller,
                   onPageChanged: (value) {
                     provider.pageIdx = value;
@@ -86,7 +86,8 @@ class RoutePage extends StatelessWidget {
                             key: const PageStorageKey<String>("route"),
                             create: (_) => RoutePageProvider(),
                             child: ListView(
-                              physics: const NeverScrollableScrollPhysics(),
+                              physics: const BouncingScrollPhysics(
+                                  parent: AlwaysScrollableScrollPhysics()),
                               children: provider.searchResList
                                   .map((e) => CustomSearchResultContainer(
                                         voteAverage: e.voteAverage,

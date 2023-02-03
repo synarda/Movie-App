@@ -96,19 +96,22 @@ class RoutePage extends StatelessWidget {
                                           id: e.id,
                                           data: "",
                                           adult: e.adult,
-                                          accountId: Provider.of<LoginProvider>(context).accountId,
+                                          accountId:
+                                              Provider.of<LoginProvider>(context).account!.id,
                                         ))
                                     .toList(),
                               ),
                             ),
                       ChangeNotifierProvider(
                           key: const PageStorageKey<String>("lists"),
-                          create: (_) => AddProvider(loginProvider.accountId),
+                          create: (_) => AddProvider(loginProvider.account!.id),
                           child: const ListsPage()),
                       ChangeNotifierProvider(
                         key: const PageStorageKey<String>("account"),
                         create: (_) => AccountProvider(),
-                        child: const AccountPage(),
+                        child: AccountPage(
+                          accountId: loginProvider.account?.id ?? "",
+                        ),
                       ),
                     ],
                   ),

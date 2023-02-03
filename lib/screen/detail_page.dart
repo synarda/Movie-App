@@ -24,7 +24,7 @@ class DetailPage extends StatefulWidget {
     required this.adult,
     required this.accountId,
   }) : super(key: key);
-  final String imgUrl;
+  final String? imgUrl;
 
   final int id;
   final String data;
@@ -177,11 +177,18 @@ class _DetailPageState extends State<DetailPage> {
                                               child: Padding(
                                                 padding:
                                                     const EdgeInsets.only(bottom: 66, right: 16),
-                                                child: Text(
-                                                  textAlign: TextAlign.center,
-                                                  movie.title,
-                                                  style: const TextStyle(color: Colorss.textColor),
-                                                ),
+                                                child: movie.title.isEmpty
+                                                    ? const Text(
+                                                        textAlign: TextAlign.center,
+                                                        "No title",
+                                                        style: TextStyle(color: Colorss.textColor),
+                                                      )
+                                                    : Text(
+                                                        textAlign: TextAlign.center,
+                                                        movie.title,
+                                                        style: const TextStyle(
+                                                            color: Colorss.textColor),
+                                                      ),
                                               ),
                                             ),
                                           ),
@@ -310,34 +317,70 @@ class _DetailPageState extends State<DetailPage> {
                                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                         crossAxisAlignment: CrossAxisAlignment.start,
                                         children: [
-                                          CustomRow(
-                                              title: "Release date:  ", data: movie.releaseDate),
-                                          CustomRow(title: "Status:  ", data: movie.status ?? ""),
-                                          CustomRow(
-                                              title: "Revenue:  ", data: movie.revenue.toString()),
-                                          CustomRow(
-                                              title: "Budget:  ", data: movie.budget.toString()),
-                                          CustomRow(
-                                              title: "Popularity:  ",
-                                              data: movie.popularity.toString()),
+                                          movie.releaseDate.isEmpty
+                                              ? const Text(
+                                                  textAlign: TextAlign.center,
+                                                  "No data",
+                                                  style: TextStyle(color: Colorss.textColor),
+                                                )
+                                              : CustomRow(
+                                                  title: "Release date:  ",
+                                                  data: movie.releaseDate),
+                                          movie.status!.isEmpty
+                                              ? const Text(
+                                                  textAlign: TextAlign.center,
+                                                  "No data",
+                                                  style: TextStyle(color: Colorss.textColor),
+                                                )
+                                              : CustomRow(
+                                                  title: "Status:  ", data: movie.status ?? ""),
+                                          movie.revenue == null
+                                              ? const Text(
+                                                  textAlign: TextAlign.center,
+                                                  "No data",
+                                                  style: TextStyle(color: Colorss.textColor),
+                                                )
+                                              : CustomRow(
+                                                  title: "Revenue:  ",
+                                                  data: movie.revenue.toString()),
+                                          movie.budget == null
+                                              ? const Text(
+                                                  textAlign: TextAlign.center,
+                                                  "No data",
+                                                  style: TextStyle(color: Colorss.textColor),
+                                                )
+                                              : CustomRow(
+                                                  title: "Budget:  ",
+                                                  data: movie.budget.toString()),
+                                          movie.popularity == null
+                                              ? const Text(
+                                                  textAlign: TextAlign.center,
+                                                  "No data",
+                                                  style: TextStyle(color: Colorss.textColor),
+                                                )
+                                              : CustomRow(
+                                                  title: "Popularity:  ",
+                                                  data: movie.popularity.toString()),
                                         ],
                                       ),
                                     ),
-                                    Padding(
-                                      padding: const EdgeInsets.only(right: 64),
-                                      child: CircularPercentIndicator(
-                                        animationDuration: 1500,
-                                        radius: 30.0,
-                                        lineWidth: 5.0,
-                                        percent: movie.voteAverage / 10,
-                                        animation: true,
-                                        center: Text(
-                                          movie.voteAverage.toString().substring(0, 3),
-                                          style: const TextStyle(color: Colorss.textColor),
-                                        ),
-                                        progressColor: Colorss.themeFirst,
-                                      ),
-                                    )
+                                    movie.voteAverage == 0.0
+                                        ? Container()
+                                        : Padding(
+                                            padding: const EdgeInsets.only(right: 64),
+                                            child: CircularPercentIndicator(
+                                              animationDuration: 1500,
+                                              radius: 30.0,
+                                              lineWidth: 5.0,
+                                              percent: movie.voteAverage / 10,
+                                              animation: true,
+                                              center: Text(
+                                                movie.voteAverage.toString().substring(0, 3),
+                                                style: const TextStyle(color: Colorss.textColor),
+                                              ),
+                                              progressColor: Colorss.themeFirst,
+                                            ),
+                                          )
                                   ],
                                 ),
                               ],
@@ -354,7 +397,6 @@ class _DetailPageState extends State<DetailPage> {
                               width: double.infinity,
                               child: Consumer<DetailProvider>(
                                 builder: (context, provider, child) {
-                                  print("girdi");
                                   return GridView.builder(
                                     shrinkWrap: true,
                                     physics: const NeverScrollableScrollPhysics(),
@@ -378,7 +420,8 @@ class _DetailPageState extends State<DetailPage> {
                                                             imgUrl: e.imgUrl,
                                                             accountId:
                                                                 Provider.of<LoginProvider>(context)
-                                                                    .accountId),
+                                                                    .account!
+                                                                    .id),
                                                       )));
                                         },
                                         child: Container(

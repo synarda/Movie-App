@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:provider_api/models/account_model.dart';
 import 'package:provider_api/services/auth_service.dart';
 
 class LoginProvider with ChangeNotifier {
   final sessionBox = Hive.box("sessionBox");
 
   String token = "";
-  String accountId = "";
+  AccountModel? account;
   TextEditingController userNameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   LoginProvider() {
@@ -33,7 +34,7 @@ class LoginProvider with ChangeNotifier {
     final sessionBox = Hive.box("sessionBox");
     final sessionId = sessionBox.get("sessionId");
     final result = await AuthService.getAccount(sessionId);
-    accountId = result!;
+    account = result!;
 
     notifyListeners();
   }

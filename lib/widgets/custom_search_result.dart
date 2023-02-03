@@ -1,7 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:lottie/lottie.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:provider/provider.dart';
 import 'package:provider_api/providers/detail_provider.dart';
@@ -41,7 +40,7 @@ class CustomSearchResultContainer extends StatelessWidget {
                         id: id,
                         data: data,
                         adult: adult,
-                        accountId: Provider.of<LoginProvider>(context).accountId,
+                        accountId: Provider.of<LoginProvider>(context).account!.id,
                       ),
                     )));
       },
@@ -57,7 +56,7 @@ class CustomSearchResultContainer extends StatelessWidget {
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(20),
                 child: imgUrl.isEmpty
-                    ? SizedBox(height: 30, width: 50, child: Lottie.asset("assets/noimage.json"))
+                    ? Image.asset("assets/noimage.png")
                     : CachedNetworkImage(
                         fit: BoxFit.cover,
                         imageUrl: "https://image.tmdb.org/t/p/original/$imgUrl",

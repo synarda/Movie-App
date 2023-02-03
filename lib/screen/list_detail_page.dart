@@ -5,8 +5,11 @@ import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
+import 'package:provider_api/providers/detail_provider.dart';
 import 'package:provider_api/providers/list_detail_provider.dart';
+import 'package:provider_api/providers/login_provider.dart';
 import 'package:provider_api/screen/alerts/delete_alert_page.dart';
+import 'package:provider_api/screen/detail_page.dart';
 import 'package:provider_api/utils/const.dart';
 import 'package:provider_api/widgets/animated_listview.dart';
 
@@ -80,52 +83,74 @@ class ListDetailPage extends StatelessWidget {
                   child: AnimatedListView(
                       physics: const BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
                       children: (provider.listDetail?.items ?? [])
-                          .map((x) => Container(
-                              key: ValueKey(x.id),
-                              width: double.infinity,
-                              height: 100,
-                              margin: const EdgeInsets.all(8),
-                              padding: const EdgeInsets.all(16),
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(20),
-                                  color: Colorss.background),
-                              child: ListTile(
-                                leading: SizedBox(
-                                  height: 50,
-                                  width: 50,
-                                  child: CachedNetworkImage(
-                                    fit: BoxFit.cover,
-                                    imageUrl:
-                                        "https://image.tmdb.org/t/p/original/${x.backdropPath}",
-                                    progressIndicatorBuilder: (context, url, downloadProgress) =>
-                                        const Center(
-                                      child: CupertinoActivityIndicator(),
-                                    ),
-                                    errorWidget: (context, url, error) => const Icon(Icons.error),
-                                  ),
-                                ),
-                                title: Text(
-                                  x.title,
-                                  style: const TextStyle(color: Colorss.textColor, fontSize: 12),
-                                ),
-                                trailing: IconButton(
-                                  icon: const Icon(
-                                    Icons.delete,
-                                    size: 20,
-                                    color: Colorss.themeFirst,
-                                  ),
-                                  onPressed: () async {
-                                    final result = await showDialog(
-                                        context: context, builder: (a) => const DeleteAlertPage());
-                                    if (result == true) {
-                                      final sessionBox = Hive.box("sessionBox");
-                                      final sessionId = sessionBox.get("sessionId");
-                                      provider.deleteListInMovie(
-                                          provider.listDetail!.id, sessionId, x.id);
-                                    }
-                                  },
-                                ),
-                              )))
+                          .map((x) => GestureDetector(
+                                key: ValueKey(x.id),
+                                onTap: () {
+                                  Navigator.push(context, MaterialPageRoute(
+                                    builder: (context) {
+                                      return ChangeNotifierProvider(
+                                        create: (ctx) => DetailProvider(x.id),
+                                        child: DetailPage(
+                                          imgUrl: x.backdropPath,
+                                          id: x.id,
+                                          data: "",
+                                          adult: false,
+                                          accountId:
+                                              Provider.of<LoginProvider>(context).account!.id,
+                                        ),
+                                      );
+                                    },
+                                  ));
+                                },
+                                child: Container(
+                                    width: double.infinity,
+                                    height: 100,
+                                    margin: const EdgeInsets.all(8),
+                                    padding: const EdgeInsets.all(16),
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(20),
+                                        color: Colorss.background),
+                                    child: ListTile(
+                                      leading: SizedBox(
+                                        height: 50,
+                                        width: 50,
+                                        child: CachedNetworkImage(
+                                          fit: BoxFit.cover,
+                                          imageUrl:
+                                              "https://image.tmdb.org/t/p/original/${x.backdropPath}",
+                                          progressIndicatorBuilder:
+                                              (context, url, downloadProgress) => const Center(
+                                            child: CupertinoActivityIndicator(),
+                                          ),
+                                          errorWidget: (context, url, error) =>
+                                              const Icon(Icons.error),
+                                        ),
+                                      ),
+                                      title: Text(
+                                        x.title,
+                                        style:
+                                            const TextStyle(color: Colorss.textColor, fontSize: 12),
+                                      ),
+                                      trailing: IconButton(
+                                        icon: const Icon(
+                                          Icons.delete,
+                                          size: 20,
+                                          color: Colorss.themeFirst,
+                                        ),
+                                        onPressed: () async {
+                                          final result = await showDialog(
+                                              context: context,
+                                              builder: (a) => const DeleteAlertPage());
+                                          if (result == true) {
+                                            final sessionBox = Hive.box("sessionBox");
+                                            final sessionId = sessionBox.get("sessionId");
+                                            provider.deleteListInMovie(
+                                                provider.listDetail!.id, sessionId, x.id);
+                                          }
+                                        },
+                                      ),
+                                    )),
+                              ))
                           .toList()),
                 ),
         ],

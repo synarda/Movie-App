@@ -24,7 +24,7 @@ class ListsPage extends StatelessWidget {
               showDialog(
                   context: context,
                   builder: (x) => ChangeNotifierProvider.value(
-                      value: context.read<AddProvider>(), child: const AddAlertPage()));
+                      value: context.read<ListsProvider>(), child: const AddAlertPage()));
             },
             child: Container(
               margin: const EdgeInsets.all(8),
@@ -49,7 +49,7 @@ class ListsPage extends StatelessWidget {
               ),
             ),
           ),
-          Consumer<AddProvider>(
+          Consumer<ListsProvider>(
             builder: (context, provider, child) {
               return Expanded(
                 child: ListView(

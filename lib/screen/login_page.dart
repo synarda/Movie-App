@@ -25,17 +25,23 @@ class LoginPage extends StatelessWidget {
               height: 150,
               child: Lottie.asset("assets/movieLottie.json"),
             ),
-            CustomTextField(
-              label: "Username",
-              limit: 50,
-              obscure: false,
-              controller: provider.userNameController,
-            ),
-            CustomTextField(
-                label: "Password",
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: CustomTextField(
+                label: "Username",
                 limit: 50,
                 obscure: false,
-                controller: provider.passwordController),
+                controller: provider.userNameController,
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: CustomTextField(
+                  label: "Password",
+                  limit: 50,
+                  obscure: false,
+                  controller: provider.passwordController),
+            ),
             Container(
               margin: const EdgeInsets.only(left: 25, right: 25),
               padding: const EdgeInsets.symmetric(horizontal: 4.0),
@@ -43,20 +49,18 @@ class LoginPage extends StatelessWidget {
               child: ElevatedButton(
                   onPressed: () {
                     provider
-                        .postAuth(provider.token, provider.userNameController.text,
-                            provider.passwordController.text)
-                        .then((value) {
-                      provider.postSession(provider.token).then((value) {
-                        if (value != null) {
-                          Navigator.pushReplacement(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => ChangeNotifierProvider(
-                                        create: (ctx) => RoutePageProvider(),
-                                        child: const RoutePage(),
-                                      )));
-                        }
-                      });
+                        .postAuth(
+                            provider.userNameController.text, provider.passwordController.text)
+                        .then((success) {
+                      if (success) {
+                        Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => ChangeNotifierProvider(
+                                      create: (ctx) => RoutePageProvider(),
+                                      child: const RoutePage(),
+                                    )));
+                      }
                     });
                   },
                   style: ElevatedButton.styleFrom(

@@ -35,7 +35,7 @@ class _AddMovieAlertPageState extends State<AddMovieAlertPage> {
             child: SizedBox(
                 height: MediaQuery.of(context).size.height / 2.5,
                 width: MediaQuery.of(context).size.width / 1.5,
-                child: Consumer<AddProvider>(builder: (context, provider, child) {
+                child: Consumer<ListsProvider>(builder: (context, provider, child) {
                   return AnimatedListView(
                     key: ValueKey(context.read<RoutePageProvider>().pageIdx),
                     shrinkWrap: true,

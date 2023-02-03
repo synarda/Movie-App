@@ -135,6 +135,21 @@ class UserService {
     return null;
   }
 
+  static Future deleteSession(String sessionId) async {
+    try {
+      http.delete(
+          Uri.http("api.themoviedb.org", "/3/authentication/session",
+              {"api_key": "9c829acfb2666008b8b6304b45fc15a7", "session_id": sessionId}),
+          headers: {
+            'Accept': 'application/json',
+          });
+    } catch (err) {
+      print(err);
+    }
+
+    return null;
+  }
+
   static Future deleteListInMovie(String listId, String sessionID, int mediaId) async {
     try {
       await http.post(

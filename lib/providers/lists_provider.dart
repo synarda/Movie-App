@@ -3,8 +3,8 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:provider_api/models/lists_model.dart';
 import 'package:provider_api/services/user_service.dart';
 
-class AddProvider with ChangeNotifier {
-  AddProvider(String id) {
+class ListsProvider with ChangeNotifier {
+  ListsProvider(String id) {
     getLists(id);
   }
 

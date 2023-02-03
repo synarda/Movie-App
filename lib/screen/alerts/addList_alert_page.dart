@@ -53,7 +53,7 @@ class _AddAlertPageState extends State<AddAlertPage> {
               width: double.infinity,
               child: ElevatedButton(
                   onPressed: () {
-                    final provider = context.read<AddProvider>();
+                    final provider = context.read<ListsProvider>();
                     provider
                         .createList(nameController.text, descController.text)
                         .then((value) => Navigator.pop(context));

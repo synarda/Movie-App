@@ -40,7 +40,7 @@ class CustomSearchResultContainer extends StatelessWidget {
                         id: id,
                         data: data,
                         adult: adult,
-                        accountId: Provider.of<LoginProvider>(context).account!.id,
+                        accountId: Provider.of<LoginProvider>(context).account.id,
                       ),
                     )));
       },

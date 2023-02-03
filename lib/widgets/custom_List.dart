@@ -36,7 +36,7 @@ class ListHome extends StatelessWidget {
                                   id: e.id,
                                   data: data,
                                   adult: e.adult,
-                                  accountId: Provider.of<LoginProvider>(context).account!.id,
+                                  accountId: Provider.of<LoginProvider>(context).account.id,
                                 ),
                               )));
                 },

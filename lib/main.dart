@@ -22,12 +22,14 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
-        providers: [
-          ChangeNotifierProvider<LoginProvider>(create: (ctx) => loginProvider),
-          ChangeNotifierProvider<RoutePageProvider>(create: (ctx) => routeProvider)
-        ],
-        child: MaterialApp(
-            debugShowCheckedModeBanner: false,
-            home: Hive.box("sessionBox").isEmpty ? const LoginPage() : const RoutePage()));
+      providers: [
+        ChangeNotifierProvider<LoginProvider>(create: (ctx) => loginProvider),
+        ChangeNotifierProvider<RoutePageProvider>(create: (ctx) => routeProvider)
+      ],
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        home: Hive.box("sessionBox").isEmpty ? const LoginPage() : const RoutePage(),
+      ),
+    );
   }
 }

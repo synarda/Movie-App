@@ -7,15 +7,20 @@ class LoginProvider with ChangeNotifier {
   final sessionBox = Hive.box("sessionBox");
 
   String token = "";
-  AccountModel? account;
+  late AccountModel account;
   TextEditingController userNameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+
+  bool isLoading = true;
+
   LoginProvider() {
-    {
-      getToken();
+    final sessionBox = Hive.box("sessionBox");
+    final sessionId = sessionBox.get("sessionId");
+    if (sessionId != null) {
       getAccount();
     }
   }
+
   @override
   void dispose() {
     userNameController.dispose();
@@ -25,28 +30,38 @@ class LoginProvider with ChangeNotifier {
 
   Future<void> getToken() async {
     final result = await AuthService.getToken();
-    token = result!;
-
-    notifyListeners();
+    if (result != null) {
+      token = result;
+    } else {
+      print("token error");
+    }
   }
 
-  Future<void> getAccount() async {
+  Future<bool> getAccount() async {
     final sessionBox = Hive.box("sessionBox");
     final sessionId = sessionBox.get("sessionId");
     final result = await AuthService.getAccount(sessionId);
-    account = result!;
+    if (result != null) {
+      account = result;
+      isLoading = false;
+      notifyListeners();
+      return true;
+    }
 
-    notifyListeners();
+    return false;
   }
 
-  Future<void> postAuth(String token, String userName, String password) async {
-    await AuthService.postAuth(token, userName, password).then((value) {
-      if (value != null) {
-        postSession(token);
+  Future<bool> postAuth(String userName, String password) async {
+    await getToken();
+    final value = await AuthService.postAuth(token, userName, password);
+    if (value != null) {
+      token = value;
+      final sessionID = await postSession(token);
+      if (sessionID != null) {
+        return getAccount();
       }
-    });
-
-    notifyListeners();
+    }
+    return false;
   }
 
   Future<String?> postSession(String token) async {
@@ -57,7 +72,6 @@ class LoginProvider with ChangeNotifier {
       print("error");
     }
 
-    notifyListeners();
     return result;
   }
 }

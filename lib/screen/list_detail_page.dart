@@ -95,8 +95,7 @@ class ListDetailPage extends StatelessWidget {
                                           id: x.id,
                                           data: "",
                                           adult: false,
-                                          accountId:
-                                              Provider.of<LoginProvider>(context).account!.id,
+                                          accountId: Provider.of<LoginProvider>(context).account.id,
                                         ),
                                       );
                                     },

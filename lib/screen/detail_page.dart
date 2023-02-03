@@ -264,8 +264,8 @@ class _DetailPageState extends State<DetailPage> {
                                       context: context,
                                       builder: (x) => MultiProvider(
                                             providers: [
-                                              ChangeNotifierProvider<AddProvider>(
-                                                  create: (ctx) => AddProvider(widget.accountId)),
+                                              ChangeNotifierProvider<ListsProvider>(
+                                                  create: (ctx) => ListsProvider(widget.accountId)),
                                               ChangeNotifierProvider<AddMovieProvider>(
                                                   create: (ctx) => AddMovieProvider())
                                             ],
@@ -420,7 +420,7 @@ class _DetailPageState extends State<DetailPage> {
                                                             imgUrl: e.imgUrl,
                                                             accountId:
                                                                 Provider.of<LoginProvider>(context)
-                                                                    .account!
+                                                                    .account
                                                                     .id),
                                                       )));
                                         },

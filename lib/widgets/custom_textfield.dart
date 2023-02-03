@@ -7,7 +7,7 @@ class CustomTextField extends StatelessWidget {
   const CustomTextField({
     Key? key,
     required this.label,
-    this.icon,
+    this.icon = const Icon(Icons.person),
     this.controller,
     required this.limit,
     required this.obscure,
@@ -18,7 +18,7 @@ class CustomTextField extends StatelessWidget {
   }) : super(key: key);
 
   final String label;
-  final Widget? icon;
+  final Widget icon;
   final TextEditingController? controller;
   final int limit;
   final bool obscure;
@@ -39,7 +39,7 @@ class CustomTextField extends StatelessWidget {
       ],
       decoration: InputDecoration(
         suffixIcon: IconButton(
-          icon: icon!,
+          icon: icon,
           onPressed: suffixIconFunc,
         ),
         labelText: label,

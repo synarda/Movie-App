@@ -1,26 +1,17 @@
-import 'package:cancellation_token/cancellation_token.dart';
 import 'package:flutter/material.dart';
 import 'package:provider_api/models/movie_model.dart';
 import 'package:provider_api/models/movies_model.dart';
-import 'package:provider_api/providers/favorite_provider.dart';
+import 'package:provider_api/providers/globalProvider.dart';
 import 'package:provider_api/services/api_service.dart';
 
 class DetailProvider with ChangeNotifier {
-  DetailProvider(int id, this.findFavProvider) {
+  DetailProvider(int id, this.globalProvider) {
     fetchMovie(id).then((value) => fetchSimilar(id));
-  }
-
-  @override
-  void dispose() {
-    cancellationToken.cancel();
-    super.dispose();
   }
 
   final List<MoviesModel> similarList = [];
   MovieModel? movie;
-  final FavoriteProvider findFavProvider;
-
-  CancellationToken cancellationToken = CancellationToken();
+  final GlobalProvider globalProvider;
 
   Future<void> fetchSimilar(int id) async {
     similarList.clear();

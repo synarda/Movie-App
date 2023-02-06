@@ -10,7 +10,7 @@ import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:provider/provider.dart';
 import 'package:provider_api/providers/add_movie_provider.dart';
 import 'package:provider_api/providers/detail_provider.dart';
-import 'package:provider_api/providers/favorite_provider.dart';
+import 'package:provider_api/providers/globalProvider.dart';
 import 'package:provider_api/providers/lists_provider.dart';
 import 'package:provider_api/providers/login_provider.dart';
 import 'package:provider_api/screen/alerts/addMovie_alert_page.dart';
@@ -312,7 +312,7 @@ class _DetailPageState extends State<DetailPage> {
                                       padding: const EdgeInsets.only(right: 8, left: 16, bottom: 8),
                                       child: GestureDetector(
                                         onTap: () {
-                                          final favoriteProvider = context.read<FavoriteProvider>();
+                                          final favoriteProvider = context.read<GlobalProvider>();
                                           favoriteProvider.postMarkFavorite(provider.movie!,
                                               context.read<LoginProvider>().account.id);
                                         },
@@ -331,7 +331,7 @@ class _DetailPageState extends State<DetailPage> {
                                               ],
                                               borderRadius: BorderRadius.circular(20),
                                               color: context
-                                                      .watch<FavoriteProvider>()
+                                                      .watch<GlobalProvider>()
                                                       .isFavorite(provider.movie!.id)
                                                   ? Colorss.themeFirst
                                                   : Colorss.forebackground),
@@ -344,7 +344,7 @@ class _DetailPageState extends State<DetailPage> {
                                                     color: Colorss.textColor, fontSize: 8),
                                               ),
                                               context
-                                                      .read<FavoriteProvider>()
+                                                      .read<GlobalProvider>()
                                                       .isFavorite(provider.movie!.id)
                                                   ? const Icon(
                                                       Icons.star,
@@ -374,11 +374,16 @@ class _DetailPageState extends State<DetailPage> {
                                         Icons.star,
                                         color: Colorss.themeFirst,
                                       ),
-                                      onRatingUpdate: (rating) {
-                                        print(rating);
+                                      onRatingUpdate: (rating) async {
                                         showDialog(
                                             context: context,
-                                            builder: (x) => const PutRatingAlert());
+                                            builder: (x) => const PutRatingAlert()).then((value) {
+                                          if (value == true) {
+                                            context
+                                                .read<GlobalProvider>()
+                                                .postRating(provider.movie!.id, rating);
+                                          }
+                                        });
                                       },
                                     ),
                                   ],
@@ -498,7 +503,7 @@ class _DetailPageState extends State<DetailPage> {
                                                         builder: (context) =>
                                                             ChangeNotifierProvider(
                                                               create: (ctx) => DetailProvider(e.id,
-                                                                  context.read<FavoriteProvider>()),
+                                                                  context.read<GlobalProvider>()),
                                                               child: DetailPage(
                                                                   adult: e.adult,
                                                                   data: widget.data,

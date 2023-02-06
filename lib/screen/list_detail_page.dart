@@ -6,7 +6,7 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
 import 'package:provider_api/providers/detail_provider.dart';
-import 'package:provider_api/providers/favorite_provider.dart';
+import 'package:provider_api/providers/globalProvider.dart';
 import 'package:provider_api/providers/list_detail_provider.dart';
 import 'package:provider_api/providers/login_provider.dart';
 import 'package:provider_api/screen/alerts/delete_alert_page.dart';
@@ -91,7 +91,7 @@ class ListDetailPage extends StatelessWidget {
                                     builder: (context) {
                                       return ChangeNotifierProvider(
                                         create: (ctx) =>
-                                            DetailProvider(x.id, context.read<FavoriteProvider>()),
+                                            DetailProvider(x.id, context.read<GlobalProvider>()),
                                         child: DetailPage(
                                           imgUrl: x.backdropPath,
                                           id: x.id,

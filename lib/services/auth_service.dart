@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:http/http.dart' as http;
 import 'package:provider_api/models/account_model.dart';
+import 'package:provider_api/services/api_service.dart';
 
 class AuthService {
   static Future<String?> getToken() async {
@@ -25,11 +26,11 @@ class AuthService {
     return null;
   }
 
-  static Future<AccountModel?> getAccount(String? sessionId) async {
+  static Future<AccountModel?> getAccount() async {
     try {
       final response = await http.get(
           Uri.http("api.themoviedb.org", "/3/account",
-              {"api_key": "9c829acfb2666008b8b6304b45fc15a7", "session_id": sessionId}),
+              {"api_key": "9c829acfb2666008b8b6304b45fc15a7", "session_id": ApiService.sessionId}),
           headers: {
             'Accept': 'application/json',
           });

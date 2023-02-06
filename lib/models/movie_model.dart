@@ -14,8 +14,9 @@ class MovieModel {
   final double voteAverage;
   final List<dynamic>? genres;
   final int id;
+  double? rate;
 
-  const MovieModel({
+  MovieModel({
     required this.title,
     required this.backdropPath,
     required this.posterPath,
@@ -30,6 +31,7 @@ class MovieModel {
     required this.voteAverage,
     required this.genres,
     required this.id,
+    this.rate,
   });
   factory MovieModel.fromJson(Map<dynamic, dynamic> json) {
     return MovieModel(
@@ -45,9 +47,35 @@ class MovieModel {
       revenue: json["revenue"],
       tagLine: json["tagline"],
       popularity: json["popularity"],
+      rate: json["rating"],
       voteAverage:
           json["vote_average"] is int ? json["vote_average"].toDouble() : json["vote_average"],
       genres: json["genres"],
     );
+  }
+
+  @override
+  int get hashCode {
+    return title.hashCode ^
+        backdropPath.hashCode ^
+        posterPath.hashCode ^
+        budget.hashCode ^
+        description.hashCode ^
+        status.hashCode ^
+        runtime.hashCode ^
+        releaseDate.hashCode ^
+        revenue.hashCode ^
+        tagLine.hashCode ^
+        popularity.hashCode ^
+        voteAverage.hashCode ^
+        genres.hashCode ^
+        id.hashCode ^
+        rate.hashCode;
+  }
+
+  @override
+  bool operator ==(Object other) {
+    // TODO: implement ==
+    return super == other;
   }
 }

@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:provider/provider.dart';
 import 'package:provider_api/providers/detail_provider.dart';
-import 'package:provider_api/providers/favorite_provider.dart';
+import 'package:provider_api/providers/globalProvider.dart';
 import 'package:provider_api/providers/login_provider.dart';
 import 'package:provider_api/screen/detail_page.dart';
 import 'package:provider_api/utils/const.dart';
@@ -35,7 +35,7 @@ class CustomSearchResultContainer extends StatelessWidget {
             context,
             MaterialPageRoute(
                 builder: (context) => ChangeNotifierProvider(
-                      create: (ctx) => DetailProvider(id, context.read<FavoriteProvider>()),
+                      create: (ctx) => DetailProvider(id, context.read<GlobalProvider>()),
                       child: DetailPage(
                         imgUrl: imgUrl,
                         id: id,

@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
+import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:provider/provider.dart';
 import 'package:provider_api/providers/detail_provider.dart';
 import 'package:provider_api/providers/globalProvider.dart';
@@ -10,8 +11,8 @@ import 'package:provider_api/screen/detail_page.dart';
 import 'package:provider_api/utils/const.dart';
 import 'package:provider_api/widgets/animated_listview.dart';
 
-class FavoritePage extends StatelessWidget {
-  const FavoritePage({super.key});
+class RatedMoviesPage extends StatelessWidget {
+  const RatedMoviesPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -19,18 +20,18 @@ class FavoritePage extends StatelessWidget {
       backgroundColor: Colorss.forebackground,
       appBar: AppBar(
         backgroundColor: Colorss.background,
-        title: const Text("Movie's Favorite"),
+        title: const Text("Rated Movie's"),
         centerTitle: true,
       ),
       body: Consumer<GlobalProvider>(builder: (context, provider, child) {
-        return provider.favoriteList.isEmpty
+        return provider.ratedList.isEmpty
             ? Center(
                 child: SizedBox(height: 250, width: 500, child: Lottie.asset("assets/ghostt.json")))
             : AnimatedListView(
                 physics: const BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
-                children: provider.favoriteList
+                children: provider.ratedList
                     .map((x) => GestureDetector(
-                          key: ValueKey(x.backdropPath),
+                          key: ValueKey(x.hashCode),
                           onTap: () {
                             Navigator.push(context, MaterialPageRoute(
                               builder: (context) {
@@ -71,15 +72,20 @@ class FavoritePage extends StatelessWidget {
                                     errorWidget: (context, url, error) => const Icon(Icons.error),
                                   ),
                                 ),
-                                trailing: IconButton(
-                                  icon: const Icon(
-                                    Icons.delete,
-                                    color: Colorss.themeFirst,
+                                trailing: Padding(
+                                  padding: const EdgeInsets.only(right: 32),
+                                  child: CircularPercentIndicator(
+                                    animationDuration: 1500,
+                                    radius: 20.0,
+                                    lineWidth: 5.0,
+                                    percent: x.rate == null ? 0 : x.rate! / 10.0,
+                                    animation: true,
+                                    center: Text(
+                                      x.rate.toString().substring(0, 3),
+                                      style: const TextStyle(color: Colorss.textColor),
+                                    ),
+                                    progressColor: Colorss.themeFirst,
                                   ),
-                                  onPressed: () {
-                                    provider.postMarkFavorite(
-                                        x, context.read<LoginProvider>().account.id);
-                                  },
                                 ),
                                 title: Text(
                                   x.title,

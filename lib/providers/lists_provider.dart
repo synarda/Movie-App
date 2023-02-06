@@ -13,6 +13,7 @@ class ListsProvider with ChangeNotifier {
   List<ListsModel> lists = [];
   final sessionId = Hive.box("sessionBox").get("sessionId");
   Future<void> getLists(String? id) async {
+    print(sessionId);
     final result = await UserService.getLists(id, sessionId);
 
     if (result != null) {

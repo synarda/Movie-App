@@ -1,4 +1,5 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+
 import 'package:flutter/material.dart';
 import 'package:provider_api/utils/const.dart';
 
@@ -39,7 +40,9 @@ class PutRatingAlert extends StatelessWidget {
               width: 100,
               height: 50,
               child: ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.pop(context, true);
+                  },
                   style: ElevatedButton.styleFrom(
                       backgroundColor: Colorss.forebackground,
                       textStyle: const TextStyle(fontSize: 15, fontWeight: FontWeight.bold)),

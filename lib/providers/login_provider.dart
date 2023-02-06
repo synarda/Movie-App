@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:provider_api/models/account_model.dart';
+import 'package:provider_api/providers/favorite_provider.dart';
 import 'package:provider_api/services/auth_service.dart';
 
 class LoginProvider with ChangeNotifier {
   final sessionBox = Hive.box("sessionBox");
-
+  final FavoriteProvider findFavProvider;
   String token = "";
   late AccountModel account;
   TextEditingController userNameController = TextEditingController();
@@ -13,11 +14,12 @@ class LoginProvider with ChangeNotifier {
 
   bool isLoading = true;
 
-  LoginProvider() {
+  LoginProvider(this.findFavProvider) {
     final sessionBox = Hive.box("sessionBox");
     final sessionId = sessionBox.get("sessionId");
     if (sessionId != null) {
       getAccount();
+      print("girildi");
     }
   }
 
@@ -40,10 +42,14 @@ class LoginProvider with ChangeNotifier {
   Future<bool> getAccount() async {
     final sessionBox = Hive.box("sessionBox");
     final sessionId = sessionBox.get("sessionId");
+    print("sessionIDem $sessionId");
+
     final result = await AuthService.getAccount(sessionId);
     if (result != null) {
       account = result;
       isLoading = false;
+      findFavProvider.getFavoriteList(account.id);
+      print("sessionIDem $sessionId");
       notifyListeners();
       return true;
     }

@@ -29,13 +29,10 @@ class ListsProvider with ChangeNotifier {
     if (!isDisposed) notifyListeners();
   }
 
-  final sessionBox = Hive.box("sessionBox");
-
   Future<void> createList(String name, String description) async {
-    final sessionID = sessionBox.get("sessionId");
     if (name.isEmpty && description.isEmpty) {
     } else {
-      final result = await UserService.createList(name, description, sessionID);
+      final result = await UserService.createList(name, description, sessionId);
       if (result != null) {
         lists.add(ListsModel(name: name, description: description, id: result, itemCount: 0));
       }

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:provider_api/providers/account_provider.dart';
 import 'package:provider_api/providers/login_provider.dart';
+import 'package:provider_api/screen/favorite_page.dart';
 import 'package:provider_api/screen/login_page.dart';
 import 'package:provider_api/utils/const.dart';
 import 'package:provider_api/widgets/custom_account_listtile.dart';
@@ -61,13 +62,22 @@ class AccountPage extends StatelessWidget {
           Column(
             children: [
               const SizedBox(height: 36),
-              CustomAccountListtile(
-                  textColor: Colorss.textColor,
-                  icon: Icon(
-                    Icons.favorite,
-                    color: Colorss.textColor.withOpacity(0.7),
-                  ),
-                  text: "Favorite"),
+              GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const FavoritePage(),
+                      ));
+                },
+                child: CustomAccountListtile(
+                    textColor: Colorss.textColor,
+                    icon: Icon(
+                      Icons.favorite,
+                      color: Colorss.textColor.withOpacity(0.7),
+                    ),
+                    text: "Favorite"),
+              ),
               GestureDetector(
                 onTap: () {
                   Provider.of<AccountProvider>(context, listen: false)

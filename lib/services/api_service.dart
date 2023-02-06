@@ -1,10 +1,11 @@
 import 'dart:convert';
 
-import 'package:cancellation_token_http/http.dart' as http;
+import 'package:http/http.dart' as http;
 import 'package:provider_api/models/movie_model.dart';
 import 'package:provider_api/models/movies_model.dart';
 
 class ApiService {
+  static String sessionId = "";
   static Future<List<MoviesModel>?> fetch(String filter) async {
     try {
       final response = await http.get(

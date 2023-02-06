@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:provider/provider.dart';
 import 'package:provider_api/providers/detail_provider.dart';
+import 'package:provider_api/providers/favorite_provider.dart';
 import 'package:provider_api/providers/home_provider.dart';
 import 'package:provider_api/providers/login_provider.dart';
 import 'package:provider_api/screen/detail_page.dart';
@@ -30,7 +31,8 @@ class ListHome extends StatelessWidget {
                       context,
                       MaterialPageRoute(
                           builder: (context) => ChangeNotifierProvider(
-                                create: (ctx) => DetailProvider(e.id),
+                                create: (ctx) =>
+                                    DetailProvider(e.id, context.read<FavoriteProvider>()),
                                 child: DetailPage(
                                   imgUrl: e.imgUrl,
                                   id: e.id,

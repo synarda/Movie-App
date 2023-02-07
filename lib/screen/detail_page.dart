@@ -449,7 +449,7 @@ class _DetailPageState extends State<DetailPage> {
                               ),
                             ],
                           ),
-                          const SizedBox(height: 64),
+                          const SizedBox(height: 16),
                           Stack(
                             children: [
                               Column(
@@ -469,45 +469,13 @@ class _DetailPageState extends State<DetailPage> {
                                                     "No data",
                                                     style: TextStyle(color: Colorss.textColor),
                                                   )
-                                                : CustomRow(
-                                                    title: "Release date:  ",
-                                                    data: provider.movie!.releaseDate),
-                                            provider.movie!.status!.isEmpty
-                                                ? const Text(
-                                                    textAlign: TextAlign.center,
-                                                    "No data",
-                                                    style: TextStyle(color: Colorss.textColor),
-                                                  )
-                                                : CustomRow(
-                                                    title: "Status:  ",
-                                                    data: provider.movie!.status ?? ""),
-                                            provider.movie!.revenue == null
-                                                ? const Text(
-                                                    textAlign: TextAlign.center,
-                                                    "No data",
-                                                    style: TextStyle(color: Colorss.textColor),
-                                                  )
-                                                : CustomRow(
-                                                    title: "Revenue:  ",
-                                                    data: provider.movie!.revenue.toString()),
-                                            provider.movie!.budget == null
-                                                ? const Text(
-                                                    textAlign: TextAlign.center,
-                                                    "No data",
-                                                    style: TextStyle(color: Colorss.textColor),
-                                                  )
-                                                : CustomRow(
-                                                    title: "Budget:  ",
-                                                    data: provider.movie!.budget.toString()),
-                                            provider.movie!.popularity == null
-                                                ? const Text(
-                                                    textAlign: TextAlign.center,
-                                                    "No data",
-                                                    style: TextStyle(color: Colorss.textColor),
-                                                  )
-                                                : CustomRow(
-                                                    title: "Popularity:  ",
-                                                    data: provider.movie!.popularity.toString()),
+                                                : CustomRow(data: {
+                                                    "Release date:  ": provider.movie!.releaseDate,
+                                                    "Status:  ": provider.movie!.status,
+                                                    "Revenue:  ": provider.movie!.revenue,
+                                                    "Budget:  ": provider.movie!.budget,
+                                                    "Popularity:  ": provider.movie!.popularity,
+                                                  })
                                           ],
                                         ),
                                       ),
@@ -532,6 +500,7 @@ class _DetailPageState extends State<DetailPage> {
                                             )
                                     ],
                                   ),
+                                  const SizedBox(height: 64),
                                   const Padding(
                                     padding: EdgeInsets.only(top: 16),
                                     child: Text(

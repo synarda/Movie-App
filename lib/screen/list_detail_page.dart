@@ -13,6 +13,7 @@ import 'package:provider_api/screen/alerts/delete_alert_page.dart';
 import 'package:provider_api/screen/detail_page.dart';
 import 'package:provider_api/utils/const.dart';
 import 'package:provider_api/widgets/animated_listview.dart';
+import 'package:provider_api/widgets/custom_row.dart';
 
 class ListDetailPage extends StatelessWidget {
   const ListDetailPage({
@@ -39,40 +40,17 @@ class ListDetailPage extends StatelessWidget {
             height: 150,
             width: MediaQuery.of(context).size.width,
             margin: const EdgeInsets.all(8),
-            padding: const EdgeInsets.all(24),
+            padding: const EdgeInsets.all(16),
             decoration:
                 BoxDecoration(borderRadius: BorderRadius.circular(20), color: Colorss.background),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Row(
-                    children: [
-                      const Text("created by: ", style: TextStyle(color: Colorss.themeFirst)),
-                      Text(provider.listDetail?.createdBy ?? "Loading...",
-                          style: const TextStyle(color: Colorss.textColor)),
-                    ],
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Row(
-                    children: [
-                      const Text("description: ", style: TextStyle(color: Colorss.themeFirst)),
-                      Text(description, style: const TextStyle(color: Colorss.textColor)),
-                    ],
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Row(
-                    children: [
-                      const Text("item Count: ", style: TextStyle(color: Colorss.themeFirst)),
-                      Text(itemCount.toString(), style: const TextStyle(color: Colorss.textColor)),
-                    ],
-                  ),
-                ),
+                CustomRow(contentSize: 12, titleSize: 13, padding: 8, data: {
+                  "created by:  ": provider.listDetail?.createdBy ?? "Loading...",
+                  "description:  ": description,
+                  "item Count:  ": itemCount.toString(),
+                })
               ],
             ),
           ),

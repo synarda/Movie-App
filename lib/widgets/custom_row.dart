@@ -5,27 +5,42 @@ import 'package:provider_api/utils/const.dart';
 class CustomRow extends StatelessWidget {
   const CustomRow({
     Key? key,
-    required this.title,
     required this.data,
+    this.padding = 0.0,
+    this.titleSize = 10.0,
+    this.contentSize = 12.0,
   }) : super(key: key);
-  final String title;
-  final String data;
+  final Map<String, dynamic> data;
+  final double padding;
+  final double titleSize;
+  final double contentSize;
+
   @override
   Widget build(BuildContext context) {
     return Align(
       alignment: Alignment.centerLeft,
-      child: Row(
-        children: [
-          Text(
-            title,
-            style: const TextStyle(color: Colorss.textColor, fontSize: 10),
-          ),
-          Text(
-            data,
-            style: const TextStyle(color: Colorss.themeFirst, fontSize: 12),
-          ),
-        ],
-      ),
+      child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: data.entries
+              .map(
+                (kv) => Container(
+                  padding: EdgeInsets.all(padding),
+                  child: Row(
+                    children: [
+                      Text(
+                        kv.key,
+                        style: TextStyle(color: Colorss.textColor, fontSize: titleSize),
+                      ),
+                      const SizedBox(height: 12),
+                      Text(
+                        kv.value?.toString() ?? "",
+                        style: TextStyle(color: Colorss.themeFirst, fontSize: contentSize),
+                      ),
+                    ],
+                  ),
+                ),
+              )
+              .toList()),
     );
   }
 }

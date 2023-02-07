@@ -38,7 +38,7 @@ class RoutePage extends StatelessWidget {
                         duration: const Duration(milliseconds: 500),
                         opacity: 1 - provider.moviesTxtOpacity,
                         child: AnimatedContainer(
-                            height: 45,
+                            height: 65,
                             duration: const Duration(milliseconds: 500),
                             width: provider.searchAnimWidth,
                             child: CustomTextField(
@@ -54,7 +54,7 @@ class RoutePage extends StatelessWidget {
                   ),
                   Container(
                     height: 50,
-                    margin: const EdgeInsets.only(left: 50),
+                    margin: const EdgeInsets.only(top: 16, left: 20),
                     child: AnimatedOpacity(
                       duration: const Duration(milliseconds: 500),
                       opacity: provider.moviesTxtOpacity,
@@ -137,6 +137,8 @@ class RoutePage extends StatelessWidget {
                     onTap: (index) {
                       provider.controller.animateToPage(index,
                           duration: const Duration(milliseconds: 500), curve: Curves.easeOutSine);
+                      print(index);
+                      provider.searchclose(index);
                     },
                   ),
                 ),

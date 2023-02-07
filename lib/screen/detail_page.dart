@@ -12,8 +12,10 @@ import 'package:provider_api/providers/detail_provider.dart';
 import 'package:provider_api/providers/globalProvider.dart';
 import 'package:provider_api/providers/lists_provider.dart';
 import 'package:provider_api/providers/login_provider.dart';
+import 'package:provider_api/providers/reviews_provider.dart';
 import 'package:provider_api/screen/alerts/addMovie_alert_page.dart';
 import 'package:provider_api/screen/alerts/put_rating_alert.dart';
+import 'package:provider_api/screen/alerts/reviews_alert.dart';
 import 'package:provider_api/utils/const.dart';
 import 'package:provider_api/widgets/custom_row.dart';
 
@@ -307,7 +309,7 @@ class _DetailPageState extends State<DetailPage> {
                                     ),
                                   ),
                                   Padding(
-                                    padding: const EdgeInsets.only(right: 8, left: 16, bottom: 8),
+                                    padding: const EdgeInsets.only(right: 8, left: 8, bottom: 8),
                                     child: GestureDetector(
                                       onTap: () {
                                         showDialog(
@@ -322,7 +324,7 @@ class _DetailPageState extends State<DetailPage> {
                                       },
                                       child: Container(
                                         height: 28,
-                                        width: 50,
+                                        width: 70,
                                         decoration: BoxDecoration(
                                             border: Border.all(color: Colorss.themeFirst),
                                             boxShadow: [
@@ -335,11 +337,67 @@ class _DetailPageState extends State<DetailPage> {
                                             ],
                                             borderRadius: BorderRadius.circular(20),
                                             color: Colorss.background),
-                                        child: const Center(
-                                          child: Text(
-                                            "Rate",
-                                            style: TextStyle(color: Colorss.textColor, fontSize: 8),
+                                        child: Row(
+                                          mainAxisAlignment: MainAxisAlignment.center,
+                                          children: const [
+                                            Text(
+                                              "Rate",
+                                              style:
+                                                  TextStyle(color: Colorss.textColor, fontSize: 8),
+                                            ),
+                                            SizedBox(width: 8),
+                                            Icon(
+                                              Icons.star,
+                                              color: Colorss.textColor,
+                                              size: 15,
+                                            )
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.only(right: 8, left: 8, bottom: 8),
+                                    child: GestureDetector(
+                                      onTap: () {
+                                        showModalBottomSheet(
+                                          context: context,
+                                          builder: (x) => ChangeNotifierProvider(
+                                            create: (ctx) => ReviewsProvider(widget.id),
+                                            child: const ReviewsAlertPage(),
                                           ),
+                                        );
+                                      },
+                                      child: Container(
+                                        height: 28,
+                                        width: 90,
+                                        decoration: BoxDecoration(
+                                            border: Border.all(color: Colorss.themeFirst),
+                                            boxShadow: [
+                                              BoxShadow(
+                                                color: Colorss.forebackground.withOpacity(0.5),
+                                                spreadRadius: 1,
+                                                blurRadius: 10,
+                                                offset: const Offset(0, 5),
+                                              ),
+                                            ],
+                                            borderRadius: BorderRadius.circular(20),
+                                            color: Colorss.background),
+                                        child: Row(
+                                          mainAxisAlignment: MainAxisAlignment.center,
+                                          children: const [
+                                            Text(
+                                              "comments",
+                                              style:
+                                                  TextStyle(color: Colorss.textColor, fontSize: 8),
+                                            ),
+                                            SizedBox(width: 8),
+                                            Icon(
+                                              Icons.comment,
+                                              color: Colorss.textColor,
+                                              size: 15,
+                                            ),
+                                          ],
                                         ),
                                       ),
                                     ),
@@ -347,10 +405,7 @@ class _DetailPageState extends State<DetailPage> {
                                 ],
                               ),
                               Padding(
-                                padding: const EdgeInsets.only(
-                                  right: 16,
-                                  left: 16,
-                                ),
+                                padding: const EdgeInsets.only(right: 8, left: 8, bottom: 8),
                                 child: GestureDetector(
                                   onTap: () {
                                     final favoriteProvider = context.read<GlobalProvider>();
@@ -380,12 +435,12 @@ class _DetailPageState extends State<DetailPage> {
                                             .read<GlobalProvider>()
                                             .isFavorite(provider.movie!.id)
                                         ? const Icon(
-                                            Icons.star,
+                                            Icons.bookmark_outlined,
                                             color: Colorss.textColor,
                                             size: 15,
                                           )
                                         : const Icon(
-                                            Icons.star_border,
+                                            Icons.bookmark_border_rounded,
                                             color: Colorss.textColor,
                                             size: 15,
                                           ),
@@ -485,7 +540,7 @@ class _DetailPageState extends State<DetailPage> {
                                     ),
                                   ),
                                   Container(
-                                    padding: const EdgeInsets.all(16),
+                                    padding: const EdgeInsets.only(left: 16, right: 16, bottom: 16),
                                     width: double.infinity,
                                     child: Consumer<DetailProvider>(
                                       builder: (context, provider, child) {

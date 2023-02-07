@@ -11,8 +11,8 @@ class DetailProvider with ChangeNotifier {
 
   final List<MoviesModel> similarList = [];
   MovieModel? movie;
-  final GlobalProvider globalProvider;
 
+  final GlobalProvider globalProvider;
   Future<void> fetchSimilar(int id) async {
     similarList.clear();
 

@@ -8,9 +8,7 @@ class GlobalProvider with ChangeNotifier {
 
   Future<void> getFavoriteList(String accountId) async {
     favoriteList.clear();
-
     final result = await UserService.getFavorite(accountId);
-
     if (result != null) {
       favoriteList.addAll(result);
       notifyListeners();

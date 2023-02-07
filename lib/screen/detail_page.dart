@@ -5,7 +5,6 @@ import 'dart:ui';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:provider/provider.dart';
 import 'package:provider_api/providers/add_movie_provider.dart';
@@ -254,26 +253,113 @@ class _DetailPageState extends State<DetailPage> {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Padding(
-                                padding: const EdgeInsets.only(right: 8, left: 16, bottom: 64),
-                                child: GestureDetector(
-                                  onTap: () => showDialog(
-                                      context: context,
-                                      builder: (x) => MultiProvider(
-                                            providers: [
-                                              ChangeNotifierProvider<ListsProvider>(
-                                                  create: (ctx) => ListsProvider(widget.accountId)),
-                                              ChangeNotifierProvider<AddMovieProvider>(
-                                                  create: (ctx) => AddMovieProvider())
+                              Row(
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.only(right: 8, left: 16, bottom: 8),
+                                    child: GestureDetector(
+                                      onTap: () => showDialog(
+                                          context: context,
+                                          builder: (x) => MultiProvider(
+                                                providers: [
+                                                  ChangeNotifierProvider<ListsProvider>(
+                                                      create: (ctx) =>
+                                                          ListsProvider(widget.accountId)),
+                                                  ChangeNotifierProvider<AddMovieProvider>(
+                                                      create: (ctx) => AddMovieProvider())
+                                                ],
+                                                child: AddMovieAlertPage(
+                                                  accounId: widget.accountId,
+                                                  movieId: widget.id,
+                                                ),
+                                              )),
+                                      child: Container(
+                                        height: 28,
+                                        width: 100,
+                                        decoration: BoxDecoration(
+                                            border: Border.all(color: Colorss.themeFirst),
+                                            boxShadow: [
+                                              BoxShadow(
+                                                color: Colorss.forebackground.withOpacity(0.5),
+                                                spreadRadius: 1,
+                                                blurRadius: 10,
+                                                offset: const Offset(0, 5),
+                                              ),
                                             ],
-                                            child: AddMovieAlertPage(
-                                              accounId: widget.accountId,
-                                              movieId: widget.id,
+                                            borderRadius: BorderRadius.circular(20),
+                                            color: Colorss.background),
+                                        child: Row(
+                                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                          children: const [
+                                            Text(
+                                              "Add Watch list",
+                                              style:
+                                                  TextStyle(color: Colorss.textColor, fontSize: 8),
                                             ),
-                                          )),
+                                            Icon(
+                                              Icons.add_circle_outline_sharp,
+                                              color: Colorss.textColor,
+                                              size: 15,
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.only(right: 8, left: 16, bottom: 8),
+                                    child: GestureDetector(
+                                      onTap: () {
+                                        showDialog(
+                                            context: context,
+                                            builder: (x) => const PutRatingAlert()).then((value) {
+                                          if (value != null) {
+                                            context
+                                                .read<GlobalProvider>()
+                                                .postRating(provider.movie!.id, value * 2);
+                                          }
+                                        });
+                                      },
+                                      child: Container(
+                                        height: 28,
+                                        width: 50,
+                                        decoration: BoxDecoration(
+                                            border: Border.all(color: Colorss.themeFirst),
+                                            boxShadow: [
+                                              BoxShadow(
+                                                color: Colorss.forebackground.withOpacity(0.5),
+                                                spreadRadius: 1,
+                                                blurRadius: 10,
+                                                offset: const Offset(0, 5),
+                                              ),
+                                            ],
+                                            borderRadius: BorderRadius.circular(20),
+                                            color: Colorss.background),
+                                        child: const Center(
+                                          child: Text(
+                                            "Rate",
+                                            style: TextStyle(color: Colorss.textColor, fontSize: 8),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(
+                                  right: 16,
+                                  left: 16,
+                                ),
+                                child: GestureDetector(
+                                  onTap: () {
+                                    final favoriteProvider = context.read<GlobalProvider>();
+                                    favoriteProvider.postMarkFavorite(
+                                        provider.movie!, context.read<LoginProvider>().account.id);
+                                  },
                                   child: Container(
                                     height: 28,
-                                    width: 100,
+                                    width: 30,
                                     decoration: BoxDecoration(
                                         border: Border.all(color: Colorss.themeFirst),
                                         boxShadow: [
@@ -285,112 +371,30 @@ class _DetailPageState extends State<DetailPage> {
                                           ),
                                         ],
                                         borderRadius: BorderRadius.circular(20),
-                                        color: Colorss.background),
-                                    child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                      children: const [
-                                        Text(
-                                          "Add Watch list",
-                                          style: TextStyle(color: Colorss.textColor, fontSize: 8),
-                                        ),
-                                        Icon(
-                                          Icons.add_circle_outline_sharp,
-                                          color: Colorss.textColor,
-                                          size: 15,
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              SizedBox(
-                                height: 100,
-                                width: 100,
-                                child: Column(
-                                  children: [
-                                    Padding(
-                                      padding: const EdgeInsets.only(right: 8, left: 16, bottom: 8),
-                                      child: GestureDetector(
-                                        onTap: () {
-                                          final favoriteProvider = context.read<GlobalProvider>();
-                                          favoriteProvider.postMarkFavorite(provider.movie!,
-                                              context.read<LoginProvider>().account.id);
-                                        },
-                                        child: Container(
-                                          height: 28,
-                                          width: 100,
-                                          decoration: BoxDecoration(
-                                              border: Border.all(color: Colorss.themeFirst),
-                                              boxShadow: [
-                                                BoxShadow(
-                                                  color: Colorss.forebackground.withOpacity(0.5),
-                                                  spreadRadius: 1,
-                                                  blurRadius: 10,
-                                                  offset: const Offset(0, 5),
-                                                ),
-                                              ],
-                                              borderRadius: BorderRadius.circular(20),
-                                              color: context
-                                                      .watch<GlobalProvider>()
-                                                      .isFavorite(provider.movie!.id)
-                                                  ? Colorss.themeFirst
-                                                  : Colorss.forebackground),
-                                          child: Row(
-                                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                            children: [
-                                              const Text(
-                                                "Favorite list",
-                                                style: TextStyle(
-                                                    color: Colorss.textColor, fontSize: 8),
-                                              ),
-                                              context
-                                                      .read<GlobalProvider>()
-                                                      .isFavorite(provider.movie!.id)
-                                                  ? const Icon(
-                                                      Icons.star,
-                                                      color: Colorss.textColor,
-                                                      size: 15,
-                                                    )
-                                                  : const Icon(
-                                                      Icons.star_border,
-                                                      color: Colorss.textColor,
-                                                      size: 15,
-                                                    ),
-                                            ],
+                                        color: context
+                                                .watch<GlobalProvider>()
+                                                .isFavorite(provider.movie!.id)
+                                            ? Colorss.themeFirst
+                                            : Colorss.forebackground),
+                                    child: context
+                                            .read<GlobalProvider>()
+                                            .isFavorite(provider.movie!.id)
+                                        ? const Icon(
+                                            Icons.star,
+                                            color: Colorss.textColor,
+                                            size: 15,
+                                          )
+                                        : const Icon(
+                                            Icons.star_border,
+                                            color: Colorss.textColor,
+                                            size: 15,
                                           ),
-                                        ),
-                                      ),
-                                    ),
-                                    RatingBar.builder(
-                                      glow: false,
-                                      unratedColor: Colorss.textColor,
-                                      itemSize: 15,
-                                      initialRating: 0,
-                                      minRating: 1,
-                                      direction: Axis.horizontal,
-                                      allowHalfRating: true,
-                                      itemCount: 5,
-                                      itemBuilder: (context, _) => const Icon(
-                                        Icons.star,
-                                        color: Colorss.themeFirst,
-                                      ),
-                                      onRatingUpdate: (rating) async {
-                                        showDialog(
-                                            context: context,
-                                            builder: (x) => const PutRatingAlert()).then((value) {
-                                          if (value == true) {
-                                            context
-                                                .read<GlobalProvider>()
-                                                .postRating(provider.movie!.id, rating);
-                                          }
-                                        });
-                                      },
-                                    ),
-                                  ],
+                                  ),
                                 ),
                               ),
                             ],
                           ),
+                          const SizedBox(height: 64),
                           Stack(
                             children: [
                               Column(
@@ -399,7 +403,7 @@ class _DetailPageState extends State<DetailPage> {
                                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                     children: [
                                       Padding(
-                                        padding: const EdgeInsets.only(left: 10, top: 16),
+                                        padding: const EdgeInsets.only(left: 24, top: 16),
                                         child: Column(
                                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -455,7 +459,7 @@ class _DetailPageState extends State<DetailPage> {
                                       provider.movie!.voteAverage == 0.0
                                           ? Container()
                                           : Padding(
-                                              padding: const EdgeInsets.only(right: 64),
+                                              padding: const EdgeInsets.only(right: 48),
                                               child: CircularPercentIndicator(
                                                 animationDuration: 1500,
                                                 radius: 30.0,

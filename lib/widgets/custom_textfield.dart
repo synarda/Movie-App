@@ -29,34 +29,37 @@ class CustomTextField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return TextField(
-      autofocus: focus,
-      keyboardType: type,
-      obscureText: obscure,
-      style: const TextStyle(color: Colorss.textColor, fontSize: 12),
-      inputFormatters: [
-        LengthLimitingTextInputFormatter(limit),
-      ],
-      decoration: InputDecoration(
-        suffixIcon: IconButton(
-          icon: icon,
-          onPressed: suffixIconFunc,
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: TextField(
+        autofocus: focus,
+        keyboardType: type,
+        obscureText: obscure,
+        style: const TextStyle(color: Colorss.textColor, fontSize: 12),
+        inputFormatters: [
+          LengthLimitingTextInputFormatter(limit),
+        ],
+        decoration: InputDecoration(
+          suffixIcon: IconButton(
+            icon: icon,
+            onPressed: suffixIconFunc,
+          ),
+          labelText: label,
+          labelStyle: const TextStyle(color: Colorss.textColor),
+          filled: false,
+          enabledBorder: const OutlineInputBorder(
+            borderSide: BorderSide(width: 1, color: Colorss.textColor),
+          ),
+          focusedBorder: const UnderlineInputBorder(
+            borderSide: BorderSide(color: Colorss.textColor),
+          ),
         ),
-        labelText: label,
-        labelStyle: const TextStyle(color: Colorss.textColor),
-        filled: false,
-        enabledBorder: const OutlineInputBorder(
-          borderSide: BorderSide(width: 1, color: Colorss.textColor),
-        ),
-        focusedBorder: const UnderlineInputBorder(
-          borderSide: BorderSide(color: Colorss.textColor),
-        ),
+        cursorColor: Colorss.themeFirst,
+        onChanged: (value) {
+          onChanged?.call();
+        },
+        controller: controller,
       ),
-      cursorColor: Colorss.themeFirst,
-      onChanged: (value) {
-        onChanged?.call();
-      },
-      controller: controller,
     );
   }
 }

@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:provider_api/providers/lists_provider.dart';
@@ -23,52 +25,78 @@ class _AddAlertPageState extends State<AddAlertPage> {
 
   @override
   Widget build(BuildContext context) {
-    return AlertDialog(
-      title: const Text(
-        textAlign: TextAlign.center,
-        "Add List",
-        style: TextStyle(color: Colorss.textColor),
-      ),
-      backgroundColor: Colorss.background.withOpacity(0.7),
-      content: GestureDetector(
-        onTap: FocusScope.of(context).unfocus,
-        child: SizedBox(
-          height: MediaQuery.of(context).size.height / 3,
-          child: Column(children: [
-            CustomTextField(
-              label: "Name",
-              limit: 50,
-              obscure: false,
-              controller: nameController,
+    return Stack(
+      children: [
+        Positioned.fill(
+          child: BackdropFilter(
+            filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
+            child: Container(
+              alignment: Alignment.center,
+              decoration: BoxDecoration(
+                color: Colorss.background.withOpacity(0.5),
+              ),
             ),
-            CustomTextField(
-              label: "Description",
-              limit: 50,
-              obscure: false,
-              controller: descController,
-            ),
-            Container(
-              margin: const EdgeInsets.only(left: 8, right: 8),
-              padding: const EdgeInsets.symmetric(horizontal: 4.0),
-              width: double.infinity,
-              child: ElevatedButton(
-                  onPressed: () {
-                    final provider = context.read<ListsProvider>();
-                    provider
-                        .createList(nameController.text, descController.text)
-                        .then((value) => Navigator.pop(context));
-                  },
-                  style: ElevatedButton.styleFrom(
-                      backgroundColor: Colorss.themeFirst,
-                      textStyle: const TextStyle(fontSize: 15, fontWeight: FontWeight.bold)),
-                  child: const Text(
-                    "Save List",
-                    style: TextStyle(color: Colorss.forebackground, fontSize: 12),
-                  )),
-            ),
-          ]),
+          ),
         ),
-      ),
+        AlertDialog(
+          backgroundColor: Colorss.background.withOpacity(0.7),
+          content: Container(
+            padding: const EdgeInsets.all(16),
+            height: MediaQuery.of(context).size.height / 3,
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(20),
+                border: Border.all(width: 1, color: Colorss.themeFirst)),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                const Text(
+                  textAlign: TextAlign.center,
+                  "Add List",
+                  style: TextStyle(color: Colorss.textColor),
+                ),
+                GestureDetector(
+                  onTap: FocusScope.of(context).unfocus,
+                  child: SizedBox(
+                    child: Column(children: [
+                      CustomTextField(
+                        label: "Name",
+                        limit: 50,
+                        obscure: false,
+                        controller: nameController,
+                      ),
+                      CustomTextField(
+                        label: "Description",
+                        limit: 50,
+                        obscure: false,
+                        controller: descController,
+                      ),
+                    ]),
+                  ),
+                ),
+                Container(
+                  margin: const EdgeInsets.only(left: 8, right: 8),
+                  padding: const EdgeInsets.symmetric(horizontal: 4.0),
+                  width: double.infinity,
+                  child: ElevatedButton(
+                      onPressed: () {
+                        final provider = context.read<ListsProvider>();
+                        provider
+                            .createList(nameController.text, descController.text)
+                            .then((value) => Navigator.pop(context));
+                      },
+                      style: ElevatedButton.styleFrom(
+                          backgroundColor: Colorss.themeFirst,
+                          textStyle: const TextStyle(fontSize: 15, fontWeight: FontWeight.bold)),
+                      child: const Text(
+                        "Save List",
+                        style: TextStyle(color: Colorss.forebackground, fontSize: 12),
+                      )),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ],
     );
   }
 }

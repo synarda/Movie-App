@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider_api/utils/const.dart';
 
-class CustomTextField extends StatelessWidget {
-  const CustomTextField({
+class TextfieldWidget extends StatelessWidget {
+  const TextfieldWidget({
     Key? key,
     required this.label,
     this.icon = const Icon(Icons.person),

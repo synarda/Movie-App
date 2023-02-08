@@ -2,8 +2,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider_api/utils/const.dart';
 
-class CustomRow extends StatelessWidget {
-  const CustomRow({
+class RowWidget extends StatelessWidget {
+  const RowWidget({
     Key? key,
     required this.data,
     this.padding = 0.0,

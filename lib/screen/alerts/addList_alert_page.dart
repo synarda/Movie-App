@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:provider_api/providers/lists_provider.dart';
 import 'package:provider_api/utils/const.dart';
-import 'package:provider_api/widgets/custom_textfield.dart';
+import 'package:provider_api/widgets/textfield.dart';
 
 class AddAlertPage extends StatefulWidget {
   const AddAlertPage({super.key});
@@ -58,13 +58,13 @@ class _AddAlertPageState extends State<AddAlertPage> {
                   onTap: FocusScope.of(context).unfocus,
                   child: SizedBox(
                     child: Column(children: [
-                      CustomTextField(
+                      TextfieldWidget(
                         label: "Name",
                         limit: 50,
                         obscure: false,
                         controller: nameController,
                       ),
-                      CustomTextField(
+                      TextfieldWidget(
                         label: "Description",
                         limit: 50,
                         obscure: false,

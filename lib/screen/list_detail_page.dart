@@ -13,7 +13,7 @@ import 'package:provider_api/screen/alerts/delete_alert_page.dart';
 import 'package:provider_api/screen/detail_page.dart';
 import 'package:provider_api/utils/const.dart';
 import 'package:provider_api/widgets/animated_listview.dart';
-import 'package:provider_api/widgets/custom_row.dart';
+import 'package:provider_api/widgets/row.dart';
 
 class ListDetailPage extends StatelessWidget {
   const ListDetailPage({
@@ -46,7 +46,7 @@ class ListDetailPage extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                CustomRow(contentSize: 12, titleSize: 13, padding: 8, data: {
+                RowWidget(contentSize: 12, titleSize: 13, padding: 8, data: {
                   "created by:  ": provider.listDetail?.createdBy ?? "Loading...",
                   "description:  ": description,
                   "item Count:  ": itemCount.toString(),

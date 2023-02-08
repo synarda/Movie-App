@@ -1,6 +1,4 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:math';
-import 'dart:ui';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
@@ -17,7 +15,10 @@ import 'package:provider_api/screen/alerts/addMovie_alert_page.dart';
 import 'package:provider_api/screen/alerts/put_rating_alert.dart';
 import 'package:provider_api/screen/alerts/reviews_alert.dart';
 import 'package:provider_api/utils/const.dart';
-import 'package:provider_api/widgets/custom_row.dart';
+import 'package:provider_api/widgets/blur.dart';
+import 'package:provider_api/widgets/button.dart';
+import 'package:provider_api/widgets/row.dart';
+import 'package:provider_api/widgets/similar_movie.dart';
 
 class DetailPage extends StatefulWidget {
   const DetailPage({
@@ -257,150 +258,60 @@ class _DetailPageState extends State<DetailPage> {
                             children: [
                               Row(
                                 children: [
-                                  Padding(
-                                    padding: const EdgeInsets.only(right: 8, left: 16, bottom: 8),
-                                    child: GestureDetector(
-                                      onTap: () => showDialog(
-                                          context: context,
-                                          builder: (x) => MultiProvider(
-                                                providers: [
-                                                  ChangeNotifierProvider<ListsProvider>(
-                                                      create: (ctx) =>
-                                                          ListsProvider(widget.accountId)),
-                                                  ChangeNotifierProvider<AddMovieProvider>(
-                                                      create: (ctx) => AddMovieProvider())
-                                                ],
-                                                child: AddMovieAlertPage(
-                                                  accounId: widget.accountId,
-                                                  movieId: widget.id,
-                                                ),
-                                              )),
-                                      child: Container(
-                                        height: 28,
-                                        width: 100,
-                                        decoration: BoxDecoration(
-                                            border: Border.all(color: Colorss.themeFirst),
-                                            boxShadow: [
-                                              BoxShadow(
-                                                color: Colorss.forebackground.withOpacity(0.5),
-                                                spreadRadius: 1,
-                                                blurRadius: 10,
-                                                offset: const Offset(0, 5),
+                                  ButtonWidget(
+                                    txt: "Add Watch list",
+                                    func: () => showDialog(
+                                        context: context,
+                                        builder: (x) => MultiProvider(
+                                              providers: [
+                                                ChangeNotifierProvider<ListsProvider>(
+                                                    create: (ctx) =>
+                                                        ListsProvider(widget.accountId)),
+                                                ChangeNotifierProvider<AddMovieProvider>(
+                                                    create: (ctx) => AddMovieProvider())
+                                              ],
+                                              child: AddMovieAlertPage(
+                                                accounId: widget.accountId,
+                                                movieId: widget.id,
                                               ),
-                                            ],
-                                            borderRadius: BorderRadius.circular(20),
-                                            color: Colorss.background),
-                                        child: Row(
-                                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                          children: const [
-                                            Text(
-                                              "Add Watch list",
-                                              style:
-                                                  TextStyle(color: Colorss.textColor, fontSize: 8),
-                                            ),
-                                            Icon(
-                                              Icons.add_circle_outline_sharp,
-                                              color: Colorss.textColor,
-                                              size: 15,
-                                            ),
-                                          ],
-                                        ),
-                                      ),
+                                            )),
+                                    widget: const Icon(
+                                      Icons.add_circle_outline_sharp,
+                                      color: Colorss.textColor,
+                                      size: 15,
                                     ),
                                   ),
-                                  Padding(
-                                    padding: const EdgeInsets.only(right: 8, left: 8, bottom: 8),
-                                    child: GestureDetector(
-                                      onTap: () {
-                                        showDialog(
-                                            context: context,
-                                            builder: (x) => const PutRatingAlert()).then((value) {
-                                          if (value != null) {
-                                            context.read<GlobalProvider>().postRating(
-                                                provider.movie!.id, value * 2, provider.movie!);
-                                          }
-                                        });
-                                      },
-                                      child: Container(
-                                        height: 28,
-                                        width: 70,
-                                        decoration: BoxDecoration(
-                                            border: Border.all(color: Colorss.themeFirst),
-                                            boxShadow: [
-                                              BoxShadow(
-                                                color: Colorss.forebackground.withOpacity(0.5),
-                                                spreadRadius: 1,
-                                                blurRadius: 10,
-                                                offset: const Offset(0, 5),
-                                              ),
-                                            ],
-                                            borderRadius: BorderRadius.circular(20),
-                                            color: Colorss.background),
-                                        child: Row(
-                                          mainAxisAlignment: MainAxisAlignment.center,
-                                          children: const [
-                                            Text(
-                                              "Rate",
-                                              style:
-                                                  TextStyle(color: Colorss.textColor, fontSize: 8),
-                                            ),
-                                            SizedBox(width: 8),
-                                            Icon(
-                                              Icons.star,
-                                              color: Colorss.textColor,
-                                              size: 15,
-                                            )
-                                          ],
-                                        ),
-                                      ),
+                                  ButtonWidget(
+                                    txt: "Rate",
+                                    func: () => showDialog(
+                                        context: context,
+                                        builder: (x) => const PutRatingAlert()).then((value) {
+                                      if (value != null) {
+                                        context.read<GlobalProvider>().postRating(
+                                            provider.movie!.id, value * 2, provider.movie!);
+                                      }
+                                    }),
+                                    widget: const Icon(
+                                      Icons.star,
+                                      color: Colorss.textColor,
+                                      size: 15,
                                     ),
                                   ),
-                                  Padding(
-                                    padding: const EdgeInsets.only(right: 8, left: 8, bottom: 8),
-                                    child: GestureDetector(
-                                      onTap: () {
-                                        showModalBottomSheet(
-                                          context: context,
-                                          builder: (x) => ChangeNotifierProvider(
-                                            create: (ctx) => ReviewsProvider(widget.id),
-                                            child: const ReviewsAlertPage(),
-                                          ),
-                                        );
-                                      },
-                                      child: Container(
-                                        height: 28,
-                                        width: 90,
-                                        decoration: BoxDecoration(
-                                            border: Border.all(color: Colorss.themeFirst),
-                                            boxShadow: [
-                                              BoxShadow(
-                                                color: Colorss.forebackground.withOpacity(0.5),
-                                                spreadRadius: 1,
-                                                blurRadius: 10,
-                                                offset: const Offset(0, 5),
-                                              ),
-                                            ],
-                                            borderRadius: BorderRadius.circular(20),
-                                            color: Colorss.background),
-                                        child: Row(
-                                          mainAxisAlignment: MainAxisAlignment.center,
-                                          children: const [
-                                            Text(
-                                              "comments",
-                                              style:
-                                                  TextStyle(color: Colorss.textColor, fontSize: 8),
-                                            ),
-                                            SizedBox(width: 8),
-                                            Icon(
-                                              Icons.comment,
-                                              color: Colorss.textColor,
-                                              size: 15,
-                                            ),
-                                          ],
-                                        ),
+                                  ButtonWidget(
+                                    txt: "comments",
+                                    func: () => showModalBottomSheet(
+                                      context: context,
+                                      builder: (x) => ChangeNotifierProvider(
+                                        create: (ctx) => ReviewsProvider(widget.id),
+                                        child: const ReviewsAlertPage(),
                                       ),
                                     ),
-                                  ),
+                                    widget: const Icon(
+                                      Icons.comment,
+                                      color: Colorss.textColor,
+                                      size: 15,
+                                    ),
+                                  )
                                 ],
                               ),
                               Padding(
@@ -468,7 +379,7 @@ class _DetailPageState extends State<DetailPage> {
                                                     "No data",
                                                     style: TextStyle(color: Colorss.textColor),
                                                   )
-                                                : CustomRow(data: {
+                                                : RowWidget(data: {
                                                     "Release date:  ": provider.movie!.releaseDate,
                                                     "Status:  ": provider.movie!.status,
                                                     "Revenue:  ": provider.movie!.revenue,
@@ -507,103 +418,7 @@ class _DetailPageState extends State<DetailPage> {
                                       style: TextStyle(color: Colorss.textColor),
                                     ),
                                   ),
-                                  Container(
-                                    padding: const EdgeInsets.only(left: 16, right: 16, bottom: 16),
-                                    width: double.infinity,
-                                    child: Consumer<DetailProvider>(
-                                      builder: (context, provider, child) {
-                                        return GridView.builder(
-                                          shrinkWrap: true,
-                                          physics: const NeverScrollableScrollPhysics(),
-                                          gridDelegate:
-                                              const SliverGridDelegateWithFixedCrossAxisCount(
-                                            crossAxisCount: 3,
-                                          ),
-                                          itemCount: provider.similarList.length,
-                                          itemBuilder: (context, index) {
-                                            final e = provider.similarList[index];
-                                            return GestureDetector(
-                                              onTap: () {
-                                                Navigator.pushReplacement(
-                                                    context,
-                                                    MaterialPageRoute(
-                                                        builder: (context) =>
-                                                            ChangeNotifierProvider(
-                                                              create: (ctx) => DetailProvider(e.id,
-                                                                  context.read<GlobalProvider>()),
-                                                              child: DetailPage(
-                                                                  adult: e.adult,
-                                                                  data: widget.data,
-                                                                  id: e.id,
-                                                                  imgUrl: e.imgUrl,
-                                                                  accountId:
-                                                                      Provider.of<LoginProvider>(
-                                                                              context)
-                                                                          .account
-                                                                          .id),
-                                                            )));
-                                              },
-                                              child: Container(
-                                                decoration: BoxDecoration(
-                                                    borderRadius: BorderRadius.circular(20)),
-                                                height: 150,
-                                                width: MediaQuery.of(context).size.width / 3,
-                                                child: Stack(
-                                                  children: [
-                                                    Container(
-                                                      margin: const EdgeInsets.all(16),
-                                                      height: 100,
-                                                      child: ClipRRect(
-                                                        borderRadius: BorderRadius.circular(20),
-                                                        child: e.imgUrl.isEmpty
-                                                            ? Center(
-                                                                child: SizedBox(
-                                                                    height: 30,
-                                                                    width: 30,
-                                                                    child: Image.asset(
-                                                                        "assets/noimage.png")),
-                                                              )
-                                                            : CachedNetworkImage(
-                                                                fit: BoxFit.cover,
-                                                                imageUrl:
-                                                                    "https://image.tmdb.org/t/p/original/${e.imgUrl}",
-                                                                errorWidget:
-                                                                    (context, url, error) =>
-                                                                        const Icon(Icons.error),
-                                                              ),
-                                                      ),
-                                                    ),
-                                                    Container(
-                                                      margin: const EdgeInsets.all(13),
-                                                      decoration: BoxDecoration(
-                                                          gradient: const LinearGradient(
-                                                            begin: Alignment.bottomCenter,
-                                                            end: Alignment.topCenter,
-                                                            colors: [
-                                                              Colorss.background,
-                                                              Colors.transparent,
-                                                            ],
-                                                          ),
-                                                          borderRadius: BorderRadius.circular(20)),
-                                                      child: Align(
-                                                        alignment: Alignment.bottomCenter,
-                                                        child: Text(
-                                                          e.title,
-                                                          style: const TextStyle(
-                                                              color: Colorss.textColor,
-                                                              fontSize: 8),
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  ],
-                                                ),
-                                              ),
-                                            );
-                                          },
-                                        );
-                                      },
-                                    ),
-                                  )
+                                  SimilarMovieWidget(data: widget.data)
                                 ],
                               )
                             ],
@@ -619,42 +434,6 @@ class _DetailPageState extends State<DetailPage> {
                   color: Colorss.textColor,
                 ),
                 onPressed: () => Navigator.pop(context)),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class Blur extends StatelessWidget {
-  const Blur({
-    Key? key,
-    required this.child,
-    this.overlay,
-    this.blur = 5,
-  }) : super(key: key);
-
-  final Widget child;
-  final Widget? overlay;
-  final double blur;
-
-  @override
-  Widget build(BuildContext context) {
-    return ClipRRect(
-      child: Stack(
-        children: [
-          child,
-          Positioned.fill(
-            child: BackdropFilter(
-              filter: ImageFilter.blur(sigmaX: blur, sigmaY: blur),
-              child: Container(
-                alignment: Alignment.center,
-                decoration: BoxDecoration(
-                  color: Colorss.background.withOpacity(0.5),
-                ),
-                child: overlay,
-              ),
-            ),
           ),
         ],
       ),

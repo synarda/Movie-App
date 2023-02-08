@@ -9,8 +9,8 @@ import 'package:provider_api/providers/login_provider.dart';
 import 'package:provider_api/screen/detail_page.dart';
 import 'package:provider_api/utils/const.dart';
 
-class ListHome extends StatelessWidget {
-  const ListHome({Key? key, required this.data}) : super(key: key);
+class HomeListWidget extends StatelessWidget {
+  const HomeListWidget({Key? key, required this.data}) : super(key: key);
 
   final String data;
 

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider_api/utils/const.dart';
-import 'package:provider_api/widgets/custom_List.dart';
+import 'package:provider_api/widgets/home_List.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({
@@ -20,7 +20,7 @@ class HomePage extends StatelessWidget {
           indent: 16,
           thickness: 2,
         ),
-        const ListHome(data: "popular", key: PageStorageKey("popular")),
+        const HomeListWidget(data: "popular", key: PageStorageKey("popular")),
         dividerTitle("Upcoming"),
         const Divider(
           color: Colorss.background,
@@ -28,7 +28,7 @@ class HomePage extends StatelessWidget {
           indent: 16,
           thickness: 2,
         ),
-        const ListHome(data: "upcoming", key: PageStorageKey("upcoming")),
+        const HomeListWidget(data: "upcoming", key: PageStorageKey("upcoming")),
         dividerTitle("Top Rated"),
         const Divider(
           color: Colorss.background,
@@ -36,7 +36,7 @@ class HomePage extends StatelessWidget {
           indent: 16,
           thickness: 2,
         ),
-        const ListHome(data: "top_rated", key: PageStorageKey("top_rated")),
+        const HomeListWidget(data: "top_rated", key: PageStorageKey("top_rated")),
         const SizedBox(height: 54),
       ],
     );

@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:provider_api/screen/alerts/comment_alert.dart';
 import 'package:provider_api/utils/const.dart';
 
-class ReviewContainer extends StatelessWidget {
-  const ReviewContainer({
+class ReviewWidget extends StatelessWidget {
+  const ReviewWidget({
     Key? key,
     required this.avatar,
     required this.userName,

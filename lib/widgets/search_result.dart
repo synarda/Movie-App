@@ -9,8 +9,8 @@ import 'package:provider_api/providers/login_provider.dart';
 import 'package:provider_api/screen/detail_page.dart';
 import 'package:provider_api/utils/const.dart';
 
-class CustomSearchResultContainer extends StatelessWidget {
-  const CustomSearchResultContainer({
+class SearchResultWidget extends StatelessWidget {
+  const SearchResultWidget({
     Key? key,
     required this.title,
     required this.id,

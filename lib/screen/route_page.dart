@@ -11,8 +11,8 @@ import 'package:provider_api/screen/account_page.dart';
 import 'package:provider_api/screen/home_Lists_page.dart';
 import 'package:provider_api/screen/lists_page.dart';
 import 'package:provider_api/utils/const.dart';
-import 'package:provider_api/widgets/custom_search_result.dart';
-import 'package:provider_api/widgets/custom_textfield.dart';
+import 'package:provider_api/widgets/search_result.dart';
+import 'package:provider_api/widgets/textfield.dart';
 
 class RoutePage extends StatelessWidget {
   const RoutePage({super.key});
@@ -41,7 +41,7 @@ class RoutePage extends StatelessWidget {
                             height: 65,
                             duration: const Duration(milliseconds: 500),
                             width: provider.searchAnimWidth,
-                            child: CustomTextField(
+                            child: TextfieldWidget(
                               suffixIconFunc: provider.searchController.clear,
                               icon: const Icon(Icons.clear, color: Colorss.textColor),
                               label: "Search",
@@ -89,7 +89,7 @@ class RoutePage extends StatelessWidget {
                               physics: const BouncingScrollPhysics(
                                   parent: AlwaysScrollableScrollPhysics()),
                               children: provider.searchResList
-                                  .map((e) => CustomSearchResultContainer(
+                                  .map((e) => SearchResultWidget(
                                         voteAverage: e.voteAverage,
                                         title: e.title,
                                         imgUrl: e.imgUrl,

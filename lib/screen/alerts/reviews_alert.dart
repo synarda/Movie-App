@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:provider_api/providers/reviews_provider.dart';
 import 'package:provider_api/utils/const.dart';
-import 'package:provider_api/widgets/custom_textfield.dart';
 import 'package:provider_api/widgets/review_widget.dart';
+import 'package:provider_api/widgets/textfield.dart';
 
 class ReviewsAlertPage extends StatelessWidget {
   const ReviewsAlertPage({
@@ -23,7 +23,7 @@ class ReviewsAlertPage extends StatelessWidget {
                 children: [
                   const Flexible(
                       flex: 4,
-                      child: CustomTextField(label: "comment", limit: 200, obscure: false)),
+                      child: TextfieldWidget(label: "comment", limit: 200, obscure: false)),
                   Flexible(
                       flex: 1,
                       child: ElevatedButton(
@@ -40,7 +40,7 @@ class ReviewsAlertPage extends StatelessWidget {
               child: ListView(
                   physics: const BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
                   children: (provider.review ?? [])
-                      .map((e) => ReviewContainer(
+                      .map((e) => ReviewWidget(
                           avatar: e.avatar ?? "",
                           userName: e.userName ?? "",
                           nickName: e.nickName,

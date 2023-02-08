@@ -5,7 +5,7 @@ import 'package:provider_api/providers/login_provider.dart';
 import 'package:provider_api/providers/route_provider.dart';
 import 'package:provider_api/screen/route_page.dart';
 import 'package:provider_api/utils/const.dart';
-import 'package:provider_api/widgets/custom_textfield.dart';
+import 'package:provider_api/widgets/textfield.dart';
 
 class LoginPage extends StatelessWidget {
   const LoginPage({super.key});
@@ -27,7 +27,7 @@ class LoginPage extends StatelessWidget {
             ),
             Padding(
               padding: const EdgeInsets.all(16.0),
-              child: CustomTextField(
+              child: TextfieldWidget(
                 label: "Username",
                 limit: 50,
                 obscure: false,
@@ -36,7 +36,7 @@ class LoginPage extends StatelessWidget {
             ),
             Padding(
               padding: const EdgeInsets.all(16.0),
-              child: CustomTextField(
+              child: TextfieldWidget(
                   label: "Password",
                   limit: 50,
                   obscure: false,

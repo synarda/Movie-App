@@ -137,8 +137,6 @@ class RoutePage extends StatelessWidget {
                     onTap: (index) {
                       provider.controller.animateToPage(index,
                           duration: const Duration(milliseconds: 500), curve: Curves.easeOutSine);
-                      print(index);
-                      provider.searchclose(index);
                     },
                   ),
                 ),

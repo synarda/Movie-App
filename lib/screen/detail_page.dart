@@ -316,9 +316,8 @@ class _DetailPageState extends State<DetailPage> {
                                             context: context,
                                             builder: (x) => const PutRatingAlert()).then((value) {
                                           if (value != null) {
-                                            context
-                                                .read<GlobalProvider>()
-                                                .postRating(provider.movie!.id, value * 2);
+                                            context.read<GlobalProvider>().postRating(
+                                                provider.movie!.id, value * 2, provider.movie!);
                                           }
                                         });
                                       },

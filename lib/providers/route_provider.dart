@@ -47,14 +47,6 @@ class RoutePageProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  void searchclose(index) {
-    if (index != 0) {
-      searchAnimWidth = 0.0;
-      moviesTxtOpacity = 1.0;
-    }
-    notifyListeners();
-  }
-
   Future<void> getSearchResult() async {
     searchResList.clear();
 

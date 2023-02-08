@@ -15,15 +15,21 @@ class GlobalProvider with ChangeNotifier {
     }
   }
 
-  void postRating(int mediaId, double rate) async {
+  Future<void> postRating(int mediaId, double rate, MovieModel movie) async {
     await UserService.postRateMovie(mediaId, rate);
     final result = ratedList.indexWhere((element) => element.id == mediaId);
-    ratedList[result].rate = rate;
+    if (result == -1) {
+      ratedList.add(movie..rate = rate);
+    } else {
+      ratedList[result].rate = rate;
+    }
+
     notifyListeners();
   }
 
   final List<MovieModel> ratedList = [];
   Future<void> getRatedMovies(String accountId) async {
+    ratedList.clear();
     final result = await UserService.getRatedMovies(accountId);
     if (result != null) {
       ratedList.addAll(result);

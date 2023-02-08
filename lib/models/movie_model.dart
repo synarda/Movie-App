@@ -73,9 +73,6 @@ class MovieModel {
         rate.hashCode;
   }
 
-  @override
-  bool operator ==(Object other) {
-    // TODO: implement ==
-    return super == other;
-  }
+  void arda() {}
+  void adil() {}
 }

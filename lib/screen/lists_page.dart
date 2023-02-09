@@ -35,12 +35,12 @@ class ListsPage extends StatelessWidget {
                   color: Colorss.background.withOpacity(0.8)),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
-                children: const [
+                children: [
                   Text(
                     "add",
                     style: TextStyle(color: Colorss.themeFirst),
                   ),
-                  SizedBox(height: 10),
+                  const SizedBox(height: 10),
                   Icon(
                     Icons.add,
                     color: Colorss.themeFirst,
@@ -113,7 +113,7 @@ class ListsPage extends StatelessWidget {
                                         fontSize: 15,
                                         fontWeight: FontWeight.bold)),
                                 trailing: IconButton(
-                                    icon: const Icon(
+                                    icon: Icon(
                                       Icons.delete,
                                       color: Colorss.themeFirst,
                                     ),

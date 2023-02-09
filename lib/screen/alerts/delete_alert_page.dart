@@ -72,7 +72,7 @@ class DeleteAlertPage extends StatelessWidget {
                                 textStyle:
                                     const TextStyle(fontSize: 15, fontWeight: FontWeight.bold)),
                             child: Row(
-                              children: const [
+                              children: [
                                 Icon(
                                   Icons.delete,
                                   color: Colorss.themeFirst,

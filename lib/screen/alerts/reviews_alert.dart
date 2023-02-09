@@ -4,7 +4,6 @@ import 'package:provider/provider.dart';
 import 'package:provider_api/providers/reviews_provider.dart';
 import 'package:provider_api/utils/const.dart';
 import 'package:provider_api/widgets/review_widget.dart';
-import 'package:provider_api/widgets/textfield.dart';
 
 class ReviewsAlertPage extends StatelessWidget {
   const ReviewsAlertPage({
@@ -17,23 +16,14 @@ class ReviewsAlertPage extends StatelessWidget {
         color: Colorss.background,
         child: Column(
           children: [
-            Container(
-              padding: const EdgeInsets.all(24),
-              child: Row(
-                children: [
-                  const Flexible(
-                      flex: 4,
-                      child: TextfieldWidget(label: "comment", limit: 200, obscure: false)),
-                  Flexible(
-                      flex: 1,
-                      child: ElevatedButton(
-                        onPressed: () {},
-                        style: ElevatedButton.styleFrom(
-                            backgroundColor: Colorss.themeFirst,
-                            textStyle: const TextStyle(fontSize: 15, fontWeight: FontWeight.bold)),
-                        child: const Text("Send"),
-                      ))
-                ],
+            const Padding(
+              padding: EdgeInsets.all(16),
+              child: Divider(
+                color: Colorss.textColor,
+                height: 5,
+                endIndent: 150,
+                indent: 150,
+                thickness: 3,
               ),
             ),
             Expanded(

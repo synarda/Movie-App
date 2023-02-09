@@ -62,7 +62,7 @@ class _PutRatingAlertState extends State<PutRatingAlert> {
                       allowHalfRating: true,
                       itemCount: 5,
                       itemPadding: const EdgeInsets.symmetric(horizontal: 4.0),
-                      itemBuilder: (context, _) => const Icon(
+                      itemBuilder: (context, _) => Icon(
                         Icons.star,
                         color: Colorss.themeFirst,
                       ),
@@ -97,7 +97,7 @@ class _PutRatingAlertState extends State<PutRatingAlert> {
                               backgroundColor: Colorss.forebackground,
                               textStyle:
                                   const TextStyle(fontSize: 15, fontWeight: FontWeight.bold)),
-                          child: const Text(
+                          child: Text(
                             "Send rating",
                             style: TextStyle(color: Colorss.themeFirst, fontSize: 12),
                           )),

@@ -38,12 +38,13 @@ class RoutePageProvider with ChangeNotifier {
 
   void searchAnimated() {
     if (searchAnimWidth == 0.0) {
-      searchAnimWidth = 200.0;
+      searchAnimWidth = 170.0;
       moviesTxtOpacity = 0.0;
     } else {
       searchAnimWidth = 0.0;
       moviesTxtOpacity = 1.0;
     }
+    notifyListeners();
     notifyListeners();
   }
 

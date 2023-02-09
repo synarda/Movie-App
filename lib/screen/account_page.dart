@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:provider_api/providers/account_provider.dart';
+import 'package:provider_api/providers/home_provider.dart';
 import 'package:provider_api/providers/login_provider.dart';
 import 'package:provider_api/screen/favorite_page.dart';
 import 'package:provider_api/screen/login_page.dart';
@@ -17,7 +18,7 @@ class AccountPage extends StatelessWidget {
   final String accountId;
   @override
   Widget build(BuildContext context) {
-    final provider = context.read<LoginProvider>();
+    final provider = context.watch<LoginProvider>();
     return Scaffold(
       backgroundColor: Colorss.forebackground,
       body: Column(
@@ -104,6 +105,7 @@ class AccountPage extends StatelessWidget {
                     Navigator.pushReplacement(
                         context, MaterialPageRoute(builder: (context) => const LoginPage()));
                     context.read<LoginProvider>().isLoading = true;
+                    context.read<HomeProvider>().chooseGenreList.clear();
                   });
                 },
                 child: CustomAccountListtile(

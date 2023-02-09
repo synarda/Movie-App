@@ -115,7 +115,7 @@ class _AddMovieAlertPageState extends State<AddMovieAlertPage> {
                                                   fontSize: 15,
                                                   fontWeight: FontWeight.bold)),
                                           trailing: IconButton(
-                                              icon: const Icon(
+                                              icon: Icon(
                                                 Icons.add,
                                                 color: Colorss.themeFirst,
                                               ),

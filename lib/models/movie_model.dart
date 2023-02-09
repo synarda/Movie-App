@@ -12,6 +12,8 @@ class MovieModel {
   final String? tagLine;
   final double popularity;
   final double voteAverage;
+  final int voteCount;
+
   final List<dynamic>? genres;
   final int id;
   double? rate;
@@ -29,6 +31,7 @@ class MovieModel {
     required this.tagLine,
     required this.popularity,
     required this.voteAverage,
+    required this.voteCount,
     required this.genres,
     required this.id,
     this.rate,
@@ -36,6 +39,7 @@ class MovieModel {
   factory MovieModel.fromJson(Map<dynamic, dynamic> json) {
     return MovieModel(
       title: json["title"],
+      voteCount: json["vote_count"],
       id: json["id"],
       backdropPath: json["backdrop_path"],
       posterPath: json["poster_path"],

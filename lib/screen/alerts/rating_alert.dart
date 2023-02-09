@@ -46,7 +46,7 @@ class RatinAlertPage extends StatelessWidget {
                   style: ElevatedButton.styleFrom(
                       backgroundColor: Colorss.forebackground,
                       textStyle: const TextStyle(fontSize: 15, fontWeight: FontWeight.bold)),
-                  child: const Text(
+                  child: Text(
                     "Send rating",
                     style: TextStyle(color: Colorss.themeFirst, fontSize: 12),
                   )),

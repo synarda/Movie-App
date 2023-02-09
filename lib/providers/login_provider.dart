@@ -52,6 +52,7 @@ class LoginProvider with ChangeNotifier {
       globalProvider.getFavoriteList(account.id);
       globalProvider.getRatedMovies(account.id);
       print("sessionIDem $sessionId");
+      print(account.id);
       notifyListeners();
       return true;
     }

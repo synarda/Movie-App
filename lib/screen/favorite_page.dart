@@ -72,7 +72,7 @@ class FavoritePage extends StatelessWidget {
                                   ),
                                 ),
                                 trailing: IconButton(
-                                  icon: const Icon(
+                                  icon: Icon(
                                     Icons.delete,
                                     color: Colorss.themeFirst,
                                   ),

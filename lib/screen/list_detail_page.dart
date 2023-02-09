@@ -111,7 +111,7 @@ class ListDetailPage extends StatelessWidget {
                                             const TextStyle(color: Colorss.textColor, fontSize: 12),
                                       ),
                                       trailing: IconButton(
-                                        icon: const Icon(
+                                        icon: Icon(
                                           Icons.delete,
                                           size: 20,
                                           color: Colorss.themeFirst,

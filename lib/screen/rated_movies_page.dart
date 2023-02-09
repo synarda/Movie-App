@@ -10,6 +10,7 @@ import 'package:provider_api/providers/login_provider.dart';
 import 'package:provider_api/screen/detail_page.dart';
 import 'package:provider_api/utils/const.dart';
 import 'package:provider_api/widgets/animated_listview.dart';
+import 'package:provider_api/widgets/row.dart';
 
 class RatedMoviesPage extends StatelessWidget {
   const RatedMoviesPage({super.key});
@@ -51,46 +52,77 @@ class RatedMoviesPage extends StatelessWidget {
                           },
                           child: Container(
                               width: double.infinity,
-                              height: 100,
+                              height: 180,
                               margin: const EdgeInsets.all(8),
                               padding: const EdgeInsets.all(16),
                               decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(20),
                                   color: Colorss.background),
-                              child: ListTile(
-                                leading: SizedBox(
-                                  height: 50,
-                                  width: 50,
-                                  child: CachedNetworkImage(
-                                    fit: BoxFit.cover,
-                                    imageUrl:
-                                        "https://image.tmdb.org/t/p/original/${x.backdropPath}",
-                                    progressIndicatorBuilder: (context, url, downloadProgress) =>
-                                        const Center(
-                                      child: CupertinoActivityIndicator(),
+                              child: Column(
+                                children: [
+                                  ListTile(
+                                    leading: SizedBox(
+                                      height: 50,
+                                      width: 50,
+                                      child: ClipRRect(
+                                        borderRadius: BorderRadius.circular(30),
+                                        child: CachedNetworkImage(
+                                          fit: BoxFit.cover,
+                                          imageUrl:
+                                              "https://image.tmdb.org/t/p/original/${x.backdropPath}",
+                                          progressIndicatorBuilder:
+                                              (context, url, downloadProgress) => const Center(
+                                            child: CupertinoActivityIndicator(),
+                                          ),
+                                          errorWidget: (context, url, error) =>
+                                              const Icon(Icons.error),
+                                        ),
+                                      ),
                                     ),
-                                    errorWidget: (context, url, error) => const Icon(Icons.error),
-                                  ),
-                                ),
-                                trailing: Padding(
-                                  padding: const EdgeInsets.only(right: 32),
-                                  child: CircularPercentIndicator(
-                                    animationDuration: 1500,
-                                    radius: 20.0,
-                                    lineWidth: 5.0,
-                                    percent: x.rate == null ? 0 : x.rate! / 10.0,
-                                    animation: true,
-                                    center: Text(
-                                      x.rate.toString().substring(0, 3),
-                                      style: const TextStyle(color: Colorss.textColor),
+                                    trailing: CircularPercentIndicator(
+                                      animationDuration: 1500,
+                                      radius: 20.0,
+                                      lineWidth: 5.0,
+                                      percent: x.voteAverage / 10,
+                                      animation: true,
+                                      center: Text(
+                                        x.rate.toString().substring(0, 3),
+                                        style: const TextStyle(color: Colorss.textColor),
+                                      ),
+                                      progressColor: Colorss.themeFirst,
                                     ),
-                                    progressColor: Colorss.themeFirst,
+                                    title: Text(
+                                      x.title,
+                                      style:
+                                          const TextStyle(color: Colorss.textColor, fontSize: 12),
+                                    ),
                                   ),
-                                ),
-                                title: Text(
-                                  x.title,
-                                  style: const TextStyle(color: Colorss.textColor, fontSize: 12),
-                                ),
+                                  Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        RowWidget(
+                                          data: {
+                                            "vote count : ": x.voteCount,
+                                            "popularity : ": x.popularity,
+                                            "your vote : ": x.rate == null ? 0 : x.rate! / 10.0,
+                                          },
+                                          padding: 4,
+                                        ),
+                                        Padding(
+                                          padding: const EdgeInsets.only(right: 16),
+                                          child: IconButton(
+                                              onPressed: () => provider.deleteRate(x.id, x),
+                                              icon: Icon(
+                                                Icons.delete,
+                                                color: Colorss.themeFirst,
+                                              )),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
                               )),
                         ))
                     .toList());

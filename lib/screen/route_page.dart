@@ -8,6 +8,7 @@ import 'package:provider_api/providers/lists_provider.dart';
 import 'package:provider_api/providers/login_provider.dart';
 import 'package:provider_api/providers/route_provider.dart';
 import 'package:provider_api/screen/account_page.dart';
+import 'package:provider_api/screen/enddrawer_page.dart';
 import 'package:provider_api/screen/home_Lists_page.dart';
 import 'package:provider_api/screen/lists_page.dart';
 import 'package:provider_api/utils/const.dart';
@@ -20,14 +21,50 @@ class RoutePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final provider = context.watch<RoutePageProvider>();
+    final providerHome = context.watch<HomeProvider>();
+
     return GestureDetector(
         onTap: () => FocusScope.of(context).unfocus(),
         child: Scaffold(
+            endDrawer: const EndDrawerPage(),
             backgroundColor: Colorss.forebackground,
             appBar: AppBar(
+              actions: [
+                Builder(builder: (context) {
+                  return GestureDetector(
+                    onTap: () {
+                      Scaffold.of(context).openEndDrawer();
+                      FocusScope.of(context).unfocus();
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.only(top: 18),
+                      child: Stack(
+                        children: [
+                          providerHome.chooseGenreList.isNotEmpty
+                              ? Container(
+                                  padding: const EdgeInsets.all(3),
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(20),
+                                      color: Colorss.themeFirst),
+                                  child: Text(
+                                    providerHome.chooseGenreList.length.toString(),
+                                    style: const TextStyle(color: Colorss.textColor, fontSize: 8),
+                                  ),
+                                )
+                              : Container(),
+                          Container(
+                              margin: const EdgeInsets.all(8),
+                              child: const Icon(Icons.filter_list)),
+                        ],
+                      ),
+                    ),
+                  );
+                })
+              ],
               toolbarHeight: 80,
               backgroundColor: Colorss.background,
               title: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Row(
                     children: [
@@ -42,6 +79,7 @@ class RoutePage extends StatelessWidget {
                             duration: const Duration(milliseconds: 500),
                             width: provider.searchAnimWidth,
                             child: TextfieldWidget(
+                              focus: false,
                               suffixIconFunc: provider.searchController.clear,
                               icon: const Icon(Icons.clear, color: Colorss.textColor),
                               label: "Search",
@@ -50,19 +88,19 @@ class RoutePage extends StatelessWidget {
                               controller: provider.searchController,
                             )),
                       ),
-                    ],
-                  ),
-                  Container(
-                    height: 50,
-                    margin: const EdgeInsets.only(top: 16, left: 20),
-                    child: AnimatedOpacity(
-                      duration: const Duration(milliseconds: 500),
-                      opacity: provider.moviesTxtOpacity,
-                      child: const Text(
-                        "Movie's",
-                        style: TextStyle(color: Colorss.textColor),
+                      Container(
+                        height: 50,
+                        margin: const EdgeInsets.only(top: 24, left: 20),
+                        child: AnimatedOpacity(
+                          duration: const Duration(milliseconds: 500),
+                          opacity: provider.moviesTxtOpacity,
+                          child: const Text(
+                            "Movie's",
+                            style: TextStyle(color: Colorss.textColor),
+                          ),
+                        ),
                       ),
-                    ),
+                    ],
                   ),
                 ],
               ),
@@ -78,10 +116,25 @@ class RoutePage extends StatelessWidget {
                   },
                   children: [
                     provider.searchController.text.isEmpty
-                        ? ChangeNotifierProvider(
-                            key: const PageStorageKey<String>("home"),
-                            create: (_) => HomeProvider(),
-                            child: const HomePage())
+                        ? providerHome.chooseGenreList.isNotEmpty
+                            ? ListView(
+                                shrinkWrap: true,
+                                children: providerHome.chooseGenreListFilter
+                                    .map((e) => SearchResultWidget(
+                                          voteAverage: e.voteAverage,
+                                          title: e.title,
+                                          imgUrl: e.imgUrl,
+                                          id: e.id,
+                                          data: "",
+                                          adult: e.adult,
+                                          accountId: Provider.of<LoginProvider>(context).account.id,
+                                        ))
+                                    .toList(),
+                              )
+                            : ChangeNotifierProvider(
+                                key: const PageStorageKey<String>("home"),
+                                create: (_) => HomeProvider(),
+                                child: const HomePage())
                         : ChangeNotifierProvider(
                             key: const PageStorageKey<String>("route"),
                             create: (_) => RoutePageProvider(),
@@ -129,7 +182,7 @@ class RoutePage extends StatelessWidget {
                     backgroundColor: Colors.transparent,
                     color: Colorss.background,
                     buttonBackgroundColor: Colorss.background,
-                    items: const <Widget>[
+                    items: <Widget>[
                       Icon(Icons.home, size: 30, color: Colorss.themeFirst),
                       Icon(Icons.add, size: 30, color: Colorss.themeFirst),
                       Icon(Icons.person, size: 30, color: Colorss.themeFirst),

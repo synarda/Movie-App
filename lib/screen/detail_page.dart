@@ -225,7 +225,7 @@ class _DetailPageState extends State<DetailPage> {
                                                           padding: const EdgeInsets.all(5),
                                                           child: Text(
                                                             x["name"].toString(),
-                                                            style: const TextStyle(
+                                                            style: TextStyle(
                                                                 color: Colorss.themeFirst,
                                                                 fontSize: 8),
                                                           ),

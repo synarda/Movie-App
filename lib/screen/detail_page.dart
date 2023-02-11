@@ -17,6 +17,7 @@ import 'package:provider_api/screen/alerts/reviews_alert.dart';
 import 'package:provider_api/utils/const.dart';
 import 'package:provider_api/widgets/blur.dart';
 import 'package:provider_api/widgets/button.dart';
+import 'package:provider_api/widgets/people_list.dart';
 import 'package:provider_api/widgets/row.dart';
 import 'package:provider_api/widgets/similar_movie.dart';
 
@@ -275,11 +276,8 @@ class _DetailPageState extends State<DetailPage> {
                                                 movieId: widget.id,
                                               ),
                                             )),
-                                    widget: const Icon(
-                                      Icons.add_circle_outline_sharp,
-                                      color: Colorss.textColor,
-                                      size: 15,
-                                    ),
+                                    widget: const Icon(Icons.add_circle_outline_sharp,
+                                        color: Colorss.textColor, size: 15),
                                   ),
                                   ButtonWidget(
                                     txt: "Rate",
@@ -291,11 +289,8 @@ class _DetailPageState extends State<DetailPage> {
                                             provider.movie!.id, value * 2, provider.movie!);
                                       }
                                     }),
-                                    widget: const Icon(
-                                      Icons.star,
-                                      color: Colorss.textColor,
-                                      size: 15,
-                                    ),
+                                    widget:
+                                        const Icon(Icons.star, color: Colorss.textColor, size: 15),
                                   ),
                                   ButtonWidget(
                                     txt: "comments",
@@ -410,7 +405,37 @@ class _DetailPageState extends State<DetailPage> {
                                             )
                                     ],
                                   ),
-                                  const SizedBox(height: 64),
+                                  const SizedBox(height: 32),
+                                  const Padding(
+                                    padding: EdgeInsets.only(top: 16),
+                                    child: Text(
+                                      "Cast Movie's",
+                                      style: TextStyle(color: Colorss.textColor),
+                                    ),
+                                  ),
+                                  Divider(
+                                    color: Colorss.themeFirst,
+                                    endIndent: 16,
+                                    thickness: 0.3,
+                                    indent: 16,
+                                  ),
+                                  Container(
+                                    padding: const EdgeInsets.only(
+                                      top: 48,
+                                      left: 16,
+                                      right: 16,
+                                    ),
+                                    height: 220,
+                                    width: MediaQuery.of(context).size.width,
+                                    child: ListView(
+                                        physics: const BouncingScrollPhysics(
+                                            parent: AlwaysScrollableScrollPhysics()),
+                                        scrollDirection: Axis.horizontal,
+                                        children: (provider.peoples ?? [])
+                                            .map((e) => PeopleListWidget(e: e))
+                                            .toList()),
+                                  ),
+                                  const SizedBox(height: 32),
                                   const Padding(
                                     padding: EdgeInsets.only(top: 16),
                                     child: Text(
@@ -418,7 +443,13 @@ class _DetailPageState extends State<DetailPage> {
                                       style: TextStyle(color: Colorss.textColor),
                                     ),
                                   ),
-                                  SimilarMovieWidget(data: widget.data)
+                                  Divider(
+                                    color: Colorss.themeFirst,
+                                    endIndent: 16,
+                                    thickness: 0.3,
+                                    indent: 16,
+                                  ),
+                                  SimilarMovieWidget(data: widget.data),
                                 ],
                               )
                             ],

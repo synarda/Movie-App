@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:provider_api/models/movie_model.dart';
 import 'package:provider_api/models/movies_model.dart';
+import 'package:provider_api/models/people_model.dart';
 import 'package:provider_api/models/reviews_model.dart';
 import 'package:provider_api/services/api_service.dart';
 
@@ -130,6 +131,26 @@ class MovieService {
       print(err);
     }
 
+    return null;
+  }
+
+  static Future<List<PeopleModel>?> getPeople(int movieId) async {
+    try {
+      final response = await http.get(
+          Uri.http("api.themoviedb.org", "/3/movie/$movieId/credits",
+              {"api_key": "9c829acfb2666008b8b6304b45fc15a7", "session_id": ApiService.sessionId}),
+          headers: {
+            'Accept': 'application/json',
+          });
+
+      if (response.statusCode == 200) {
+        final result = jsonDecode(response.body);
+        List<dynamic> lists = result["cast"];
+        return lists.map((e) => PeopleModel.fromJson(e)).toList();
+      }
+    } catch (error) {
+      print(error);
+    }
     return null;
   }
 }

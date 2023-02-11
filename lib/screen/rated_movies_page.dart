@@ -7,6 +7,7 @@ import 'package:provider/provider.dart';
 import 'package:provider_api/providers/detail_provider.dart';
 import 'package:provider_api/providers/globalProvider.dart';
 import 'package:provider_api/providers/login_provider.dart';
+import 'package:provider_api/screen/alerts/delete_alert_page.dart';
 import 'package:provider_api/screen/detail_page.dart';
 import 'package:provider_api/utils/const.dart';
 import 'package:provider_api/widgets/animated_listview.dart';
@@ -113,7 +114,14 @@ class RatedMoviesPage extends StatelessWidget {
                                         Padding(
                                           padding: const EdgeInsets.only(right: 16),
                                           child: IconButton(
-                                              onPressed: () => provider.deleteRate(x.id, x),
+                                              onPressed: () async {
+                                                final result = await showDialog(
+                                                    context: context,
+                                                    builder: (context) => const DeleteAlertPage());
+                                                if (result == true) {
+                                                  provider.deleteRate(x.id, x);
+                                                }
+                                              },
                                               icon: Icon(
                                                 Icons.delete,
                                                 color: Colorss.themeFirst,

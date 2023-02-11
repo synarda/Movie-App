@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 import 'package:provider_api/providers/detail_provider.dart';
 import 'package:provider_api/providers/globalProvider.dart';
 import 'package:provider_api/providers/login_provider.dart';
+import 'package:provider_api/screen/alerts/delete_alert_page.dart';
 import 'package:provider_api/screen/detail_page.dart';
 import 'package:provider_api/utils/const.dart';
 import 'package:provider_api/widgets/animated_listview.dart';
@@ -76,9 +77,14 @@ class FavoritePage extends StatelessWidget {
                                     Icons.delete,
                                     color: Colorss.themeFirst,
                                   ),
-                                  onPressed: () {
-                                    provider.postMarkFavorite(
-                                        x, context.read<LoginProvider>().account.id);
+                                  onPressed: () async {
+                                    final result = await showDialog(
+                                        context: context,
+                                        builder: (context) => const DeleteAlertPage());
+                                    if (result == true) {
+                                      provider.postMarkFavorite(
+                                          x, context.read<LoginProvider>().account.id);
+                                    }
                                   },
                                 ),
                                 title: Text(

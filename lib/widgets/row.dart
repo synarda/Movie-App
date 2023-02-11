@@ -17,30 +17,31 @@ class RowWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Align(
-      alignment: Alignment.centerLeft,
-      child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: data.entries
-              .map(
-                (kv) => Container(
-                  padding: EdgeInsets.all(padding),
-                  child: Row(
-                    children: [
-                      Text(
-                        kv.key,
-                        style: TextStyle(color: Colorss.textColor, fontSize: titleSize),
-                      ),
-                      const SizedBox(height: 12),
-                      Text(
+    return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: data.entries
+            .map(
+              (kv) => Container(
+                padding: EdgeInsets.all(padding),
+                child: Row(
+                  children: [
+                    Text(
+                      kv.key,
+                      style: TextStyle(color: Colorss.textColor, fontSize: titleSize),
+                    ),
+                    const SizedBox(height: 12),
+                    SizedBox(
+                      width: 75,
+                      child: Text(
+                        overflow: TextOverflow.ellipsis,
                         kv.value?.toString() ?? "",
                         style: TextStyle(color: Colorss.themeFirst, fontSize: contentSize),
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
-              )
-              .toList()),
-    );
+              ),
+            )
+            .toList());
   }
 }

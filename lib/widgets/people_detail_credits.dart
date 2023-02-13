@@ -13,8 +13,10 @@ class PeopleDetailCreditsMovies extends StatelessWidget {
   const PeopleDetailCreditsMovies({
     Key? key,
     required this.data,
+    this.isGame = false,
   }) : super(key: key);
   final String data;
+  final bool isGame;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -37,9 +39,9 @@ class PeopleDetailCreditsMovies extends StatelessWidget {
                       context,
                       MaterialPageRoute(
                           builder: (context) => ChangeNotifierProvider(
-                                create: (ctx) =>
-                                    DetailProvider(e.id, context.read<GlobalProvider>()),
+                                create: (ctx) => DetailProvider(e.id, context.read<GlobalProvider>()),
                                 child: DetailPage(
+                                    isGame: isGame == true ? false : true,
                                     adult: e.adult,
                                     data: data,
                                     id: e.id,
@@ -60,10 +62,7 @@ class PeopleDetailCreditsMovies extends StatelessWidget {
                           borderRadius: BorderRadius.circular(20),
                           child: e!.imgUrl.isEmpty
                               ? Center(
-                                  child: SizedBox(
-                                      height: 30,
-                                      width: 30,
-                                      child: Image.asset("assets/noimage.png")),
+                                  child: SizedBox(height: 30, width: 30, child: Image.asset("assets/noimage.png")),
                                 )
                               : CachedNetworkImage(
                                   fit: BoxFit.cover,

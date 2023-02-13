@@ -7,6 +7,7 @@ import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:provider/provider.dart';
 import 'package:provider_api/providers/add_movie_provider.dart';
 import 'package:provider_api/providers/detail_provider.dart';
+import 'package:provider_api/providers/game_alert_provider.dart';
 import 'package:provider_api/providers/globalProvider.dart';
 import 'package:provider_api/providers/lists_provider.dart';
 import 'package:provider_api/providers/login_provider.dart';
@@ -15,6 +16,7 @@ import 'package:provider_api/screen/alerts/addMovie_alert_page.dart';
 import 'package:provider_api/screen/alerts/put_rating_alert.dart';
 import 'package:provider_api/screen/alerts/reviews_alert.dart';
 import 'package:provider_api/utils/const.dart';
+import 'package:provider_api/utils/extentions.dart';
 import 'package:provider_api/widgets/blur.dart';
 import 'package:provider_api/widgets/button.dart';
 import 'package:provider_api/widgets/people_list.dart';
@@ -29,6 +31,7 @@ class DetailPage extends StatefulWidget {
     required this.data,
     required this.adult,
     required this.accountId,
+    this.isGame = false,
   }) : super(key: key);
   final String? imgUrl;
 
@@ -36,6 +39,7 @@ class DetailPage extends StatefulWidget {
   final String data;
   final bool adult;
   final String accountId;
+  final bool isGame;
 
   @override
   State<DetailPage> createState() => _DetailPageState();
@@ -69,6 +73,12 @@ class _DetailPageState extends State<DetailPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: widget.isGame == true
+          ? AppBar(
+              title: Text(context.watch<GameAlertProvider>().testTime.secondsToTimeZero),
+              centerTitle: true,
+            )
+          : null,
       backgroundColor: Colorss.background,
       body: Stack(
         children: [
@@ -163,8 +173,7 @@ class _DetailPageState extends State<DetailPage> {
                                                       fit: BoxFit.cover,
                                                       imageUrl:
                                                           "https://image.tmdb.org/t/p/original/${provider.movie!.posterPath}",
-                                                      errorWidget: (context, url, error) =>
-                                                          const Icon(
+                                                      errorWidget: (context, url, error) => const Icon(
                                                         Icons.signal_cellular_nodata,
                                                         color: Colorss.textColor,
                                                         size: 25,
@@ -188,8 +197,7 @@ class _DetailPageState extends State<DetailPage> {
                                                   : Text(
                                                       textAlign: TextAlign.center,
                                                       provider.movie!.title,
-                                                      style:
-                                                          const TextStyle(color: Colorss.textColor),
+                                                      style: const TextStyle(color: Colorss.textColor),
                                                     ),
                                             ),
                                           ),
@@ -211,24 +219,20 @@ class _DetailPageState extends State<DetailPage> {
                                                           decoration: BoxDecoration(
                                                               boxShadow: [
                                                                 BoxShadow(
-                                                                  color: Colorss.forebackground
-                                                                      .withOpacity(0.5),
+                                                                  color: Colorss.forebackground.withOpacity(0.5),
                                                                   spreadRadius: 1,
                                                                   blurRadius: 10,
                                                                   offset: const Offset(0, 5),
                                                                 ),
                                                               ],
                                                               color: Colorss.background,
-                                                              borderRadius:
-                                                                  BorderRadius.circular(20)),
+                                                              borderRadius: BorderRadius.circular(20)),
                                                           margin: const EdgeInsets.only(
                                                               left: 0, right: 8, top: 8, bottom: 8),
                                                           padding: const EdgeInsets.all(5),
                                                           child: Text(
                                                             x["name"].toString(),
-                                                            style: TextStyle(
-                                                                color: Colorss.themeFirst,
-                                                                fontSize: 8),
+                                                            style: TextStyle(color: Colorss.themeFirst, fontSize: 8),
                                                           ),
                                                         ))
                                                     .toList(),
@@ -266,8 +270,7 @@ class _DetailPageState extends State<DetailPage> {
                                         builder: (x) => MultiProvider(
                                               providers: [
                                                 ChangeNotifierProvider<ListsProvider>(
-                                                    create: (ctx) =>
-                                                        ListsProvider(widget.accountId)),
+                                                    create: (ctx) => ListsProvider(widget.accountId)),
                                                 ChangeNotifierProvider<AddMovieProvider>(
                                                     create: (ctx) => AddMovieProvider())
                                               ],
@@ -276,21 +279,20 @@ class _DetailPageState extends State<DetailPage> {
                                                 movieId: widget.id,
                                               ),
                                             )),
-                                    widget: const Icon(Icons.add_circle_outline_sharp,
-                                        color: Colorss.textColor, size: 15),
+                                    widget:
+                                        const Icon(Icons.add_circle_outline_sharp, color: Colorss.textColor, size: 15),
                                   ),
                                   ButtonWidget(
                                     txt: "Rate",
-                                    func: () => showDialog(
-                                        context: context,
-                                        builder: (x) => const PutRatingAlert()).then((value) {
+                                    func: () => showDialog(context: context, builder: (x) => const PutRatingAlert())
+                                        .then((value) {
                                       if (value != null) {
-                                        context.read<GlobalProvider>().postRating(
-                                            provider.movie!.id, value * 2, provider.movie!);
+                                        context
+                                            .read<GlobalProvider>()
+                                            .postRating(provider.movie!.id, value * 2, provider.movie!);
                                       }
                                     }),
-                                    widget:
-                                        const Icon(Icons.star, color: Colorss.textColor, size: 15),
+                                    widget: const Icon(Icons.star, color: Colorss.textColor, size: 15),
                                   ),
                                   ButtonWidget(
                                     txt: "comments",
@@ -331,14 +333,10 @@ class _DetailPageState extends State<DetailPage> {
                                           ),
                                         ],
                                         borderRadius: BorderRadius.circular(20),
-                                        color: context
-                                                .watch<GlobalProvider>()
-                                                .isFavorite(provider.movie!.id)
+                                        color: context.watch<GlobalProvider>().isFavorite(provider.movie!.id)
                                             ? Colorss.themeFirst
                                             : Colorss.forebackground),
-                                    child: context
-                                            .read<GlobalProvider>()
-                                            .isFavorite(provider.movie!.id)
+                                    child: context.read<GlobalProvider>().isFavorite(provider.movie!.id)
                                         ? const Icon(
                                             Icons.bookmark_outlined,
                                             color: Colorss.textColor,
@@ -395,9 +393,7 @@ class _DetailPageState extends State<DetailPage> {
                                                 percent: provider.movie!.voteAverage / 10,
                                                 animation: true,
                                                 center: Text(
-                                                  provider.movie!.voteAverage
-                                                      .toString()
-                                                      .substring(0, 3),
+                                                  provider.movie!.voteAverage.toString().substring(0, 3),
                                                   style: const TextStyle(color: Colorss.textColor),
                                                 ),
                                                 progressColor: Colorss.themeFirst,
@@ -428,28 +424,40 @@ class _DetailPageState extends State<DetailPage> {
                                     height: 220,
                                     width: MediaQuery.of(context).size.width,
                                     child: ListView(
-                                        physics: const BouncingScrollPhysics(
-                                            parent: AlwaysScrollableScrollPhysics()),
+                                        physics: const BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
                                         scrollDirection: Axis.horizontal,
                                         children: (provider.peoples ?? [])
-                                            .map((e) => PeopleListWidget(e: e))
+                                            .map((e) => PeopleListWidget(
+                                                  e: e,
+                                                  isGame: widget.isGame == true ? false : true,
+                                                ))
                                             .toList()),
                                   ),
                                   const SizedBox(height: 32),
-                                  const Padding(
-                                    padding: EdgeInsets.only(top: 16),
-                                    child: Text(
-                                      "Similar Movie's",
-                                      style: TextStyle(color: Colorss.textColor),
+                                  Visibility(
+                                    visible: widget.isGame == true ? false : true,
+                                    child: Column(
+                                      children: [
+                                        const Padding(
+                                          padding: EdgeInsets.only(top: 16),
+                                          child: Text(
+                                            "Similar Movie's",
+                                            style: TextStyle(color: Colorss.textColor),
+                                          ),
+                                        ),
+                                        Divider(
+                                          color: Colorss.themeFirst,
+                                          endIndent: 16,
+                                          thickness: 0.3,
+                                          indent: 16,
+                                        ),
+                                        SimilarMovieWidget(
+                                          data: widget.data,
+                                          isGame: widget.isGame == true ? false : true,
+                                        ),
+                                      ],
                                     ),
-                                  ),
-                                  Divider(
-                                    color: Colorss.themeFirst,
-                                    endIndent: 16,
-                                    thickness: 0.3,
-                                    indent: 16,
-                                  ),
-                                  SimilarMovieWidget(data: widget.data),
+                                  )
                                 ],
                               )
                             ],
@@ -457,15 +465,17 @@ class _DetailPageState extends State<DetailPage> {
                         ]));
             }),
           ),
-          Padding(
-            padding: const EdgeInsets.only(top: 24),
-            child: IconButton(
-                icon: const Icon(
-                  Icons.arrow_back,
-                  color: Colorss.textColor,
+          widget.isGame == true
+              ? const SizedBox()
+              : Padding(
+                  padding: const EdgeInsets.only(top: 24),
+                  child: IconButton(
+                      icon: const Icon(
+                        Icons.arrow_back,
+                        color: Colorss.textColor,
+                      ),
+                      onPressed: () => Navigator.pop(context)),
                 ),
-                onPressed: () => Navigator.pop(context)),
-          ),
         ],
       ),
     );

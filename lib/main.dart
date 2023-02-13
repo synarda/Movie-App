@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:provider/provider.dart';
+import 'package:provider_api/providers/game_alert_provider.dart';
 import 'package:provider_api/providers/globalProvider.dart';
 import 'package:provider_api/providers/home_provider.dart';
 import 'package:provider_api/providers/login_provider.dart';
@@ -23,6 +24,7 @@ class MyApp extends StatelessWidget {
     final routeProvider = RoutePageProvider();
     final globalProvider = GlobalProvider();
     final homeProvider = HomeProvider();
+    final gameAlertProvider = GameAlertProvider(context);
 
     final loginProvider = LoginProvider(globalProvider);
     return MultiProvider(
@@ -30,7 +32,8 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider<LoginProvider>(create: (ctx) => loginProvider),
         ChangeNotifierProvider<HomeProvider>(create: (ctx) => homeProvider),
         ChangeNotifierProvider<RoutePageProvider>(create: (ctx) => routeProvider),
-        ChangeNotifierProvider<GlobalProvider>(create: (ctx) => globalProvider)
+        ChangeNotifierProvider<GlobalProvider>(create: (ctx) => globalProvider),
+        ChangeNotifierProvider<GameAlertProvider>(create: (ctx) => gameAlertProvider),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

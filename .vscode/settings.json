@@ -1,9 +1,9 @@
 {
     "dart.flutterSdkPath": "/opt/flutter",
-    "dart.lineLength": 100,
+    "dart.lineLength": 120,
     "[dart]": {
         "editor.rulers": [
-            100
+            120
         ],
     },
     "editor.codeActionsOnSave": {

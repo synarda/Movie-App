@@ -1,11 +1,10 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:provider_api/providers/account_provider.dart';
-import 'package:provider_api/providers/home_provider.dart';
+import 'package:provider_api/providers/game_provider.dart';
 import 'package:provider_api/providers/login_provider.dart';
 import 'package:provider_api/screen/favorite_page.dart';
-import 'package:provider_api/screen/login_page.dart';
+import 'package:provider_api/screen/game_page.dart';
 import 'package:provider_api/screen/rated_movies_page.dart';
 import 'package:provider_api/utils/const.dart';
 import 'package:provider_api/widgets/custom_account_listtile.dart';
@@ -83,6 +82,23 @@ class AccountPage extends StatelessWidget {
               GestureDetector(
                 onTap: () {
                   Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => ChangeNotifierProvider(
+                            create: (ctx) => GameProvider(), child: const GamePage()),
+                      ));
+                },
+                child: CustomAccountListtile(
+                    textColor: Colorss.textColor,
+                    icon: Icon(
+                      Icons.games,
+                      color: Colorss.textColor.withOpacity(0.7),
+                    ),
+                    text: "Play Game"),
+              ),
+              GestureDetector(
+                onTap: () {
+                  Navigator.push(
                     context,
                     MaterialPageRoute(
                       builder: (context) => const RatedMoviesPage(),
@@ -98,16 +114,7 @@ class AccountPage extends StatelessWidget {
                     text: "Rated movies"),
               ),
               GestureDetector(
-                onTap: () {
-                  Provider.of<AccountProvider>(context, listen: false)
-                      .deleteSession()
-                      .then((value) {
-                    Navigator.pushReplacement(
-                        context, MaterialPageRoute(builder: (context) => const LoginPage()));
-                    context.read<LoginProvider>().isLoading = true;
-                    context.read<HomeProvider>().chooseGenreList.clear();
-                  });
-                },
+                onTap: () {},
                 child: CustomAccountListtile(
                     textColor: Colorss.themeFirst,
                     icon: Icon(

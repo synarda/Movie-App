@@ -1,3 +1,4 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:ui';
 
 import 'package:cached_network_image/cached_network_image.dart';
@@ -10,14 +11,18 @@ import 'package:provider_api/widgets/people_detail_credits.dart';
 import 'package:provider_api/widgets/row.dart';
 
 class PeopleDetailPage extends StatelessWidget {
-  const PeopleDetailPage({super.key});
-
+  const PeopleDetailPage({
+    Key? key,
+    this.isGame = false,
+  }) : super(key: key);
+  final bool isGame;
   @override
   Widget build(BuildContext context) {
     final provider = context.watch<PeopleDetailProviderr>();
     final people = provider.personDetail;
-    final creditsMovie = provider.personDetailCast;
+
     return Scaffold(
+        appBar: isGame == true ? AppBar(title: const Text("playing"), centerTitle: true) : null,
         backgroundColor: Colorss.background,
         body: provider.personDetail == null
             ? const SizedBox()
@@ -32,10 +37,8 @@ class PeopleDetailPage extends StatelessWidget {
                             width: MediaQuery.of(context).size.width,
                             child: CachedNetworkImage(
                               fit: BoxFit.cover,
-                              imageUrl:
-                                  "https://image.tmdb.org/t/p/original/${people!.profilePath}",
-                              progressIndicatorBuilder: (context, url, downloadProgress) =>
-                                  const Center(
+                              imageUrl: "https://image.tmdb.org/t/p/original/${people!.profilePath}",
+                              progressIndicatorBuilder: (context, url, downloadProgress) => const Center(
                                 child: CupertinoActivityIndicator(),
                               ),
                               errorWidget: (context, url, error) => const Icon(Icons.error),
@@ -53,19 +56,17 @@ class PeopleDetailPage extends StatelessWidget {
                             ),
                           ),
                           SizedBox(
-                            height: MediaQuery.of(context).size.height,
+                            height: MediaQuery.of(context).size.height / 1.2,
                             child: ListView(
                               shrinkWrap: true,
-                              physics: const BouncingScrollPhysics(
-                                  parent: AlwaysScrollableScrollPhysics()),
+                              physics: const BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
                               children: [
                                 Align(
                                   alignment: Alignment.centerLeft,
                                   child: Row(
                                     children: [
                                       Container(
-                                        margin:
-                                            const EdgeInsets.only(top: 64, bottom: 32, left: 64),
+                                        margin: const EdgeInsets.only(top: 64, bottom: 32, left: 64),
                                         height: 170,
                                         width: 100,
                                         child: ClipRRect(
@@ -76,13 +77,11 @@ class PeopleDetailPage extends StatelessWidget {
                                                     fit: BoxFit.cover,
                                                     imageUrl:
                                                         "https://image.tmdb.org/t/p/original/${people.profilePath}",
-                                                    progressIndicatorBuilder:
-                                                        (context, url, downloadProgress) =>
-                                                            const Center(
+                                                    progressIndicatorBuilder: (context, url, downloadProgress) =>
+                                                        const Center(
                                                       child: CupertinoActivityIndicator(),
                                                     ),
-                                                    errorWidget: (context, url, error) =>
-                                                        const Icon(Icons.error),
+                                                    errorWidget: (context, url, error) => const Icon(Icons.error),
                                                   )),
                                       ),
                                       Padding(
@@ -105,10 +104,8 @@ class PeopleDetailPage extends StatelessWidget {
                                               data: {
                                                 "birthday:  ": people.birthday ?? "no data",
                                                 "deathday:  ": people.deathday ?? "∞",
-                                                "Place of Birth  :  ":
-                                                    people.placeOfBirt ?? "no data",
-                                                "Gender  :  ":
-                                                    people.gender == 1 ? "Female" : "Male"
+                                                "Place of Birth  :  ": people.placeOfBirt ?? "no data",
+                                                "Gender  :  ": people.gender == 1 ? "Female" : "Male"
                                               },
                                             )
                                           ],
@@ -123,8 +120,7 @@ class PeopleDetailPage extends StatelessWidget {
                                     child: Stack(
                                       children: [
                                         ListView(
-                                          physics: const BouncingScrollPhysics(
-                                              parent: AlwaysScrollableScrollPhysics()),
+                                          physics: const BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
                                           children: [
                                             Text(
                                               people.biography ?? "No  biography",
@@ -134,7 +130,10 @@ class PeopleDetailPage extends StatelessWidget {
                                         ),
                                       ],
                                     )),
-                                const PeopleDetailCreditsMovies(data: "")
+                                PeopleDetailCreditsMovies(
+                                  data: "",
+                                  isGame: isGame == true ? false : true,
+                                )
                               ],
                             ),
                           ),
@@ -142,18 +141,20 @@ class PeopleDetailPage extends StatelessWidget {
                       ),
                     ],
                   ),
-                  Align(
-                    alignment: Alignment.topLeft,
-                    child: Padding(
-                      padding: const EdgeInsets.only(top: 32, left: 16),
-                      child: IconButton(
-                          icon: const Icon(
-                            Icons.arrow_back,
-                            color: Colorss.textColor,
+                  isGame == true
+                      ? const SizedBox()
+                      : Align(
+                          alignment: Alignment.topLeft,
+                          child: Padding(
+                            padding: const EdgeInsets.only(top: 32, left: 16),
+                            child: IconButton(
+                                icon: const Icon(
+                                  Icons.arrow_back,
+                                  color: Colorss.textColor,
+                                ),
+                                onPressed: () => Navigator.pop(context)),
                           ),
-                          onPressed: () => Navigator.pop(context)),
-                    ),
-                  ),
+                        ),
                 ],
               ));
   }

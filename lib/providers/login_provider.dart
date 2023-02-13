@@ -20,7 +20,6 @@ class LoginProvider with ChangeNotifier {
     final sessionId = sessionBox.get("sessionId");
     if (sessionId != null) {
       getAccount();
-      print("girildi");
     }
   }
 

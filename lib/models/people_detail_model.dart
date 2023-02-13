@@ -7,6 +7,7 @@ class PeopleDetailModel {
   final String? profilePath;
   final String? biography;
   final int? gender;
+  final int id;
   PeopleDetailModel({
     required this.name,
     required this.birthday,
@@ -15,10 +16,12 @@ class PeopleDetailModel {
     required this.profilePath,
     required this.biography,
     required this.gender,
+    required this.id,
   });
   factory PeopleDetailModel.fromJson(Map<dynamic, dynamic> json) {
     return PeopleDetailModel(
       name: json["name"],
+      id: json["id"],
       birthday: json["birthday"],
       deathday: json["deathday"],
       placeOfBirt: json["place_of_birth"],

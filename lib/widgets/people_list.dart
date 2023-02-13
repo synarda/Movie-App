@@ -12,8 +12,10 @@ class PeopleListWidget extends StatelessWidget {
   const PeopleListWidget({
     Key? key,
     required this.e,
+    this.isGame = false,
   }) : super(key: key);
   final PeopleModel e;
+  final bool isGame;
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -21,7 +23,10 @@ class PeopleListWidget extends StatelessWidget {
           context,
           MaterialPageRoute(
             builder: (context) => ChangeNotifierProvider(
-                create: (_) => PeopleDetailProviderr(e.id), child: const PeopleDetailPage()),
+                create: (_) => PeopleDetailProviderr(e.id),
+                child: PeopleDetailPage(
+                  isGame: isGame == true ? false : true,
+                )),
           )),
       child: Container(
         height: 220,
@@ -50,8 +55,7 @@ class PeopleListWidget extends StatelessWidget {
             height: 200,
             width: 120,
             decoration: const BoxDecoration(
-              borderRadius: BorderRadius.only(
-                  bottomRight: Radius.circular(20), bottomLeft: Radius.circular(20)),
+              borderRadius: BorderRadius.only(bottomRight: Radius.circular(20), bottomLeft: Radius.circular(20)),
               gradient: LinearGradient(
                 begin: Alignment.bottomCenter,
                 end: Alignment.topCenter,

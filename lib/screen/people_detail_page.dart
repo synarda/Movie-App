@@ -6,7 +6,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:provider_api/providers/people_detail_provider.dart';
-import 'package:provider_api/screen/alerts/game_get_back_alert.dart';
 import 'package:provider_api/utils/const.dart';
 import 'package:provider_api/widgets/people_detail_credits.dart';
 import 'package:provider_api/widgets/row.dart';
@@ -24,14 +23,7 @@ class PeopleDetailPage extends StatelessWidget {
 
     return WillPopScope(
         onWillPop: () async {
-          if (isGame == true) {
-            final result = await showDialog(context: context, builder: (context) => const GameGetBackAlert());
-            if (result == true) {
-              Navigator.pop(context);
-            }
-          } else {
-            Navigator.pop(context);
-          }
+          provider.inGameWillPop(context, isGame);
           return false;
         },
         child: Scaffold(

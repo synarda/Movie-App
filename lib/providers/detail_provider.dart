@@ -3,6 +3,7 @@ import 'package:provider_api/models/movie_model.dart';
 import 'package:provider_api/models/movies_model.dart';
 import 'package:provider_api/models/people_model.dart';
 import 'package:provider_api/providers/globalProvider.dart';
+import 'package:provider_api/screen/alerts/game_get_back_alert.dart';
 import 'package:provider_api/services/api_service.dart';
 import 'package:provider_api/services/movie_service.dart';
 
@@ -42,5 +43,16 @@ class DetailProvider with ChangeNotifier {
       print(peoples);
     }
     notifyListeners();
+  }
+
+  Future<void> inGameWillPop(context, bool isGame) async {
+    if (isGame == true) {
+      final result = await showDialog(context: context, builder: (context) => const GameGetBackAlert());
+      if (result == true) {
+        Navigator.pop(context);
+      }
+    } else {
+      Navigator.pop(context);
+    }
   }
 }

@@ -1,6 +1,7 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:provider_api/models/movies_model.dart';
 import 'package:provider_api/models/people_detail_model.dart';
+import 'package:provider_api/screen/alerts/game_get_back_alert.dart';
 import 'package:provider_api/services/people_service.dart';
 
 class PeopleDetailProviderr with ChangeNotifier {
@@ -25,5 +26,16 @@ class PeopleDetailProviderr with ChangeNotifier {
       personDetailCast = result;
     }
     notifyListeners();
+  }
+
+  Future<void> inGameWillPop(context, bool isGame) async {
+    if (isGame == true) {
+      final result = await showDialog(context: context, builder: (context) => const GameGetBackAlert());
+      if (result == true) {
+        Navigator.pop(context);
+      }
+    } else {
+      Navigator.pop(context);
+    }
   }
 }

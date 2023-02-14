@@ -32,7 +32,7 @@ class PeopleDetailCreditsMovies extends StatelessWidget {
               final e = provider.personDetailCast![index];
               return GestureDetector(
                 onTap: () {
-                  context.read<GameAlertProvider>().route(isGame, e.id, context, "detail", e.adult, e.imgUrl);
+                  context.read<GameAlertProvider>().route(isGame, e.id, context, "detail", e.adult, e.imgUrl, e.title);
                 },
                 child: Container(
                   decoration: BoxDecoration(borderRadius: BorderRadius.circular(20)),

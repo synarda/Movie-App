@@ -22,11 +22,6 @@ class GamePageAlert extends StatelessWidget {
                 borderRadius: BorderRadius.circular(20), border: Border.all(color: Colorss.themeFirst, width: 2)),
             child: Consumer<GameAlertProvider>(builder: (context, provider, child) {
               return Column(children: [
-                const Text(
-                  "Let's go",
-                  style: TextStyle(color: Colorss.textColor),
-                ),
-                const SizedBox(height: 16),
                 Container(
                   margin: const EdgeInsets.all(16),
                   height: 70,
@@ -39,6 +34,11 @@ class GamePageAlert extends StatelessWidget {
                     ),
                   ),
                 ),
+                Text(
+                  provider.gameModel!.from.name,
+                  style: const TextStyle(color: Colorss.textColor, fontSize: 12),
+                ),
+                const SizedBox(height: 16),
                 const Icon(Icons.arrow_downward_rounded, color: Colorss.textColor),
                 Container(
                   margin: const EdgeInsets.all(16),
@@ -52,7 +52,11 @@ class GamePageAlert extends StatelessWidget {
                     ),
                   ),
                 ),
-                const SizedBox(height: 75),
+                Text(
+                  provider.gameModel!.to.name,
+                  style: const TextStyle(color: Colorss.textColor, fontSize: 12),
+                ),
+                const SizedBox(height: 50),
                 Container(
                   height: 70,
                   width: 70,

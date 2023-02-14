@@ -5,8 +5,10 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:provider_api/providers/game_alert_provider.dart';
 import 'package:provider_api/providers/people_detail_provider.dart';
 import 'package:provider_api/utils/const.dart';
+import 'package:provider_api/utils/extentions.dart';
 import 'package:provider_api/widgets/people_detail_credits.dart';
 import 'package:provider_api/widgets/row.dart';
 
@@ -20,6 +22,7 @@ class PeopleDetailPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final provider = context.watch<PeopleDetailProvider>();
     final people = provider.personDetail;
+    final providerAlert = context.read<GameAlertProvider>();
 
     return WillPopScope(
         onWillPop: () async {
@@ -27,7 +30,83 @@ class PeopleDetailPage extends StatelessWidget {
           return false;
         },
         child: Scaffold(
-            appBar: isGame == true ? AppBar(title: const Text("playing"), centerTitle: true) : null,
+            appBar: isGame == true
+                ? AppBar(
+                    leading: const SizedBox(),
+                    leadingWidth: 0,
+                    toolbarHeight: 80,
+                    backgroundColor: Colorss.background,
+                    title: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+                      Column(
+                        children: [
+                          Container(
+                            margin: const EdgeInsets.only(top: 16, bottom: 4),
+                            height: 35,
+                            width: 35,
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(50),
+                              child: CachedNetworkImage(
+                                fit: BoxFit.cover,
+                                imageUrl: "https://image.tmdb.org/t/p/original/${providerAlert.gameModel?.from.poster}",
+                                progressIndicatorBuilder: (context, url, downloadProgress) => const Center(
+                                  child: CupertinoActivityIndicator(),
+                                ),
+                                errorWidget: (context, url, error) => const Icon(Icons.error),
+                              ),
+                            ),
+                          ),
+                          SizedBox(
+                            width: 150,
+                            child: Text(
+                              providerAlert.gameModel!.from.name,
+                              textAlign: TextAlign.center,
+                              overflow: TextOverflow.ellipsis,
+                              style: const TextStyle(color: Colorss.textColor, fontSize: 12),
+                            ),
+                          ),
+                          const SizedBox(height: 8)
+                        ],
+                      ),
+                      Column(
+                        children: [
+                          Text(context.watch<GameAlertProvider>().testTime.secondsToTimeZero),
+                          const Icon(Icons.arrow_forward, color: Colorss.textColor, size: 15),
+                        ],
+                      ),
+                      Column(
+                        children: [
+                          Container(
+                            margin: const EdgeInsets.only(top: 16, bottom: 4),
+                            height: 35,
+                            width: 35,
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(50),
+                              child: CachedNetworkImage(
+                                fit: BoxFit.cover,
+                                imageUrl: "https://image.tmdb.org/t/p/original/${providerAlert.gameModel?.to.poster}",
+                                progressIndicatorBuilder: (context, url, downloadProgress) => const Center(
+                                  child: CupertinoActivityIndicator(),
+                                ),
+                                errorWidget: (context, url, error) => const Icon(Icons.error),
+                              ),
+                            ),
+                          ),
+                          SizedBox(
+                            width: 150,
+                            child: Text(
+                              providerAlert.gameModel!.to.name,
+                              overflow: TextOverflow.ellipsis,
+                              textAlign: TextAlign.center,
+                              style: const TextStyle(color: Colorss.textColor, fontSize: 12),
+                            ),
+                          ),
+                          const SizedBox(height: 8)
+                        ],
+                      ),
+                    ]),
+                    centerTitle: true,
+                  )
+                : null,
             backgroundColor: Colorss.background,
             body: provider.personDetail == null
                 ? const SizedBox()

@@ -73,7 +73,7 @@ class _DetailPageState extends State<DetailPage> {
   @override
   Widget build(BuildContext context) {
     final provider = context.watch<DetailProvider>();
-
+    final providerAlert = context.read<GameAlertProvider>();
     return WillPopScope(
       onWillPop: () async {
         provider.inGameWillPop(context, widget.isGame);
@@ -82,7 +82,78 @@ class _DetailPageState extends State<DetailPage> {
       child: Scaffold(
         appBar: widget.isGame == true
             ? AppBar(
-                title: Text(context.watch<GameAlertProvider>().testTime.secondsToTimeZero),
+                leading: const SizedBox(),
+                leadingWidth: 0,
+                toolbarHeight: 80,
+                backgroundColor: Colorss.background,
+                title: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+                  Column(
+                    children: [
+                      Container(
+                        margin: const EdgeInsets.only(top: 16, bottom: 4),
+                        height: 35,
+                        width: 35,
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(50),
+                          child: CachedNetworkImage(
+                            fit: BoxFit.cover,
+                            imageUrl: "https://image.tmdb.org/t/p/original/${providerAlert.gameModel?.from.poster}",
+                            progressIndicatorBuilder: (context, url, downloadProgress) => const Center(
+                              child: CupertinoActivityIndicator(),
+                            ),
+                            errorWidget: (context, url, error) => const Icon(Icons.error),
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        width: 150,
+                        child: Text(
+                          providerAlert.gameModel!.from.name,
+                          textAlign: TextAlign.center,
+                          overflow: TextOverflow.ellipsis,
+                          style: const TextStyle(color: Colorss.textColor, fontSize: 12),
+                        ),
+                      ),
+                      const SizedBox(height: 8)
+                    ],
+                  ),
+                  Column(
+                    children: [
+                      Text(context.watch<GameAlertProvider>().testTime.secondsToTimeZero),
+                      const Icon(Icons.arrow_forward, color: Colorss.textColor, size: 15),
+                    ],
+                  ),
+                  Column(
+                    children: [
+                      Container(
+                        margin: const EdgeInsets.only(top: 16, bottom: 4),
+                        height: 35,
+                        width: 35,
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(50),
+                          child: CachedNetworkImage(
+                            fit: BoxFit.cover,
+                            imageUrl: "https://image.tmdb.org/t/p/original/${providerAlert.gameModel?.to.poster}",
+                            progressIndicatorBuilder: (context, url, downloadProgress) => const Center(
+                              child: CupertinoActivityIndicator(),
+                            ),
+                            errorWidget: (context, url, error) => const Icon(Icons.error),
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        width: 150,
+                        child: Text(
+                          providerAlert.gameModel!.to.name,
+                          overflow: TextOverflow.ellipsis,
+                          textAlign: TextAlign.center,
+                          style: const TextStyle(color: Colorss.textColor, fontSize: 12),
+                        ),
+                      ),
+                      const SizedBox(height: 8)
+                    ],
+                  ),
+                ]),
                 centerTitle: true,
               )
             : null,

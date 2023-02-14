@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:provider_api/models/game_model.dart';
 import 'package:provider_api/providers/detail_provider.dart';
+import 'package:provider_api/providers/game_result_provider.dart';
 import 'package:provider_api/providers/globalProvider.dart';
 import 'package:provider_api/providers/login_provider.dart';
 import 'package:provider_api/providers/people_detail_provider.dart';
@@ -25,11 +26,14 @@ class GameAlertProvider with ChangeNotifier {
   Timer? testTimer;
   int randomInt = 0;
   GameModel? gameModel;
+  int countPage = 0;
+  List<Map<String, dynamic>> routeList = [];
 
   void startTestTimer() {
+    testTimer?.cancel();
+    testTime = 0;
     testTimer = Timer.periodic(const Duration(seconds: 1), (t) {
       testTime += 1;
-
       notifyListeners();
     });
   }
@@ -39,21 +43,18 @@ class GameAlertProvider with ChangeNotifier {
     if (result != null) {
       gameDataList = result;
       randomInt = random.nextInt(result.length);
+      print(randomInt);
       gameModel = gameDataList![randomInt];
     }
     notifyListeners();
   }
 
-  Future<void> checkMyRoutePage(id, context) async {
-    if (id == gameModel!.to.id) {
-      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const GameResultPage()));
-    }
-  }
-
   Future<void> timerToRoute(context) async {
+    timeToRoute = 5;
     Timer.periodic(const Duration(seconds: 1), (t) {
       timeToRoute -= 1;
       if (timeToRoute == 0) {
+        startTestTimer();
         t.cancel();
         Navigator.pop(context);
         if (gameModel!.from.isMovie == true) {
@@ -88,15 +89,23 @@ class GameAlertProvider with ChangeNotifier {
 
       notifyListeners();
     });
-    startTestTimer();
   }
 
-  Future<void> route(bool isGame, int id, BuildContext context, String page, adult, imgUrl) async {
-    if (isGame == false) {
+  Future<void> route(bool isGame, int id, BuildContext context, String page, adult, imgUrl, name) async {
+    if (!isGame) {
+      countPage += 1;
       if (id == gameModel!.to.id) {
-        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const GameResultPage()));
+        context.read<GameAlertProvider>().testTimer?.cancel();
+        Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+              builder: (context) =>
+                  ChangeNotifierProvider(create: (_) => GameResultProvider(countPage), child: const GameResultPage()),
+            ));
       } else {
         if (page == "detail") {
+          routeList.add({"img": imgUrl, "name": name});
+
           Navigator.pushReplacement(
               context,
               MaterialPageRoute(
@@ -111,6 +120,8 @@ class GameAlertProvider with ChangeNotifier {
                             accountId: Provider.of<LoginProvider>(context).account.id),
                       )));
         } else if (page == "people") {
+          routeList.add({"img": imgUrl, "name": name});
+
           Navigator.pushReplacement(
               context,
               MaterialPageRoute(

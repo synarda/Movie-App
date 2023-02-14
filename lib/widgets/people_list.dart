@@ -19,9 +19,7 @@ class PeopleListWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        context.read<GameAlertProvider>().route(isGame, e.id, context, "people", true, "");
-        print(e.id);
-        print("buraya bastık 1");
+        context.read<GameAlertProvider>().route(isGame, e.id, context, "people", true, e.profilePath, e.name);
       },
       child: Container(
         height: 220,

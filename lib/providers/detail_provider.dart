@@ -17,6 +17,7 @@ class DetailProvider with ChangeNotifier {
   List<PeopleModel>? peoples;
 
   final GlobalProvider globalProvider;
+
   Future<void> fetchSimilar(int id) async {
     similarList.clear();
 

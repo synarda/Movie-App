@@ -4,8 +4,8 @@ import 'package:provider_api/models/people_detail_model.dart';
 import 'package:provider_api/screen/alerts/game_get_back_alert.dart';
 import 'package:provider_api/services/people_service.dart';
 
-class PeopleDetailProviderr with ChangeNotifier {
-  PeopleDetailProviderr(int personId) {
+class PeopleDetailProvider with ChangeNotifier {
+  PeopleDetailProvider(int personId) {
     getPeopleDetail(personId).then((value) => getPeopleCredits(personId));
   }
 

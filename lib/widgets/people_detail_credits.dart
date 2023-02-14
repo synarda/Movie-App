@@ -2,11 +2,8 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:provider_api/providers/detail_provider.dart';
-import 'package:provider_api/providers/globalProvider.dart';
-import 'package:provider_api/providers/login_provider.dart';
+import 'package:provider_api/providers/game_alert_provider.dart';
 import 'package:provider_api/providers/people_detail_provider.dart';
-import 'package:provider_api/screen/detail_page.dart';
 import 'package:provider_api/utils/const.dart';
 
 class PeopleDetailCreditsMovies extends StatelessWidget {
@@ -22,7 +19,7 @@ class PeopleDetailCreditsMovies extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.only(left: 16, right: 16, bottom: 16),
       width: double.infinity,
-      child: Consumer<PeopleDetailProviderr>(
+      child: Consumer<PeopleDetailProvider>(
         builder: (context, provider, child) {
           return GridView.builder(
             shrinkWrap: true,
@@ -35,19 +32,7 @@ class PeopleDetailCreditsMovies extends StatelessWidget {
               final e = provider.personDetailCast![index];
               return GestureDetector(
                 onTap: () {
-                  Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => ChangeNotifierProvider(
-                                create: (ctx) => DetailProvider(e.id, context.read<GlobalProvider>()),
-                                child: DetailPage(
-                                    isGame: isGame == true ? false : true,
-                                    adult: e.adult,
-                                    data: data,
-                                    id: e.id,
-                                    imgUrl: e.imgUrl,
-                                    accountId: Provider.of<LoginProvider>(context).account.id),
-                              )));
+                  context.read<GameAlertProvider>().route(isGame, e.id, context, "detail", e.adult, e.imgUrl);
                 },
                 child: Container(
                   decoration: BoxDecoration(borderRadius: BorderRadius.circular(20)),

@@ -4,8 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:provider_api/models/people_model.dart';
-import 'package:provider_api/providers/people_detail_provider.dart';
-import 'package:provider_api/screen/people_detail_page.dart';
+import 'package:provider_api/providers/game_alert_provider.dart';
 import 'package:provider_api/utils/const.dart';
 
 class PeopleListWidget extends StatelessWidget {
@@ -20,27 +19,9 @@ class PeopleListWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        if (isGame == false) {
-          Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(
-                builder: (context) => ChangeNotifierProvider(
-                    create: (_) => PeopleDetailProviderr(e.id),
-                    child: PeopleDetailPage(
-                      isGame: isGame == true ? false : true,
-                    )),
-              ));
-        } else {
-          Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => ChangeNotifierProvider(
-                    create: (_) => PeopleDetailProviderr(e.id),
-                    child: PeopleDetailPage(
-                      isGame: isGame == true ? false : true,
-                    )),
-              ));
-        }
+        context.read<GameAlertProvider>().route(isGame, e.id, context, "people", true, "");
+        print(e.id);
+        print("buraya bastık 1");
       },
       child: Container(
         height: 220,

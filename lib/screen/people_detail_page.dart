@@ -18,7 +18,7 @@ class PeopleDetailPage extends StatelessWidget {
   final bool isGame;
   @override
   Widget build(BuildContext context) {
-    final provider = context.watch<PeopleDetailProviderr>();
+    final provider = context.watch<PeopleDetailProvider>();
     final people = provider.personDetail;
 
     return WillPopScope(

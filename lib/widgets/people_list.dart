@@ -19,15 +19,29 @@ class PeopleListWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => ChangeNotifierProvider(
-                create: (_) => PeopleDetailProviderr(e.id),
-                child: PeopleDetailPage(
-                  isGame: isGame == true ? false : true,
-                )),
-          )),
+      onTap: () {
+        if (isGame == false) {
+          Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                builder: (context) => ChangeNotifierProvider(
+                    create: (_) => PeopleDetailProviderr(e.id),
+                    child: PeopleDetailPage(
+                      isGame: isGame == true ? false : true,
+                    )),
+              ));
+        } else {
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => ChangeNotifierProvider(
+                    create: (_) => PeopleDetailProviderr(e.id),
+                    child: PeopleDetailPage(
+                      isGame: isGame == true ? false : true,
+                    )),
+              ));
+        }
+      },
       child: Container(
         height: 220,
         width: 115,

@@ -6,7 +6,7 @@ import 'package:provider_api/models/game_model.dart';
 class GameService {
   static Future<List<GameModel>?> getGameData() async {
     try {
-      final response = await http.get(Uri.http("192.168.1.108", "/data.json"), headers: {
+      final response = await http.get(Uri.http("192.168.1.107", "/data.json"), headers: {
         'Accept': 'application/json',
       });
 

@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:provider_api/providers/game_alert_provider.dart';
 import 'package:provider_api/providers/people_detail_provider.dart';
+import 'package:provider_api/screen/home_Lists_page.dart';
 import 'package:provider_api/utils/const.dart';
 import 'package:provider_api/utils/extentions.dart';
 import 'package:provider_api/widgets/people_detail_credits.dart';
@@ -23,6 +24,7 @@ class PeopleDetailPage extends StatelessWidget {
     final provider = context.watch<PeopleDetailProvider>();
     final people = provider.personDetail;
     final providerAlert = context.read<GameAlertProvider>();
+    providerAlert.contextt = context;
 
     return WillPopScope(
         onWillPop: () async {
@@ -198,6 +200,14 @@ class PeopleDetailPage extends StatelessWidget {
                                         ],
                                       ),
                                     ),
+                                    dividerTitle("Biography"),
+                                    const Divider(
+                                      color: Colorss.textColor,
+                                      endIndent: 16,
+                                      indent: 16,
+                                      thickness: 0.5,
+                                    ),
+                                    const SizedBox(height: 16),
                                     Container(
                                         padding: const EdgeInsets.only(left: 16, right: 16),
                                         height: 248,
@@ -215,6 +225,15 @@ class PeopleDetailPage extends StatelessWidget {
                                             ),
                                           ],
                                         )),
+                                    const SizedBox(height: 16),
+                                    dividerTitle("Movie's"),
+                                    const Divider(
+                                      color: Colorss.textColor,
+                                      endIndent: 16,
+                                      indent: 16,
+                                      thickness: 0.5,
+                                    ),
+                                    const SizedBox(height: 16),
                                     PeopleDetailCreditsMovies(
                                       data: "",
                                       isGame: isGame == true ? false : true,

@@ -74,6 +74,8 @@ class _DetailPageState extends State<DetailPage> {
   Widget build(BuildContext context) {
     final provider = context.watch<DetailProvider>();
     final providerAlert = context.read<GameAlertProvider>();
+    providerAlert.contextt = context;
+
     return WillPopScope(
       onWillPop: () async {
         provider.inGameWillPop(context, widget.isGame);

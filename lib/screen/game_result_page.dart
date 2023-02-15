@@ -1,3 +1,4 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:ui';
 
 import 'package:cached_network_image/cached_network_image.dart';
@@ -10,11 +11,15 @@ import 'package:provider_api/providers/game_result_provider.dart';
 import 'package:provider_api/providers/login_provider.dart';
 import 'package:provider_api/screen/home_Lists_page.dart';
 import 'package:provider_api/utils/const.dart';
+import 'package:provider_api/utils/extentions.dart';
 import 'package:provider_api/widgets/row.dart';
 
 class GameResultPage extends StatelessWidget {
-  const GameResultPage({super.key});
-
+  const GameResultPage({
+    Key? key,
+    this.inTime = false,
+  }) : super(key: key);
+  final bool? inTime;
   @override
   Widget build(BuildContext context) {
     final providerGame = context.read<GameAlertProvider>();
@@ -33,7 +38,7 @@ class GameResultPage extends StatelessWidget {
         SizedBox(
             height: MediaQuery.of(context).size.height,
             width: MediaQuery.of(context).size.width,
-            child: Lottie.asset("assets/success.json")),
+            child: inTime == true ? Lottie.asset("assets/loader.json") : Lottie.asset("assets/success.json")),
         Positioned.fill(
           child: BackdropFilter(
             filter: ImageFilter.blur(sigmaX: 3, sigmaY: 3),
@@ -63,7 +68,7 @@ class GameResultPage extends StatelessWidget {
                           color: provider.txtColor),
                       child: Center(
                         child: Text(
-                          provider.txt,
+                          inTime == true ? "Try again" : provider.txt,
                           style: const TextStyle(color: Colorss.background),
                         ),
                       ),
@@ -81,10 +86,10 @@ class GameResultPage extends StatelessWidget {
                       ),
                       Padding(
                         padding: const EdgeInsets.only(left: 64, top: 32),
-                        child: RowWidget(
-                            titleSize: 15,
-                            padding: 8,
-                            data: {"page count:   ": providerGame.countPage, "Time:   ": providerGame.testTime}),
+                        child: RowWidget(titleSize: 15, padding: 8, data: {
+                          "page count:   ": providerGame.countPage,
+                          "Time:   ": (600 - providerGame.testTime).secondsToTimeZero
+                        }),
                       ),
                     ]),
                   ),

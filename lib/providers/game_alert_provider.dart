@@ -20,9 +20,10 @@ class GameAlertProvider with ChangeNotifier {
   }
 
   List<GameModel>? gameDataList = [];
+  BuildContext? contextt;
   Random random = Random();
   int timeToRoute = 5;
-  int testTime = 0;
+  int testTime = 600;
   Timer? testTimer;
   int randomInt = 0;
   GameModel? gameModel;
@@ -31,9 +32,21 @@ class GameAlertProvider with ChangeNotifier {
 
   void startTestTimer() {
     testTimer?.cancel();
-    testTime = 0;
+    testTime = 600;
     testTimer = Timer.periodic(const Duration(seconds: 1), (t) {
-      testTime += 1;
+      testTime -= 1;
+      if (testTime <= 0) {
+        t.cancel();
+        Navigator.pushReplacement(
+            contextt!,
+            MaterialPageRoute(
+              builder: (context) => ChangeNotifierProvider(
+                  create: (_) => GameResultProvider(testTime, context),
+                  child: const GameResultPage(
+                    inTime: true,
+                  )),
+            ));
+      }
       notifyListeners();
     });
   }
@@ -99,13 +112,14 @@ class GameAlertProvider with ChangeNotifier {
         Navigator.pushReplacement(
             context,
             MaterialPageRoute(
-              builder: (context) =>
-                  ChangeNotifierProvider(create: (_) => GameResultProvider(countPage), child: const GameResultPage()),
+              builder: (context) => ChangeNotifierProvider(
+                  create: (_) => GameResultProvider((600 - testTime), context),
+                  child: const GameResultPage(inTime: false)),
             ));
       } else {
+        contextt = context;
         if (page == "detail") {
           routeList.add({"img": imgUrl, "name": name});
-
           Navigator.pushReplacement(
               context,
               MaterialPageRoute(

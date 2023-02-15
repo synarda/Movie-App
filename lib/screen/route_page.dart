@@ -24,7 +24,7 @@ class RoutePage extends StatelessWidget {
     final providerHome = context.watch<HomeProvider>();
 
     return GestureDetector(
-        onTap: () => FocusScope.of(context).unfocus(),
+        onTap: provider.focusNode.unfocus,
         child: Scaffold(
             endDrawer: const EndDrawerPage(),
             backgroundColor: Colorss.forebackground,
@@ -34,7 +34,6 @@ class RoutePage extends StatelessWidget {
                   return GestureDetector(
                     onTap: () {
                       Scaffold.of(context).openEndDrawer();
-                      FocusScope.of(context).unfocus();
                     },
                     child: Padding(
                       padding: const EdgeInsets.only(top: 18),
@@ -43,18 +42,15 @@ class RoutePage extends StatelessWidget {
                           providerHome.chooseGenreList.isNotEmpty
                               ? Container(
                                   padding: const EdgeInsets.all(3),
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(20),
-                                      color: Colorss.themeFirst),
+                                  decoration:
+                                      BoxDecoration(borderRadius: BorderRadius.circular(20), color: Colorss.themeFirst),
                                   child: Text(
                                     providerHome.chooseGenreList.length.toString(),
                                     style: const TextStyle(color: Colorss.textColor, fontSize: 8),
                                   ),
                                 )
                               : Container(),
-                          Container(
-                              margin: const EdgeInsets.all(8),
-                              child: const Icon(Icons.filter_list)),
+                          Container(margin: const EdgeInsets.all(8), child: const Icon(Icons.filter_list)),
                         ],
                       ),
                     ),
@@ -68,9 +64,7 @@ class RoutePage extends StatelessWidget {
                 children: [
                   Row(
                     children: [
-                      IconButton(
-                          onPressed: () => provider.searchAnimated(),
-                          icon: const Icon(Icons.search)),
+                      IconButton(onPressed: () => provider.searchAnimated(context), icon: const Icon(Icons.search)),
                       AnimatedOpacity(
                         duration: const Duration(milliseconds: 500),
                         opacity: 1 - provider.moviesTxtOpacity,
@@ -79,6 +73,7 @@ class RoutePage extends StatelessWidget {
                             duration: const Duration(milliseconds: 500),
                             width: provider.searchAnimWidth,
                             child: TextfieldWidget(
+                              focusNode: provider.focusNode,
                               focus: false,
                               suffixIconFunc: provider.searchController.clear,
                               icon: const Icon(Icons.clear, color: Colorss.textColor),
@@ -139,8 +134,7 @@ class RoutePage extends StatelessWidget {
                             key: const PageStorageKey<String>("route"),
                             create: (_) => RoutePageProvider(),
                             child: ListView(
-                              physics: const BouncingScrollPhysics(
-                                  parent: AlwaysScrollableScrollPhysics()),
+                              physics: const BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
                               children: provider.searchResList
                                   .map((e) => SearchResultWidget(
                                         voteAverage: e.voteAverage,
@@ -188,8 +182,8 @@ class RoutePage extends StatelessWidget {
                       Icon(Icons.person, size: 30, color: Colorss.themeFirst),
                     ],
                     onTap: (index) {
-                      provider.controller.animateToPage(index,
-                          duration: const Duration(milliseconds: 500), curve: Curves.easeOutSine);
+                      provider.controller
+                          .animateToPage(index, duration: const Duration(milliseconds: 500), curve: Curves.easeOutSine);
                     },
                   ),
                 ),

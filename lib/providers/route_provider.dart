@@ -12,7 +12,7 @@ class RoutePageProvider with ChangeNotifier {
   double moviesTxtOpacity = 1.0;
   List<MoviesModel> searchResList = [];
   TextEditingController searchController = TextEditingController();
-
+  final focusNode = FocusNode();
   Timer? searchTimer;
 
   RoutePageProvider() {
@@ -36,7 +36,7 @@ class RoutePageProvider with ChangeNotifier {
     super.dispose();
   }
 
-  void searchAnimated() {
+  void searchAnimated(context) {
     if (searchAnimWidth == 0.0) {
       searchAnimWidth = 170.0;
       moviesTxtOpacity = 0.0;
@@ -44,7 +44,6 @@ class RoutePageProvider with ChangeNotifier {
       searchAnimWidth = 0.0;
       moviesTxtOpacity = 1.0;
     }
-    notifyListeners();
     notifyListeners();
   }
 

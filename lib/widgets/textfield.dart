@@ -15,6 +15,7 @@ class TextfieldWidget extends StatelessWidget {
     this.focus = false,
     this.onChanged,
     this.suffixIconFunc,
+    this.focusNode,
   }) : super(key: key);
 
   final String label;
@@ -24,14 +25,15 @@ class TextfieldWidget extends StatelessWidget {
   final bool obscure;
   final TextInputType? type;
   final bool focus;
-  final Function? onChanged;
+  final Function(String)? onChanged;
   final void Function()? suffixIconFunc;
-
+  final FocusNode? focusNode;
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: TextField(
+        focusNode: focusNode,
         autofocus: focus,
         keyboardType: type,
         obscureText: obscure,
@@ -55,9 +57,7 @@ class TextfieldWidget extends StatelessWidget {
           ),
         ),
         cursorColor: Colorss.themeFirst,
-        onChanged: (value) {
-          onChanged?.call();
-        },
+        onChanged: onChanged,
         controller: controller,
       ),
     );

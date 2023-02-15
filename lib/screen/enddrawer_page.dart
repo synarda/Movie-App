@@ -38,8 +38,7 @@ class EndDrawerPage extends StatelessWidget {
                         child: ListView(
                             scrollDirection: Axis.horizontal,
                             shrinkWrap: true,
-                            physics: const BouncingScrollPhysics(
-                                parent: AlwaysScrollableScrollPhysics()),
+                            physics: const BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
                             children: provider.chooseGenreList
                                 .map((e) => GestureDetector(
                                       onTap: () => provider.chooseGenre(e, 11),
@@ -61,13 +60,11 @@ class EndDrawerPage extends StatelessWidget {
                                             height: 50,
                                             width: 50,
                                             decoration: BoxDecoration(
-                                                borderRadius: BorderRadius.circular(20),
-                                                color: Colors.transparent),
+                                                borderRadius: BorderRadius.circular(20), color: Colors.transparent),
                                             child: Text(
                                               textAlign: TextAlign.center,
                                               e,
-                                              style: const TextStyle(
-                                                  color: Colorss.textColor, fontSize: 9),
+                                              style: const TextStyle(color: Colorss.textColor, fontSize: 9),
                                             ),
                                           ),
                                         ],
@@ -93,9 +90,7 @@ class EndDrawerPage extends StatelessWidget {
                         margin: EdgeInsets.all(contain ? provider.animPadding : 12),
                         padding: const EdgeInsets.all(8),
                         decoration: BoxDecoration(
-                            border: Border.all(
-                                width: 1,
-                                color: contain ? Colorss.themeFirst : Colorss.forebackground),
+                            border: Border.all(width: 1, color: contain ? Colorss.themeFirst : Colorss.forebackground),
                             color: Colorss.forebackground,
                             borderRadius: BorderRadius.circular(20)),
                         child: Center(

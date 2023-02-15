@@ -112,7 +112,7 @@ class PeopleDetailPage extends StatelessWidget {
                 ? const SizedBox()
                 : Stack(
                     children: [
-                      Column(
+                      ListView(
                         children: [
                           Stack(
                             children: [
@@ -140,9 +140,9 @@ class PeopleDetailPage extends StatelessWidget {
                                 ),
                               ),
                               SizedBox(
-                                height: MediaQuery.of(context).size.height / 1.2,
+                                height: MediaQuery.of(context).size.height / 1,
                                 child: ListView(
-                                  shrinkWrap: true,
+                                  shrinkWrap: false,
                                   physics: const BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
                                   children: [
                                     Align(

@@ -9,7 +9,7 @@ class AuthService {
     try {
       final response = await http.get(
           Uri.http("api.themoviedb.org", "/3/authentication/token/new",
-              {"api_key": "9c829acfb2666008b8b6304b45fc15a7"}),
+              {"api_key": "Your Api KEY"}),
           headers: {
             'Accept': 'application/json',
           });
@@ -30,7 +30,7 @@ class AuthService {
     try {
       final response = await http.get(
           Uri.http("api.themoviedb.org", "/3/account",
-              {"api_key": "9c829acfb2666008b8b6304b45fc15a7", "session_id": ApiService.sessionId}),
+              {"api_key": "Your Api KEY", "session_id": ApiService.sessionId}),
           headers: {
             'Accept': 'application/json',
           });
@@ -50,7 +50,7 @@ class AuthService {
     try {
       final response = await http.post(
           Uri.http("api.themoviedb.org", "/3/authentication/session/new",
-              {"api_key": "9c829acfb2666008b8b6304b45fc15a7"}),
+              {"api_key": "Your Api KEY"}),
           headers: {
             'Accept': 'application/json',
           },
@@ -73,7 +73,7 @@ class AuthService {
     try {
       final response = await http.post(
           Uri.http("api.themoviedb.org", "/3/authentication/token/validate_with_login",
-              {"api_key": "9c829acfb2666008b8b6304b45fc15a7"}),
+              {"api_key": "Your Api KEY"}),
           headers: {
             'Accept': 'application/json',
           },
@@ -98,7 +98,7 @@ class AuthService {
     try {
       http.delete(
           Uri.http("api.themoviedb.org", "/3/authentication/session",
-              {"api_key": "9c829acfb2666008b8b6304b45fc15a7", "session_id": sessionId}),
+              {"api_key": "Your Api KEY", "session_id": sessionId}),
           headers: {
             'Accept': 'application/json',
           },

@@ -10,7 +10,7 @@ class UserService {
     try {
       final response = await http.post(
           Uri.http("api.themoviedb.org", "/3/list",
-              {"api_key": "9c829acfb2666008b8b6304b45fc15a7", "session_id": sessionID}),
+              {"api_key": "Your Api KEY", "session_id": sessionID}),
           headers: {
             'Accept': 'application/json',
           },
@@ -36,7 +36,7 @@ class UserService {
     try {
       final response = await http.post(
           Uri.http("api.themoviedb.org", "/3/list/$listId/add_item",
-              {"api_key": "9c829acfb2666008b8b6304b45fc15a7", "session_id": sessionID}),
+              {"api_key": "Your Api KEY", "session_id": sessionID}),
           headers: {
             'Accept': 'application/json',
           },
@@ -60,7 +60,7 @@ class UserService {
     try {
       final response = await http.get(
           Uri.http("api.themoviedb.org", "/3/account/$id/lists",
-              {"api_key": "9c829acfb2666008b8b6304b45fc15a7", "session_id": sessionId}),
+              {"api_key": "Your Api KEY", "session_id": sessionId}),
           headers: {
             'Accept': 'application/json',
           });
@@ -81,7 +81,7 @@ class UserService {
   static Future<List<MoviesModel>?> getSearchResult(String sessionId, String query) async {
     try {
       final response = await http.get(Uri.http("api.themoviedb.org", "/3/search/movie", {
-        "api_key": "9c829acfb2666008b8b6304b45fc15a7",
+        "api_key": "Your Api KEY",
         "session_id": sessionId,
         "query": query
       }));
@@ -103,7 +103,7 @@ class UserService {
     try {
       final response = await http.get(
           Uri.http("api.themoviedb.org", "/3/list/$listId",
-              {"api_key": "9c829acfb2666008b8b6304b45fc15a7", "session_id": sessionId}),
+              {"api_key": "Your Api KEY", "session_id": sessionId}),
           headers: {
             'Accept': 'application/json',
           });
@@ -124,7 +124,7 @@ class UserService {
     try {
       http.delete(
           Uri.http("api.themoviedb.org", "/3/list/$listId",
-              {"api_key": "9c829acfb2666008b8b6304b45fc15a7", "session_id": sessionId}),
+              {"api_key": "Your Api KEY", "session_id": sessionId}),
           headers: {
             'Accept': 'application/json',
           });
@@ -139,7 +139,7 @@ class UserService {
     try {
       http.delete(
           Uri.http("api.themoviedb.org", "/3/authentication/session",
-              {"api_key": "9c829acfb2666008b8b6304b45fc15a7", "session_id": sessionId}),
+              {"api_key": "Your Api KEY", "session_id": sessionId}),
           headers: {
             'Accept': 'application/json',
           });
@@ -154,7 +154,7 @@ class UserService {
     try {
       await http.post(
           Uri.http("api.themoviedb.org", "/3/list/$listId/remove_item",
-              {"api_key": "9c829acfb2666008b8b6304b45fc15a7", "session_id": sessionID}),
+              {"api_key": "Your Api KEY", "session_id": sessionID}),
           headers: {
             'Accept': 'application/json',
           },

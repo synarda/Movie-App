@@ -1,4 +1,2 @@
-<tr>
-    <th>![Ekran görüntüsü 2023-08-30 230511](https://user-images.githubusercontent.com/67860630/264472033-221697e1-a49c-4d79-8cb5-4d90a353414e.png)</th>
-    <th>![Ekran görüntüsü 2023-08-30 230511](https://user-images.githubusercontent.com/67860630/264472033-221697e1-a49c-4d79-8cb5-4d90a353414e.png)</th>
-  </tr> 
+![movie](https://github.com/synarda/Movie-App/assets/67860630/1684e8e8-5e82-46f0-a90d-dd5e58bd40b4)
+![movie1](https://github.com/synarda/Movie-App/assets/67860630/d3c14216-0cba-4ae4-8e9f-e4e44f32b014)

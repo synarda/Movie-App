@@ -11,7 +11,7 @@ class ApiService {
     try {
       final response = await http.get(
           Uri.http("api.themoviedb.org", "/3/movie/$filter",
-              {"api_key": "9c829acfb2666008b8b6304b45fc15a7"}),
+              {"api_key": "Your Api KEY"}),
           headers: {
             'Accept': 'application/json',
           });
@@ -30,7 +30,7 @@ class ApiService {
     try {
       final response = await http.get(
           Uri.http("api.themoviedb.org", "/3/movie/$id",
-              {"api_key": "9c829acfb2666008b8b6304b45fc15a7"}),
+              {"api_key": "Your Api KEY"}),
           headers: {
             'Accept': 'application/json',
           });
@@ -49,7 +49,7 @@ class ApiService {
     try {
       final response = await http.get(
           Uri.http("api.themoviedb.org", "/3/genre/movie/list",
-              {"api_key": "9c829acfb2666008b8b6304b45fc15a7", "session_id": ApiService.sessionId}),
+              {"api_key": "Your Api KEY", "session_id": ApiService.sessionId}),
           headers: {
             'Accept': 'application/json',
           });
@@ -68,7 +68,7 @@ class ApiService {
     try {
       final response = await http.get(
           Uri.http("api.themoviedb.org", "/3/movie/$id/similar",
-              {"api_key": "9c829acfb2666008b8b6304b45fc15a7"}),
+              {"api_key": "Your Api KEY"}),
           headers: {
             'Accept': 'application/json',
           });

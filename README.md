@@ -1,16 +1,1 @@
-# provider_api
-
-A new Flutter project.
-
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+> ![Ekran görüntüsü 2023-08-30 230511](https://user-images.githubusercontent.com/67860630/264472033-221697e1-a49c-4d79-8cb5-4d90a353414e.png)

@@ -9,7 +9,7 @@ class PeopleService {
   static Future<PeopleDetailModel?> getPeople(int personId) async {
     final response = await http.get(
         Uri.http("api.themoviedb.org", "/3/person/$personId",
-            {"api_key": "9c829acfb2666008b8b6304b45fc15a7", "session_id": ApiService.sessionId}),
+            {"api_key": "Your Api KEY", "session_id": ApiService.sessionId}),
         headers: {
           'Accept': 'application/json',
         });
@@ -24,7 +24,7 @@ class PeopleService {
   static Future<List<MoviesModel>?> getcPeopleCastMovies(int personId) async {
     final response = await http.get(
         Uri.http("api.themoviedb.org", "/3/person/$personId/movie_credits",
-            {"api_key": "9c829acfb2666008b8b6304b45fc15a7", "session_id": ApiService.sessionId}),
+            {"api_key": "Your Api KEY", "session_id": ApiService.sessionId}),
         headers: {
           'Accept': 'application/json',
         });

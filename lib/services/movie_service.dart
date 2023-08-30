@@ -11,7 +11,7 @@ class MovieService {
   static Future<List<ReviewsModel>?> getReview(int movieId) async {
     final response = await http.get(
         Uri.http("api.themoviedb.org", "/3/movie/$movieId/reviews",
-            {"api_key": "9c829acfb2666008b8b6304b45fc15a7", "session_id": ApiService.sessionId}),
+            {"api_key": "Your Api KEY", "session_id": ApiService.sessionId}),
         headers: {
           'Accept': 'application/json',
         });
@@ -28,7 +28,7 @@ class MovieService {
     try {
       await http.post(
           Uri.http("api.themoviedb.org", "/3/account/$accountId/favorite",
-              {"api_key": "9c829acfb2666008b8b6304b45fc15a7", "session_id": sessionID}),
+              {"api_key": "Your Api KEY", "session_id": sessionID}),
           headers: {
             "Content-Type": "application/json;charset=utf-8",
           },
@@ -43,7 +43,7 @@ class MovieService {
     try {
       await http.post(
           Uri.http("api.themoviedb.org", "/3/movie/$mediaId/rating",
-              {"api_key": "9c829acfb2666008b8b6304b45fc15a7", "session_id": ApiService.sessionId}),
+              {"api_key": "Your Api KEY", "session_id": ApiService.sessionId}),
           headers: {
             "Content-Type": "application/json;charset=utf-8",
           },
@@ -58,7 +58,7 @@ class MovieService {
     try {
       final response = await http.get(
           Uri.http("api.themoviedb.org", "/3/account/$accountId/favorite/movies",
-              {"api_key": "9c829acfb2666008b8b6304b45fc15a7", "session_id": ApiService.sessionId}),
+              {"api_key": "Your Api KEY", "session_id": ApiService.sessionId}),
           headers: {
             'Accept': 'application/json',
           });
@@ -80,7 +80,7 @@ class MovieService {
     try {
       final response = await http.get(
           Uri.http("api.themoviedb.org", "/3/account/$accountId/rated/movies",
-              {"api_key": "9c829acfb2666008b8b6304b45fc15a7", "session_id": ApiService.sessionId}),
+              {"api_key": "Your Api KEY", "session_id": ApiService.sessionId}),
           headers: {
             'Accept': 'application/json',
           });
@@ -101,7 +101,7 @@ class MovieService {
   static Future<List<MoviesModel>?> getDiscoverFilter(String accountId, List<String> genre) async {
     final response = await http.get(
         Uri.http("api.themoviedb.org", "/3/discover/movie", {
-          "api_key": "9c829acfb2666008b8b6304b45fc15a7",
+          "api_key": "Your Api KEY",
           "session_id": ApiService.sessionId,
           "with_genres": genre
         }),
@@ -123,7 +123,7 @@ class MovieService {
     try {
       http.delete(
           Uri.http("api.themoviedb.org", "/3/movie/$movieId/rating",
-              {"api_key": "9c829acfb2666008b8b6304b45fc15a7", "session_id": ApiService.sessionId}),
+              {"api_key": "Your Api KEY", "session_id": ApiService.sessionId}),
           headers: {
             'Accept': 'application/json',
           });
@@ -138,7 +138,7 @@ class MovieService {
     try {
       final response = await http.get(
           Uri.http("api.themoviedb.org", "/3/movie/$movieId/credits",
-              {"api_key": "9c829acfb2666008b8b6304b45fc15a7", "session_id": ApiService.sessionId}),
+              {"api_key": "Your Api KEY", "session_id": ApiService.sessionId}),
           headers: {
             'Accept': 'application/json',
           });
